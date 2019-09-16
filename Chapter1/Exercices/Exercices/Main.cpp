@@ -1,8 +1,9 @@
 #include <iostream>
+#include <string>
 
 // Chapter 1 Exercices 
 // BECLE Denis C00254311 
-// 13 / 09 / 2019 
+// 16 / 09 / 2019 
 
 
 // Q1 
@@ -41,10 +42,27 @@ double deg2rad(double degrees)
 //Q3 
 void vectorNormalize(float inputVector[], float resultVector[])
 {
-	float lenght = sqrt(inputVector[0] * inputVector[0] + inputVector[1] * inputVector[1]);
+	float length = sqrt(inputVector[0] * inputVector[0] + inputVector[1] * inputVector[1]);
 
 	resultVector[0] = inputVector[0] / length;
-	resultVector[1] = inputVector[0] / length;
+	resultVector[1] = inputVector[1] / length;
+}
+
+//Q4
+void sort(std::string* pNames[]) 
+{
+	int length = 10;
+	for (int i = 0; i < length; i++)
+	{
+		for (int j = i; j < length; j++)
+		{
+			if (*pNames[j] < *pNames[i]) {
+				std::string* temp = pNames[i];
+				pNames[i] = pNames[j];
+				pNames[j] = temp;
+			}
+		}
+	}
 }
 
 int main() 
@@ -75,6 +93,45 @@ int main()
 	*/
 
 	//vectorMormalizeTest 
+	/*
+	float inputVector[] = { 1, 1 };
+	float resultVector[2];
+
+	vectorNormalize(inputVector, resultVector);
+
+	std::cout << "input vector\nX = " << inputVector[0] << "\nY = " << inputVector[1] << "\n\n";
+	std::cout << "result vector\nX = " << resultVector[0] << "\nY = " << resultVector[1] << "\n\n";
+	*/
+
+	//Sort 
+	std::string names[10];
+	std::string* pNames[10];
+
+	for (int i = 0; i < sizeof(names) / sizeof(std::string); i++) 
+	{
+		std::cout << "Name " << i << " ? " << std::endl;
+		std::cin >> names[i];
+		std::cout << std::endl;
+
+		pNames[i] = &names[i];
+	}
+
+	std::cout << "Original : \n";
+
+	for (int i = 0; i < sizeof(pNames) / sizeof(std::string*); i++)
+	{
+		std::cout << i << " : " << pNames[i] << " = " << *pNames[i] << std::endl;
+	}
+
+	sort(pNames);
+
+	std::cout << "\nSorted : \n";
+
+	for (int i = 0; i < sizeof(pNames) / sizeof(std::string*); i++)
+	{
+		std::cout << i << " : " << pNames[i] << " = " << *pNames[i] << std::endl;
+	}
+
 
 
 }

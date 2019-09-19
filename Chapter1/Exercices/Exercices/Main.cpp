@@ -49,12 +49,11 @@ void vectorNormalize(float inputVector[], float resultVector[])
 }
 
 //Q4
-void sort(std::string* pNames[]) 
+void sort(std::string* pNames[],const int LENGTH) 
 {
-	int length = 10;
-	for (int i = 0; i < length; i++)
+	for (int i = 0; i < LENGTH; i++)
 	{
-		for (int j = i; j < length; j++)
+		for (int j = i; j < LENGTH; j++)
 		{
 			if (*pNames[j] < *pNames[i]) {
 				std::string* temp = pNames[i];
@@ -104,10 +103,12 @@ int main()
 	*/
 
 	//Sort 
-	std::string names[10];
-	std::string* pNames[10];
 
-	for (int i = 0; i < sizeof(names) / sizeof(std::string); i++) 
+	const int LENGTH = 10;
+	std::string names[LENGTH];
+	std::string* pNames[LENGTH];
+
+	for (int i = 0; i < LENGTH; i++) 
 	{
 		std::cout << "Name " << i << " ? " << std::endl;
 		std::cin >> names[i];
@@ -118,16 +119,16 @@ int main()
 
 	std::cout << "Original : \n";
 
-	for (int i = 0; i < sizeof(pNames) / sizeof(std::string*); i++)
+	for (int i = 0; i < LENGTH; i++)
 	{
 		std::cout << i << " : " << pNames[i] << " = " << *pNames[i] << std::endl;
 	}
 
-	sort(pNames);
+	sort(pNames,LENGTH);
 
 	std::cout << "\nSorted : \n";
 
-	for (int i = 0; i < sizeof(pNames) / sizeof(std::string*); i++)
+	for (int i = 0; i < LENGTH; i++)
 	{
 		std::cout << i << " : " << pNames[i] << " = " << *pNames[i] << std::endl;
 	}

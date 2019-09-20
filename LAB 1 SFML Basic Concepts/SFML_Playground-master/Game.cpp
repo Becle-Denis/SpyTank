@@ -20,7 +20,13 @@ Game::Game()
 	m_sprite.setTexture(m_myTexture);
 
 	//the origin of the sprite is set to the it center, is position is a the top left corner so 3/4 of the sprite is drawn outside the window 
-	m_sprite.setOrigin(50,50);
+	m_sprite.setOrigin(m_myTexture.getSize().x / 2, m_myTexture.getSize().y / 2);
+	
+	//changing the position to be visible 
+	m_sprite.setPosition(200, 200);
+
+	//rotation of the sprite 
+	m_sprite.rotate(90);
 }
 
 ////////////////////////////////////////////////////////////
@@ -92,8 +98,7 @@ void Game::update(double dt)
 void Game::render()
 {
 	m_window.clear(sf::Color(0, 0, 0, 0));
-	
-	
+
 	m_window.draw(m_sprite);
 	
 

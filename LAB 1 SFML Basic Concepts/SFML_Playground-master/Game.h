@@ -8,6 +8,7 @@
 /// @date June 2017
 /// @version 1.0
 /// 
+/// @completed September 2019 / Becle Denis C00254311 / Lab Exercices 
 /// </summary>
 
 /// <summary>

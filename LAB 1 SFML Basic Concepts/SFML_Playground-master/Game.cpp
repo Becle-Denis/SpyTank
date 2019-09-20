@@ -9,6 +9,15 @@ Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default)
 {
 	m_window.setVerticalSyncEnabled(true);
+	//myTexture was destroyed at the end of the function so it can't be displayed 
+	//To fix this issue, the Game member variable m_myTexture was created  
+	if (!m_myTexture.loadFromFile("E-100.png"))
+	{
+		std::string s("Error loading texture");
+		throw std::exception(s.c_str());
+	}
+
+	m_sprite.setTexture(m_myTexture);
 }
 
 ////////////////////////////////////////////////////////////
@@ -80,6 +89,9 @@ void Game::update(double dt)
 void Game::render()
 {
 	m_window.clear(sf::Color(0, 0, 0, 0));
+
+	m_window.draw(m_sprite);
+
 	m_window.display();
 }
 

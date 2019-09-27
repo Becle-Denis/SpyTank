@@ -70,4 +70,23 @@ protected:
 
 	// main window
 	sf::RenderWindow m_window;
+
+	// Load the game level data.
+	LevelData m_level;
+
+
+
+	//tank texture 
+	sf::Texture m_tankTexture;
+	//background texture 
+	sf::Texture m_bgTexture;
+
+	//tank sprite 
+	sf::Sprite m_tankSprite;
+	//backgroud sprite 
+	sf::Sprite m_bgSprite;
+
+	std::vector<sf::Sprite>  m_sprites;
+	// A texture for the sprite sheet
+	sf::Texture m_spriteSheetTexture;
 };

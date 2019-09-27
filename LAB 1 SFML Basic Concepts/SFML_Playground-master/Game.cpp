@@ -26,7 +26,9 @@ Game::Game()
 	m_sprite.setPosition(200, 200);
 
 	//rotation of the sprite 
-	m_sprite.rotate(90);
+	m_sprite.rotate(20);
+
+	std::cout << "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq";
 }
 
 ////////////////////////////////////////////////////////////

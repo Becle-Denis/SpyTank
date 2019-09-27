@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "ScreenSize.h"
+#include "LevelLoader.h"
 
 /// <summary>
 /// @author RP
@@ -69,10 +70,4 @@ protected:
 
 	// main window
 	sf::RenderWindow m_window;
-
-	// main sprite 
-	sf::Sprite m_sprite;
-
-	// Texture of the main sprite
-	sf::Texture m_myTexture;
 };

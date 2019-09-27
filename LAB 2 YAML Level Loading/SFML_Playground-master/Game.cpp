@@ -9,24 +9,7 @@ Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default)
 {
 	m_window.setVerticalSyncEnabled(true);
-	//myTexture was destroyed at the end of the function so it can't be displayed 
-	//To fix this issue, the Game member variable m_myTexture was created  
-	if (!m_myTexture.loadFromFile("E-100.png"))
-	{
-		std::string s("Error loading texture");
-		throw std::exception(s.c_str());
-	}
 
-	m_sprite.setTexture(m_myTexture);
-
-	//the origin of the sprite is set to the it center, is position is a the top left corner so 3/4 of the sprite is drawn outside the window 
-	m_sprite.setOrigin(m_myTexture.getSize().x / 2, m_myTexture.getSize().y / 2);
-	
-	//changing the position to be visible 
-	m_sprite.setPosition(200, 200);
-
-	//rotation of the sprite 
-	m_sprite.rotate(90);
 }
 
 ////////////////////////////////////////////////////////////
@@ -98,10 +81,7 @@ void Game::update(double dt)
 void Game::render()
 {
 	m_window.clear(sf::Color(0, 0, 0, 0));
-
-	m_window.draw(m_sprite);
 	
-
 	m_window.display();
 }
 

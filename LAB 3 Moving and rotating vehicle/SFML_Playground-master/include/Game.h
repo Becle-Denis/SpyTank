@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "ScreenSize.h"
 #include "LevelLoader.h"
+#include "Tank.h"
 
 /// <summary>
 /// @author RP
@@ -78,15 +79,22 @@ protected:
 
 	//tank texture 
 	sf::Texture m_tankTexture;
+
+	sf::Texture m_tankTexture2;
+
 	//background texture 
 	sf::Texture m_bgTexture;
 
 	//tank sprite 
 	sf::Sprite m_tankSprite;
+
 	//backgroud sprite 
 	sf::Sprite m_bgSprite;
-
 	std::vector<sf::Sprite>  m_sprites;
+	
 	// A texture for the sprite sheet
 	sf::Texture m_spriteSheetTexture;
+
+	// An instance representing the player controlled tank.
+	Tank m_tank;
 };

@@ -71,6 +71,9 @@ void operator >> (const YAML::Node& levelNode, LevelData& level)
 void LevelLoader::load(int nr, LevelData& level)
 {
 	std::stringstream ss;
+	//added 
+	ss << "./resources/levels/";
+
 	ss << "level";
 	ss << nr;
 	ss << ".yaml";

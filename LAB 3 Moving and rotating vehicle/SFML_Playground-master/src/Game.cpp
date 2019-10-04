@@ -6,9 +6,12 @@ static double const MS_PER_UPDATE = 10.0;
 
 ////////////////////////////////////////////////////////////
 Game::Game()
-	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default)
+	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
+	m_tank(m_tankTexture2)
 {
-	//loadiibg the level data from the YAML file corresponding
+	
+	
+	//loading the level data from the YAML file corresponding
 	int currentLevel = 1;
 	// Will generate an exception if level loading fails.
 	try
@@ -23,47 +26,25 @@ Game::Game()
 	}
 
 	m_window.setVerticalSyncEnabled(true);
-
+	
 	//loading the backgroud texture to the backgroud sprite 
-	if (!m_bgTexture.loadFromFile("Background.jpg"))
+	if (!m_bgTexture.loadFromFile(m_level.m_background.m_fileName))
 	{
 		std::string s("Error loading background texture");
 		throw std::exception(s.c_str());
 	}
 	m_bgSprite.setTexture(m_bgTexture);
-
-	//loading the tank texture to the tank sprite 
-	if (!m_tankTexture.loadFromFile("E-100.png"))
+	
+	
+	//loading the tank texture 
+	if (!m_tankTexture2.loadFromFile("./resources/images/SpriteSheet.png"))
 	{
-		std::string s("Error loading tank texture");
+		std::string s("Error loading texture");
 		throw std::exception(s.c_str());
 	}
-	m_tankSprite.setTexture(m_tankTexture);
-	m_tankSprite.setOrigin(m_tankTexture.getSize().x / 2, m_tankTexture.getSize().y / 2);
 
-	//set the position of the tank according to the level data 
-	m_tankSprite.setPosition(m_level.m_tank.m_position);
-
-	if (!m_spriteSheetTexture.loadFromFile("SpriteSheet.png"))
-	{
-		std::string errorMsg("Error loading texture");
-		throw std::exception(errorMsg.c_str());
-	}
-
-	// loading the sprites texture of the wall and creating wall obastacle sprite
-	// Extract the wall image from the spritesheet.
-	sf::Sprite sprite;
-	sf::IntRect wallRect(2, 129, 33, 23);
-	sprite.setTexture(m_spriteSheetTexture);
-	sprite.setTextureRect(wallRect);
-	// Loop through each Obstacle instance - recall that Obstacles are structs
-	for (auto& obstacle : m_level.m_obstacles)
-	{
-		// Position the wall sprite using the obstacle data
-		sprite.setPosition(obstacle.m_position);
-		sprite.rotate(obstacle.m_rotation);
-		m_sprites.push_back(sprite);
-	}
+	// Now the level data is loaded, set the tank position.
+	m_tank.setPosition(m_level.m_tank.m_position);
 }
 
 ////////////////////////////////////////////////////////////
@@ -116,8 +97,21 @@ void Game::processGameEvents(sf::Event& event)
 		case sf::Keyboard::Escape:
 			m_window.close();
 			break;
+
 		case sf::Keyboard::Up:
-			// Up key was pressed...
+			m_tank.increaseSpeed();
+			break;
+			
+		case sf::Keyboard::Down:
+			m_tank.decreaseSpeed();
+			break;
+
+		case sf::Keyboard::Right:
+			m_tank.increaseRotation();
+			break;
+
+		case sf::Keyboard::Left:
+			m_tank.decreaseRotation();
 			break;
 		default:
 			break;
@@ -128,24 +122,20 @@ void Game::processGameEvents(sf::Event& event)
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 {
-
+	m_tank.update(dt);
 }
 
 ////////////////////////////////////////////////////////////
 void Game::render()
 {
 	m_window.clear(sf::Color(0, 0, 0, 0));
+	
 	//drawing the backgroud
 	m_window.draw(m_bgSprite);
 
-	//drawing the obstacles 
-	for (sf::Sprite sprite : m_sprites)
-	{
-		m_window.draw(sprite);
-	}
 
 	//drawing the tank 
-	m_window.draw(m_tankSprite);
+	m_tank.render(m_window);
 	
 	m_window.display();
 }

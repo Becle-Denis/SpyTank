@@ -98,21 +98,6 @@ void Game::processGameEvents(sf::Event& event)
 			m_window.close();
 			break;
 
-		case sf::Keyboard::Up:
-			m_tank.increaseSpeed();
-			break;
-			
-		case sf::Keyboard::Down:
-			m_tank.decreaseSpeed();
-			break;
-
-		case sf::Keyboard::Right:
-			m_tank.increaseRotation();
-			break;
-
-		case sf::Keyboard::Left:
-			m_tank.decreaseRotation();
-			break;
 		default:
 			break;
 		}

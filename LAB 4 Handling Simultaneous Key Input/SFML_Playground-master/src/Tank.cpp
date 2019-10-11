@@ -25,7 +25,7 @@ void Tank::update(double dt)
 
 	//set rotation 
 	m_tankBase.setRotation(m_rotation);
-	m_turret.setRotation(m_rotation);
+	m_turret.setRotation(m_turretRotation);
 
 
 	//decrease speed 
@@ -108,6 +108,7 @@ void Tank::increaseRotation()
 	{
 		m_rotation = 0;
 	}
+	increaseTurretRotation();
 }
 
 ////////////////////////////////////////////////////////////
@@ -117,6 +118,27 @@ void Tank::decreaseRotation()
 	if (m_rotation == 0.0)
 	{
 		m_rotation = 359.0;
+	}
+	decreaseTurretRotation();
+}
+
+////////////////////////////////////////////////////////////
+void Tank::increaseTurretRotation()
+{
+	m_turretRotation += 1;
+	if (m_turretRotation == 360.0)
+	{
+		m_turretRotation = 0;
+	}
+}
+
+////////////////////////////////////////////////////////////
+void Tank::decreaseTurretRotation()
+{
+	m_turretRotation -= 1;
+	if (m_turretRotation == 0.0)
+	{
+		m_turretRotation = 359.0;
 	}
 }
 
@@ -140,6 +162,14 @@ void Tank::handleKeyInput()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
 	{
 		decreaseRotation();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X))
+	{
+		increaseTurretRotation();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
+	{
+		decreaseTurretRotation();
 	}
 
 }

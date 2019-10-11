@@ -25,7 +25,7 @@ Game::Game()
 		throw e;
 	}
 
-	m_window.setVerticalSyncEnabled(true);
+	m_window.setVerticalSyncEnabled(true); // limit the framerate of the window 
 	
 	//loading the backgroud texture to the backgroud sprite 
 	if (!m_bgTexture.loadFromFile(m_level.m_background.m_fileName))

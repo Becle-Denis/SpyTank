@@ -29,6 +29,9 @@ private:
 	// The current rotation as applied to tank base.
 	double m_rotation{ 0.0 };
 
+	// The current rotation to the turret 
+	double m_turretRotation{ 0.0 };
+
 	double m_maximumSpeed;
 
 	/// <summary>
@@ -47,14 +50,24 @@ private:
 	void decreaseSpeed();
 
 	/// <summary>
-	/// @brief Increases the rotation by 1 degree, wraps to 0 degrees after 359.
+	/// @brief Increases the rotation by 1 degree, wraps to 0 degrees after 359, also increase turret rotation.
 	/// </summary>
 	void increaseRotation();
 
 	/// <summary>
-	/// @brief Decreases the rotation by 1 degree, wraps to 359 degrees after 0.
+	/// @brief Decreases the rotation by 1 degree, wraps to 359 degrees after 0, also decrease turret rotation.
 	/// </summary>
 	void decreaseRotation();
+
+	/// <summary>
+	/// @brief Increases the turret rotation by 1 degree,  wraps to 0 degrees after 359
+	/// </summary>
+	void increaseTurretRotation();
+
+	/// <summary>
+	/// @brief Decreases the turret rotation by 1 degree, wraps to 359 degrees after 0
+	/// </summary>
+	void decreaseTurretRotation();
 		
 };
 

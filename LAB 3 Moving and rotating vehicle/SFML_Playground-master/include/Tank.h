@@ -51,6 +51,8 @@ private:
 
 	// The current rotation as applied to tank base.
 	double m_rotation{ 0.0 };
+
+	double m_maximumSpeed;
 		
 };
 

@@ -4,7 +4,7 @@
 
 
 Tank::Tank(sf::Texture const & texture/*, sf::Vector2f const & pos*/)
-: m_texture(texture)
+: m_texture(texture),m_maximumSpeed(80)
 {
 	
 }
@@ -23,6 +23,29 @@ void Tank::update(double dt)
 	m_tankBase.setRotation(m_rotation);
 	m_turret.setRotation(m_rotation);
 
+
+	//decrease speed 
+	if (m_speed >= 0.05)
+	{
+		m_speed -= 0.05;
+	}
+	else if (m_speed <= -0.05 )
+	{
+		m_speed += 0.05;
+	}
+	else
+	{
+		m_speed = 0;
+	}
+	
+
+	//limiting speed 
+	double high = m_maximumSpeed;
+	double low = m_maximumSpeed * -1;
+
+	m_speed = std::clamp(m_speed,low,high);
+
+	std::cout << "Speed : " << m_speed << std::endl;
 }
 
 

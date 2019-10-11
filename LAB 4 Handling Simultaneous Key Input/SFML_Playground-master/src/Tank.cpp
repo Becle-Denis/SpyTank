@@ -11,6 +11,10 @@ Tank::Tank(sf::Texture const & texture/*, sf::Vector2f const & pos*/)
 
 void Tank::update(double dt)
 {	
+
+	// Handle user input 
+	handleKeyInput();
+
 	//get new position
 	float newXPosition = m_tankBase.getPosition().x + cos(m_rotation * MathUtility::DEG_TO_RAD) * m_speed * (dt / 1000);
 	float newYPosition = m_tankBase.getPosition().y + sin(m_rotation * MathUtility::DEG_TO_RAD) * m_speed * (dt / 1000);
@@ -25,13 +29,13 @@ void Tank::update(double dt)
 
 
 	//decrease speed 
-	if (m_speed >= 0.05)
+	if (m_speed >= 0.3)
 	{
-		m_speed -= 0.05;
+		m_speed -= 0.3;
 	}
-	else if (m_speed <= -0.05 )
+	else if (m_speed <= -0.3 )
 	{
-		m_speed += 0.05;
+		m_speed += 0.3;
 	}
 	else
 	{
@@ -114,4 +118,28 @@ void Tank::decreaseRotation()
 	{
 		m_rotation = 359.0;
 	}
+}
+
+
+
+/// //////////////////////////////////////////////////////////
+void Tank::handleKeyInput()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+	{
+		increaseSpeed();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+	{
+		decreaseSpeed();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+	{
+		increaseRotation();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+	{
+		decreaseRotation();
+	}
+
 }

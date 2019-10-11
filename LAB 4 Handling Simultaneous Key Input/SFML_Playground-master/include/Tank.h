@@ -14,29 +14,6 @@ public:
 	void render(sf::RenderWindow & window);
 	void setPosition(sf::Vector2f const& pos);
 
-	/// <summary>
-	/// @brief Increases the speed by 1, max speed is capped at 100.
-	/// 
-	/// </summary>
-	void increaseSpeed();
-
-	/// <summary>
-	/// @brief Decreases the speed by 1, min speed is capped at -100.
-	/// 
-	/// </summary>
-	void decreaseSpeed();
-
-	/// <summary>
-	/// @brief Increases the rotation by 1 degree, wraps to 0 degrees after 359.
-	/// 
-	/// </summary>
-	void increaseRotation();
-
-	/// <summary>
-	/// @brief Decreases the rotation by 1 degree, wraps to 359 degrees after 0.
-	/// 
-	/// </summary>
-	void decreaseRotation();
 
 
 	
@@ -53,6 +30,31 @@ private:
 	double m_rotation{ 0.0 };
 
 	double m_maximumSpeed;
+
+	/// <summary>
+	/// @brief Processes control keys and applies speed/rotation as appropriate.
+	/// </summary>
+	void handleKeyInput();
+
+	/// <summary>
+	/// @brief Increases the speed by 1, max speed is capped at 100
+	/// </summary>
+	void increaseSpeed();
+
+	/// <summary>
+	/// @brief Decreases the speed by 1, min speed is capped at -100.
+	/// </summary>
+	void decreaseSpeed();
+
+	/// <summary>
+	/// @brief Increases the rotation by 1 degree, wraps to 0 degrees after 359.
+	/// </summary>
+	void increaseRotation();
+
+	/// <summary>
+	/// @brief Decreases the rotation by 1 degree, wraps to 359 degrees after 0.
+	/// </summary>
+	void decreaseRotation();
 		
 };
 

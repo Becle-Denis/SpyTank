@@ -1,4 +1,7 @@
 #include "Tank.h"
+#include <iostream>
+#include "MathUtility.h"
+
 
 Tank::Tank(sf::Texture const & texture/*, sf::Vector2f const & pos*/)
 : m_texture(texture)
@@ -8,9 +11,9 @@ Tank::Tank(sf::Texture const & texture/*, sf::Vector2f const & pos*/)
 
 void Tank::update(double dt)
 {	
-	//get new position 
-	float newXPosition = m_tankBase.getPosition().x + cos(m_rotation) * m_speed * (dt / 1000);
-	float newYPosition = m_tankBase.getPosition().y + sin(m_rotation) * m_speed * (dt / 1000);
+	//get new position
+	float newXPosition = m_tankBase.getPosition().x + cos(m_rotation * MathUtility::DEG_TO_RAD) * m_speed * (dt / 1000);
+	float newYPosition = m_tankBase.getPosition().y + sin(m_rotation * MathUtility::DEG_TO_RAD) * m_speed * (dt / 1000);
 
 	//set new position 
 	m_tankBase.setPosition(sf::Vector2f(newXPosition,newYPosition));
@@ -19,6 +22,7 @@ void Tank::update(double dt)
 	//set rotation 
 	m_tankBase.setRotation(m_rotation);
 	m_turret.setRotation(m_rotation);
+
 }
 
 

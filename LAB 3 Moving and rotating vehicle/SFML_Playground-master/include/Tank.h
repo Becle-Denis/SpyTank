@@ -38,6 +38,7 @@ public:
 	/// </summary>
 	void decreaseRotation();
 
+
 	
 private:
 	void initSprites(sf::Vector2f const & pos);

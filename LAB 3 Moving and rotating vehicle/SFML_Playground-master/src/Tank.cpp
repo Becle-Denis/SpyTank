@@ -25,7 +25,7 @@ void Tank::update(double dt)
 
 
 	//decrease speed 
-	if (m_speed >= 0.05)
+	/*if (m_speed >= 0.05)
 	{
 		m_speed -= 0.05;
 	}
@@ -36,8 +36,9 @@ void Tank::update(double dt)
 	else
 	{
 		m_speed = 0;
-	}
+	}*/
 	
+	m_speed *= 0.99;
 
 	//limiting speed 
 	double high = m_maximumSpeed;

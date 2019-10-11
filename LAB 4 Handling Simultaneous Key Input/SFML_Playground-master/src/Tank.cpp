@@ -142,9 +142,13 @@ void Tank::decreaseTurretRotation()
 	}
 }
 
+//////////////////////////////////////////////////////////////
+void Tank::centerTurret()
+{
+	m_turretRotation = m_rotation;
+}
 
-
-/// //////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 void Tank::handleKeyInput()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
@@ -170,6 +174,10 @@ void Tank::handleKeyInput()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
 	{
 		decreaseTurretRotation();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C))
+	{
+		centerTurret();
 	}
 
 }

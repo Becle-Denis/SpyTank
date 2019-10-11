@@ -68,6 +68,10 @@ private:
 	/// @brief Decreases the turret rotation by 1 degree, wraps to 359 degrees after 0
 	/// </summary>
 	void decreaseTurretRotation();
-		
+
+	/// <summary>
+	/// @brief Put the rotation of the turret at the center of the tank 
+	/// </summary>
+	void centerTurret();
 };
 

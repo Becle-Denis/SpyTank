@@ -7,7 +7,7 @@ static double const MS_PER_UPDATE = 10.0;
 ////////////////////////////////////////////////////////////
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
-	m_tank(m_tankTexture2)
+	m_tank(m_tankTexture2,m_wallSprites)
 {
 	
 	
@@ -146,7 +146,7 @@ void Game::render()
 	m_window.draw(m_bgSprite);
 
 	//drawing the wall
-	for (sf::Sprite& wallSprite : m_wallSprites)
+	for (sf::Sprite const & wallSprite : m_wallSprites)
 	{
 		m_window.draw(wallSprite);
 	}

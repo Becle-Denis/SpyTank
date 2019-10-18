@@ -45,6 +45,14 @@ public:
 
 protected:
 	/// <summary>
+	/// @brief Creates the wall sprites and loads them into a vector.
+	/// Note that sf::Sprite is considered a light weight class, so 
+	///  storing copies (instead of pointers to sf::Sprite) in std::vector is acceptable.
+	/// </summary>
+	void generateWalls();
+
+
+	/// <summary>
 	/// @brief Placeholder to perform updates to all game objects.
 	/// </summary>
 	/// <param name="time">update delta time</param>
@@ -92,9 +100,13 @@ protected:
 	sf::Sprite m_bgSprite;
 	std::vector<sf::Sprite>  m_sprites;
 	
+	// Wall sprites
+	std::vector<sf::Sprite> m_wallSprites;
+
 	// A texture for the sprite sheet
 	sf::Texture m_spriteSheetTexture;
 
 	// An instance representing the player controlled tank.
 	Tank m_tank;
+
 };

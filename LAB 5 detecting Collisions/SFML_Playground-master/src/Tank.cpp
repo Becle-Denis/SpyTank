@@ -30,7 +30,9 @@ void Tank::update(double dt)
 	m_tankBase.setRotation(m_rotation);
 	m_turret.setRotation(m_turretRotation);
 
-	
+
+
+	/*
 	//decrease speed 
 	if (m_speed >= 0.3)
 	{
@@ -49,9 +51,9 @@ void Tank::update(double dt)
 	//limiting speed 
 	double high = m_maximumSpeed;
 	double low = m_maximumSpeed * -1;
-
+	
 	m_speed = std::clamp(m_speed,low,high);
-
+	*/
 	
 
 	//checking wall collisions
@@ -144,7 +146,6 @@ void Tank::increaseRotation()
 ////////////////////////////////////////////////////////////
 void Tank::decreaseRotation()
 {
-
 	//saving the actual rotation
 	m_previousRotation = m_rotation;
 
@@ -170,7 +171,6 @@ void Tank::increaseTurretRotation()
 			m_turretRotation = 0;
 		}
 	}
-
 }
 
 ////////////////////////////////////////////////////////////
@@ -187,7 +187,6 @@ void Tank::decreaseTurretRotation()
 			m_turretRotation = 359.0;
 		}
 	}
-
 }
 
 //////////////////////////////////////////////////////////////

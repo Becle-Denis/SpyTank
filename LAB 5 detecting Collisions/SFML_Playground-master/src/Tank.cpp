@@ -32,28 +32,16 @@ void Tank::update(double dt)
 
 
 
-	/*
-	//decrease speed 
-	if (m_speed >= 0.3)
-	{
-		m_speed -= 0.3;
-	}
-	else if (m_speed <= -0.3 )
-	{
-		m_speed += 0.3;
-	}
-	else
-	{
-		m_speed = 0;
-	}
 	
+	//decrease speed 
+	m_speed = 0.99 * m_speed;
 
 	//limiting speed 
 	double high = m_maximumSpeed;
 	double low = m_maximumSpeed * -1;
 	
 	m_speed = std::clamp(m_speed,low,high);
-	*/
+	
 	
 
 	//checking wall collisions
@@ -129,36 +117,36 @@ void Tank::decreaseSpeed()
 ////////////////////////////////////////////////////////////
 void Tank::increaseRotation()
 {
-	
-
-	//saving the actual rotation
-	m_previousRotation = m_rotation;
-
-	m_rotation += 1;
-	if (m_rotation == 360.0)
+	if (m_enableRotation)
 	{
-		m_rotation = 0;
+		//saving the actual rotation
+		m_previousRotation = m_rotation;
+
+		m_rotation += 1;
+		if (m_rotation == 360.0)
+		{
+			m_rotation = 0;
+		}
+		increaseTurretRotation();
 	}
-	increaseTurretRotation();
-
-
 
 }
 
 ////////////////////////////////////////////////////////////
 void Tank::decreaseRotation()
 {
-
-	//saving the actual rotation
-	m_previousRotation = m_rotation;
-
-	m_rotation -= 1;
-	if (m_rotation == 0.0)
+	if (m_enableRotation)
 	{
-		m_rotation = 359.0;
-	}
-	decreaseTurretRotation();
+		//saving the actual rotation
+		m_previousRotation = m_rotation;
 
+		m_rotation -= 1;
+		if (m_rotation == 0.0)
+		{
+			m_rotation = 359.0;
+		}
+		decreaseTurretRotation();
+	}
 
 }
 
@@ -232,11 +220,11 @@ void Tank::deflect()
 		// Apply small force in opposite direction of travel.
 		if (m_previousSpeed < 0)
 		{
-			m_speed = 8;
+			m_speed = 20;
 		}
 		else
 		{
-			m_speed = -8;
+			m_speed = -20;
 		}
 	}
 	

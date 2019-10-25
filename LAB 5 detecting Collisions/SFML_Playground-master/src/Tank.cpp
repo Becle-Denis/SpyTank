@@ -130,7 +130,7 @@ void Tank::decreaseSpeed()
 void Tank::increaseRotation()
 {
 	
-	
+
 	//saving the actual rotation
 	m_previousRotation = m_rotation;
 
@@ -141,11 +141,14 @@ void Tank::increaseRotation()
 	}
 	increaseTurretRotation();
 
+
+
 }
 
 ////////////////////////////////////////////////////////////
 void Tank::decreaseRotation()
 {
+
 	//saving the actual rotation
 	m_previousRotation = m_rotation;
 
@@ -155,6 +158,8 @@ void Tank::decreaseRotation()
 		m_rotation = 359.0;
 	}
 	decreaseTurretRotation();
+
+
 }
 
 ////////////////////////////////////////////////////////////

@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <iostream>
+#include "Projectile.h"
 
 // Updates per milliseconds
 static double const MS_PER_UPDATE = 10.0;
@@ -153,8 +154,6 @@ void Game::render()
 
 	//drawing the tank 
 	m_tank.render(m_window);
-
-	
 
 	
 	m_window.display();

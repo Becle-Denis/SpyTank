@@ -4,6 +4,7 @@
 #include "ScreenSize.h"
 #include "LevelLoader.h"
 #include "Tank.h"
+#include "Projectile.h"
 
 /// <summary>
 /// @author RP
@@ -108,5 +109,6 @@ protected:
 
 	// An instance representing the player controlled tank.
 	Tank m_tank;
+
 
 };

@@ -25,7 +25,7 @@ public:
 	void render(sf::RenderWindow & window);
 	void setPosition(sf::Vector2f const& pos);
 
-
+	
 
 	
 private:

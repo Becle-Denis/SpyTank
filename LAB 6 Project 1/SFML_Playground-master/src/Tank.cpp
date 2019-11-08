@@ -12,6 +12,7 @@ m_maximumSpeed(80)
 void Tank::update(double dt)
 {	
 
+
 	// Handle user input 
 	handleKeyInput();
 
@@ -117,8 +118,8 @@ void Tank::decreaseSpeed()
 ////////////////////////////////////////////////////////////
 void Tank::increaseRotation()
 {
-	if (m_enableRotation)
-	{
+	//if (m_enableRotation)
+	//{
 		//saving the actual rotation
 		m_previousRotation = m_rotation;
 
@@ -128,15 +129,15 @@ void Tank::increaseRotation()
 			m_rotation = 0;
 		}
 		increaseTurretRotation();
-	}
+	//}
 
 }
 
 ////////////////////////////////////////////////////////////
 void Tank::decreaseRotation()
 {
-	if (m_enableRotation)
-	{
+	//if (m_enableRotation)
+	//{
 		//saving the actual rotation
 		m_previousRotation = m_rotation;
 
@@ -146,7 +147,7 @@ void Tank::decreaseRotation()
 			m_rotation = 359.0;
 		}
 		decreaseTurretRotation();
-	}
+	//}
 
 }
 
@@ -220,11 +221,11 @@ void Tank::deflect()
 		// Apply small force in opposite direction of travel.
 		if (m_previousSpeed < 0)
 		{
-			m_speed = 20;
+			m_speed = 40;
 		}
 		else
 		{
-			m_speed = -20;
+			m_speed = -40;
 		}
 	}
 	

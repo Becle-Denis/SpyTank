@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "MathUtility.h"
+#include "CollisionDetector.h"
 
 /// <summary>
 /// @brief Projectile class 
@@ -14,6 +15,9 @@ public:
 
 	//update the displacement of the projectile 
 	void update(double dt);
+
+	//check for collision on wall, or projectile outside the map
+	bool isAlive(std::vector<sf::Sprite>& wallSprites);
 
 	//draw the projectile
 	void render(sf::RenderWindow& window);

@@ -3,6 +3,7 @@
 #include "CollisionDetector.h"
 #include "MathUtility.h"
 #include "Projectile.h"
+#include <Thor/Time/CallbackTimer.hpp>
 
 
 /// <summary>
@@ -67,6 +68,9 @@ private:
 
 	// True if the tank can fire
 	bool canFire{ true };
+
+	// Timer for the time between two fire
+	thor::Timer m_fireTimer;
 
 	// container of the tank projectile
 	std::vector<Projectile> m_projectiles;
@@ -133,5 +137,6 @@ private:
 
 	//fire a projectile 
 	void fire();
+
 };
 

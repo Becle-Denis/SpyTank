@@ -1,5 +1,6 @@
 #include "Projectile.h"
 
+
 double Projectile::s_projectile_speed = 800;
 
 Projectile::Projectile(sf::Texture const& texture , sf::Vector2f position, double rotation) 
@@ -21,6 +22,23 @@ void Projectile::update(double dt)
 
 	//set new position 
 	m_projectileSprite.setPosition(sf::Vector2f(newXPosition, newYPosition));
+}
+
+bool Projectile::isAlive(std::vector<sf::Sprite>& wallSprites)
+{
+	sf::Vector2f position = m_projectileSprite.getPosition();
+	if (position.x < 0 || position.y < 0 || position.x > 1000 || position.y > 1000 )
+	{
+		return false;
+	}
+	for (sf::Sprite& wall : wallSprites)
+	{
+		if (CollisionDetector::collision(m_projectileSprite,wall))
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 void Projectile::render(sf::RenderWindow& window)

@@ -8,11 +8,23 @@ m_wallSprites(wallSprites),
 m_maximumSpeed(80)
 {
 	initSprites();
+	m_fireTimer.restart(sf::seconds(1.f));
 }
 
 void Tank::update(double dt)
 {	
+	//updating the projectiles
+	for (Projectile& projectile : m_projectiles)
+	{
+		projectile.update(dt);
+	}
 
+	//updating the timer
+	if (m_fireTimer.isExpired())
+	{
+		canFire = true;
+		m_fireTimer.restart(sf::seconds(1.f));
+	}
 
 	// Handle user input 
 	handleKeyInput();
@@ -56,11 +68,8 @@ void Tank::update(double dt)
 		m_enableRotation = true;
 	}
 
-	//updating the projectiles
-	for (Projectile& projectile : m_projectiles)
-	{
-		projectile.update(dt);
-	}
+
+
 }
 
 

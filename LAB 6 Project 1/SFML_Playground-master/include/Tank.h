@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "CollisionDetector.h"
 #include "MathUtility.h"
+#include "Projectile.h"
 
 
 /// <summary>
@@ -61,9 +62,14 @@ private:
 	// The previous rotation to the turret 
 	double m_previousTurretRotation{ 0.0 };
 
-
 	// A reference to the container of wall sprites.
 	std::vector<sf::Sprite>& m_wallSprites;
+
+	// True if the tank can fire
+	bool canFire{ true };
+
+	// container of the tank projectile
+	std::vector<Projectile> m_projectiles;
 
 	/// <summary>
 	/// @brief Processes control keys and applies speed/rotation as appropriate.
@@ -124,5 +130,8 @@ private:
 	void deflect();
 
 	void adjustRotation();
+
+	//fire a projectile 
+	void fire();
 };
 

@@ -10,7 +10,7 @@
 class Projectile
 {
 public:
-	Projectile(sf::Texture& texture, sf::Vector2f position, double rotation);
+	Projectile(sf::Texture const& texture, sf::Vector2f position, double rotation);
 
 	//update the displacement of the projectile 
 	void update(double dt);

@@ -1,4 +1,5 @@
 #include "Tank.h"
+#include <iostream>
 
 
 Tank::Tank(sf::Texture const & texture, std::vector<sf::Sprite>& wallSprites)
@@ -43,7 +44,6 @@ void Tank::update(double dt)
 	
 	m_speed = std::clamp(m_speed,low,high);
 	
-	
 
 	//checking wall collisions
 	if (checkWallCollision())
@@ -55,11 +55,21 @@ void Tank::update(double dt)
 		//reanable rotation, when the collision is gone
 		m_enableRotation = true;
 	}
+
+	//updating the projectiles
+	for (Projectile& projectile : m_projectiles)
+	{
+		projectile.update(dt);
+	}
 }
 
 
 void Tank::render(sf::RenderWindow & window) 
 {
+	for (Projectile& projectile : m_projectiles)
+	{
+		projectile.render(window);
+	}
 	window.draw(m_tankBase);
 	window.draw(m_turret);
 }
@@ -255,6 +265,13 @@ void Tank::adjustRotation()
 	}
 }
 
+////////////////////////////////////////////////////////////////
+void Tank::fire()
+{
+	m_projectiles.push_back(Projectile(m_texture, m_tankBase.getPosition(), m_turretRotation));
+	canFire = false;
+}
+
 
 //////////////////////////////////////////////////////////////
 void Tank::handleKeyInput()
@@ -286,6 +303,10 @@ void Tank::handleKeyInput()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C))
 	{
 		centerTurret();
+	}
+	if (canFire && sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+	{
+		fire();
 	}
 
 }

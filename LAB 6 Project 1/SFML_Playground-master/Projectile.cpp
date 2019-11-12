@@ -1,15 +1,15 @@
 #include "Projectile.h"
 
-double Projectile::s_projectile_speed = 1000;
+double Projectile::s_projectile_speed = 800;
 
-Projectile::Projectile(sf::Texture& texture , sf::Vector2f position, double rotation) 
+Projectile::Projectile(sf::Texture const& texture , sf::Vector2f position, double rotation) 
 	: m_texture(texture), m_rotation(rotation)
 {
 	m_projectileSprite.setTexture(texture);
 	sf::IntRect baseRect(8,175, 8, 10);
 	m_projectileSprite.setTextureRect(baseRect);
 	m_projectileSprite.setOrigin(baseRect.width / 2.0, baseRect.height / 2.0);
-	m_projectileSprite.setRotation(-90);
+	m_projectileSprite.setRotation(rotation - 90);
 	m_projectileSprite.setPosition(position);
 }
 

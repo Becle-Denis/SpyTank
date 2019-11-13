@@ -14,9 +14,13 @@ m_maximumSpeed(80)
 void Tank::update(double dt)
 {	
 	//updating the projectiles
-	for (Projectile& projectile : m_projectiles)
+	for (int i = m_projectiles.size() -1; i >= 0; i--)
 	{
-		projectile.update(dt);
+		m_projectiles.at(i).update(dt);
+		if (!(m_projectiles.at(i).isAlive(m_wallSprites)))
+		{
+			m_projectiles.erase(m_projectiles.begin() + i);
+		}
 	}
 
 	//updating the timer

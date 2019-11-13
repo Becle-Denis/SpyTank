@@ -14,6 +14,18 @@ Projectile::Projectile(sf::Texture const& texture , sf::Vector2f position, doubl
 	m_projectileSprite.setPosition(position);
 }
 
+Projectile::Projectile(const Projectile& p)
+	: Projectile(p.m_texture,p.m_projectileSprite.getPosition(),p.m_rotation)
+{
+
+}
+
+Projectile& Projectile::operator=(Projectile const & rhs) 
+{
+	Projectile p(rhs);
+	return p;
+}
+
 void Projectile::update(double dt)
 {
 	//get new position
@@ -27,7 +39,7 @@ void Projectile::update(double dt)
 bool Projectile::isAlive(std::vector<sf::Sprite>& wallSprites)
 {
 	sf::Vector2f position = m_projectileSprite.getPosition();
-	if (position.x < 0 || position.y < 0 || position.x > 1000 || position.y > 1000 )
+	if (position.x < 0 || position.y < 0 || position.x > 1600 || position.y > 1000 )
 	{
 		return false;
 	}

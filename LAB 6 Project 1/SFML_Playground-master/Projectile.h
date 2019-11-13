@@ -13,6 +13,12 @@ class Projectile
 public:
 	Projectile(sf::Texture const& texture, sf::Vector2f position, double rotation);
 
+	//copy contructor, needed for operator= 
+	Projectile(const Projectile & p);
+
+	//=operator, needed for vector::erase, because of const menber texture
+	Projectile& operator=(Projectile const& rhs);
+
 	//update the displacement of the projectile 
 	void update(double dt);
 
@@ -34,5 +40,8 @@ private:
 
 	// The rotation of the projectile.
 	double m_rotation{ 0.0 };
+
 };
+
+
 

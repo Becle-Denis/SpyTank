@@ -23,7 +23,6 @@ void Tank::update(double dt)
 	if (m_fireTimer.isExpired())
 	{
 		canFire = true;
-		m_fireTimer.restart(sf::seconds(1.f));
 	}
 
 	// Handle user input 
@@ -279,6 +278,7 @@ void Tank::fire()
 {
 	m_projectiles.push_back(Projectile(m_texture, m_tankBase.getPosition(), m_turretRotation));
 	canFire = false;
+	m_fireTimer.restart(sf::seconds(1.f));
 }
 
 

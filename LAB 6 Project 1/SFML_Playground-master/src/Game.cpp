@@ -70,7 +70,7 @@ void Game::run()
 {
 	sf::Clock clock;
 	sf::Int32 lag = 0;
-	m_timeLeft = 60;
+	m_timerLeft.restart(sf::seconds(60.f));
 
 	while (m_window.isOpen())
 	{
@@ -143,15 +143,14 @@ void Game::processGameEvents(sf::Event& event)
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 {
-	if (m_timeLeft <= 0)
+	if (m_timerLeft.isExpired())
 	{
 		m_state = GameState::STOPPED;
 	}
-
-	if (m_state == GameState::IN_PROGRESS)
+	else 
 	{
-		m_timeLeft -= dt / 1000;
-		m_timerText.setString("Time left "+std::to_string((int) m_timeLeft)+" seconds");
+		sf::Time timeLeft = m_timerLeft.getRemainingTime();
+		m_timerText.setString("Time left "+std::to_string((int) timeLeft.asSeconds())+" seconds");
 		m_tank.update(dt);
 	}
 }

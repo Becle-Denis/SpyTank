@@ -119,7 +119,7 @@ protected:
 	GameState m_state;
 
 	// Float for the time left in Game
-	double m_timeLeft;
+	thor::Timer m_timerLeft;
 
 	//Font for the text
 	sf::Font m_fontA;

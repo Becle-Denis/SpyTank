@@ -14,12 +14,13 @@ m_maximumSpeed(80)
 void Tank::update(double dt)
 {	
 	//updating the projectiles
-	for (int i = m_projectiles.size() -1; i >= 0; i--)
+	for (int i = m_projectiles.size() - 1; i >= 0; i--)
 	{
 		m_projectiles.at(i).update(dt);
 		if (!(m_projectiles.at(i).isAlive(m_wallSprites)))
 		{
-			m_projectiles.erase(m_projectiles.begin() + i);
+			//bug with deleting the projectile ------------------------------------
+   			m_projectiles.erase(m_projectiles.begin() + i);
 		}
 	}
 

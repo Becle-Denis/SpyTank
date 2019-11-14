@@ -8,10 +8,8 @@ static double const MS_PER_UPDATE = 10.0;
 ////////////////////////////////////////////////////////////
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
-	m_tank(m_tankTexture2,m_wallSprites)
+	m_tank(m_tankTexture2,m_wallSprites),m_state(GameState::IN_PROGRESS)
 {
-	
-	
 	//loading the level data from the YAML file corresponding
 	int currentLevel = 1;
 	// Will generate an exception if level loading fails.
@@ -51,6 +49,15 @@ Game::Game()
 		throw std::exception(s.c_str());
 	}
 
+	//loading the font 
+	if (!m_fontA.loadFromFile("./resources/fonts/8_bit_fortress.ttf"))
+	{
+		std::cout << "problem loading font file" << std::endl;
+	}
+	m_timerText = sf::Text("",m_fontA,50);
+	m_timerText.setFillColor(sf::Color::Red);
+	m_timerText.setPosition(400,80);
+
 	// Now the level data is loaded, set the tank position.
 	m_tank.setPosition(m_level.m_tank.m_position);
 
@@ -63,6 +70,7 @@ void Game::run()
 {
 	sf::Clock clock;
 	sf::Int32 lag = 0;
+	m_timeLeft = 60;
 
 	while (m_window.isOpen())
 	{
@@ -135,7 +143,17 @@ void Game::processGameEvents(sf::Event& event)
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 {
-	m_tank.update(dt);
+	if (m_timeLeft <= 0)
+	{
+		m_state = GameState::STOPPED;
+	}
+
+	if (m_state == GameState::IN_PROGRESS)
+	{
+		m_timeLeft -= dt / 1000;
+		m_timerText.setString("Time left "+std::to_string((int) m_timeLeft)+" seconds");
+		m_tank.update(dt);
+	}
 }
 
 ////////////////////////////////////////////////////////////
@@ -145,6 +163,9 @@ void Game::render()
 	
 	//drawing the backgroud
 	m_window.draw(m_bgSprite);
+
+	//drawing the timer
+	m_window.draw(m_timerText);
 
 	//drawing the wall
 	for (sf::Sprite const & wallSprite : m_wallSprites)

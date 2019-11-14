@@ -14,6 +14,11 @@
 /// @completed September 2019 / Becle Denis C00254311 / Lab Exercices 
 /// </summary>
 
+
+//Enum for gameState
+enum GameState{IN_PROGRESS,STOPPED};
+
+
 /// <summary>
 /// @brief Main class for the SFML Playground project.
 /// 
@@ -110,5 +115,15 @@ protected:
 	// An instance representing the player controlled tank.
 	Tank m_tank;
 
+	//state of the game
+	GameState m_state;
 
+	// Float for the time left in Game
+	double m_timeLeft;
+
+	//Font for the text
+	sf::Font m_fontA;
+
+	//text for the timer 
+	sf::Text m_timerText;
 };

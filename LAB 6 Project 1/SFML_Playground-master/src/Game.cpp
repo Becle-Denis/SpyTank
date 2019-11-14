@@ -10,6 +10,9 @@ Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
 	m_tank(m_tankTexture2,m_wallSprites),m_state(GameState::IN_PROGRESS)
 {
+
+	//seed the random 
+	srand(time(nullptr));
 	//loading the level data from the YAML file corresponding
 	int currentLevel = 1;
 	// Will generate an exception if level loading fails.
@@ -58,8 +61,23 @@ Game::Game()
 	m_timerText.setFillColor(sf::Color::Red);
 	m_timerText.setPosition(400,80);
 
-	// Now the level data is loaded, set the tank position.
-	m_tank.setPosition(m_level.m_tank.m_position);
+	// Set the tank position in one corner randmoly.
+	switch (rand() % 4)
+	{
+	case 0:
+		m_tank.setPosition(sf::Vector2f(150, 150));
+		break;
+	case 1:
+		m_tank.setPosition(sf::Vector2f(ScreenSize::s_height - 150, 150));
+		break;
+	case 2:
+		m_tank.setPosition(sf::Vector2f(150, ScreenSize::s_width - 150));
+		break;
+	case 3:
+		m_tank.setPosition(sf::Vector2f(ScreenSize::s_height - 150, ScreenSize::s_width - 150));
+		break;
+	}
+	//m_tank.setPosition(m_level.m_tank.m_position);
 
 	// Construct the wall sprites
 	generateWalls();

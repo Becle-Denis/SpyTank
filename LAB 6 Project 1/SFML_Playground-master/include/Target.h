@@ -3,6 +3,8 @@
 #include <Thor/Time/CallbackTimer.hpp>
 #include "CollisionDetector.h"
 
+enum TargetState { DeadByTime, DeadByHit, NotStarted, NotDisplayed, OnScreen, Blinking };
+
 /// <summary>
 /// @brief A class for target to be hit by the player 
 /// 
@@ -40,6 +42,7 @@ public:
 	/// <returns>True if collision</returns>
 	bool isColliding(sf::Sprite const& sprite);
 
+
 private:
 	// the sprite of the Target, this will store the position and rotation of the Target
 	sf::Sprite m_sprite;
@@ -50,18 +53,18 @@ private:
 	//Timer to deal with time on screen and time to display 
 	thor::Timer m_timer;
 
+	//Timer for blinking
+	thor::Timer m_blinkingTimer;
+
 	//Simply storage values 
 	sf::Time m_timeOnScreen;
 	sf::Time m_timeToStart;
-
+	static const sf::Time S_BLINKING_TIME;
 
 	// actual state of the Target 
-	// 0 Not started
-	// 1 Not Yet Displayed 
-	// 2 On Screen 
-	// -1 Dead (Time out)
-	// -2 Dead (hitted by player)
-	int m_state;
-	
+	TargetState m_state;
+
+	// boolean for displaying the Target 
+	bool m_isDisplayed;
 };
 

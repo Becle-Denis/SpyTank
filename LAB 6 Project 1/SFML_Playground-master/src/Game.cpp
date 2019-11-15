@@ -8,7 +8,7 @@ static double const MS_PER_UPDATE = 10.0;
 ////////////////////////////////////////////////////////////
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
-	m_tank(m_tankTexture2,m_wallSprites),m_state(GameState::IN_PROGRESS)
+	m_tank(m_tankTexture2, m_wallSprites), m_state(GameState::IN_PROGRESS)
 {
 
 	//seed the random 
@@ -189,7 +189,6 @@ void Game::update(double dt)
 		m_tank.update(dt);
 
 		//updating the targets
-		
 	}
 }
 

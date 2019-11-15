@@ -5,6 +5,7 @@
 #include "LevelLoader.h"
 #include "Tank.h"
 #include "Projectile.h"
+#include "Target.h"
 
 /// <summary>
 /// @author RP
@@ -56,6 +57,11 @@ protected:
 	///  storing copies (instead of pointers to sf::Sprite) in std::vector is acceptable.
 	/// </summary>
 	void generateWalls();
+
+	/// <summary>
+	/// @brief Creates the target sprites and loads them into a vector.
+	/// </summary>
+	void generateTarget();
 
 
 	/// <summary>
@@ -112,6 +118,9 @@ protected:
 	// A texture for the sprite sheet
 	sf::Texture m_spriteSheetTexture;
 
+	// A texture for the Targets
+	sf::Texture m_targetTexture;
+
 	// An instance representing the player controlled tank.
 	Tank m_tank;
 
@@ -126,4 +135,5 @@ protected:
 
 	//text for the timer 
 	sf::Text m_timerText;
+
 };

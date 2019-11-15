@@ -52,6 +52,13 @@ Game::Game()
 		throw std::exception(s.c_str());
 	}
 
+	//loading the Target Texture
+	if (!m_targetTexture.loadFromFile("./resources/images/Hoodblaster.png"))
+	{
+		std::string s("Error loading texture");
+		throw std::exception(s.c_str());
+	}
+
 	//loading the font 
 	if (!m_fontA.loadFromFile("./resources/fonts/8_bit_fortress.ttf"))
 	{
@@ -59,7 +66,7 @@ Game::Game()
 	}
 	m_timerText = sf::Text("",m_fontA,50);
 	m_timerText.setFillColor(sf::Color::Red);
-	m_timerText.setPosition(400,80);
+	m_timerText.setPosition(400,50);
 
 	// Set the tank position in one corner randmoly.
 	switch (rand() % 4)
@@ -77,10 +84,11 @@ Game::Game()
 		m_tank.setPosition(sf::Vector2f(ScreenSize::s_height - 150, ScreenSize::s_width - 150));
 		break;
 	}
-	//m_tank.setPosition(m_level.m_tank.m_position);
 
 	// Construct the wall sprites
 	generateWalls();
+
+	// Construct the Target 
 }
 
 ////////////////////////////////////////////////////////////
@@ -127,6 +135,12 @@ void Game::generateWalls()
 }
 
 ////////////////////////////////////////////////////////////
+void Game::generateTarget()
+{
+
+}
+
+////////////////////////////////////////////////////////////
 void Game::processEvents()
 {
 	sf::Event event;
@@ -167,9 +181,15 @@ void Game::update(double dt)
 	}
 	else 
 	{
+		//updating the timer
 		sf::Time timeLeft = m_timerLeft.getRemainingTime();
 		m_timerText.setString("Time left "+std::to_string((int) timeLeft.asSeconds())+" seconds");
+
+		//updating the tank 
 		m_tank.update(dt);
+
+		//updating the targets
+		
 	}
 }
 
@@ -193,7 +213,8 @@ void Game::render()
 	//drawing the tank 
 	m_tank.render(m_window);
 
-	
+	//drawing the target
+
 	m_window.display();
 }
 

@@ -24,20 +24,20 @@
     <ClInclude Include="include\LevelLoader.h" />
     <ClInclude Include="include\MathUtility.h" />
     <ClInclude Include="include\OrientedBoundingBox.h" />
+    <ClInclude Include="include\Projectile.h" />
     <ClInclude Include="include\ScreenSize.h" />
     <ClInclude Include="include\Tank.h" />
-    <ClInclude Include="Projectile.h" />
-    <ClInclude Include="Target.h" />
+    <ClInclude Include="include\Target.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="src\CollisionDetector.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\LevelLoader.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\OrientedBoundingBox.cpp" />
+    <ClCompile Include="src\Projectile.cpp" />
     <ClCompile Include="src\Tank.cpp" />
-    <ClCompile Include="Target.cpp" />
+    <ClCompile Include="src\Target.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F10133B9-852C-4A93-A994-DC0D1C009AD5}</ProjectGuid>

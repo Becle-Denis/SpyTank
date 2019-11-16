@@ -8,7 +8,7 @@ static double const MS_PER_UPDATE = 10.0;
 ////////////////////////////////////////////////////////////
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
-	m_tank(m_tankTexture2, m_wallSprites), m_state(GameState::IN_PROGRESS)
+	m_tank(m_tankTexture2, m_wallSprites, m_targets), m_state(GameState::IN_PROGRESS)
 {
 
 	//seed the random 
@@ -190,14 +190,16 @@ void Game::update(double dt)
 		sf::Time timeLeft = m_timerLeft.getRemainingTime();
 		m_timerText.setString(""+std::to_string((int) timeLeft.asSeconds())+" seconds left");
 
-		//updating the tank 
-		m_tank.update(dt);
-
 		//updating the targets
 		for (Target& target : m_targets)
 		{
 			target.update();
 		}
+
+		//updating the tank 
+		m_tank.update(dt);
+
+
 	}
 }
 
@@ -218,14 +220,16 @@ void Game::render()
 		m_window.draw(wallSprite);
 	}
 
-	//drawing the tank 
-	m_tank.render(m_window);
-
 	//drawing the target
 	for (Target& target : m_targets)
 	{
 		target.render(m_window);
 	}
+
+	//drawing the tank 
+	m_tank.render(m_window);
+
+
 
 	m_window.display();
 }

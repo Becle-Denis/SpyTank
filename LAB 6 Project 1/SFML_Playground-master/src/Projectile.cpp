@@ -53,6 +53,19 @@ bool Projectile::isAlive(std::vector<sf::Sprite>& wallSprites)
 	return true;
 }
 
+bool Projectile::hitTarget(std::vector<Target>& targets)
+{
+	for (Target& target : targets)
+	{
+		if (target.isColliding(m_projectileSprite))
+		{
+			target.hit();
+			return true;
+		}
+	}
+	return false;
+}
+
 void Projectile::render(sf::RenderWindow& window)
 {
 	window.draw(m_projectileSprite);

@@ -2,10 +2,11 @@
 #include <iostream>
 
 
-Tank::Tank(sf::Texture const & texture, std::vector<sf::Sprite>& wallSprites)
-: m_texture(texture),
-m_wallSprites(wallSprites),
-m_maximumSpeed(80)
+Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::vector<Target>& targets)
+	: m_texture(texture),
+	m_wallSprites(wallSprites),
+	m_targets(targets),
+	m_maximumSpeed(80)
 {
 	initSprites();
 	m_fireTimer.restart(sf::seconds(1.f));
@@ -16,11 +17,18 @@ void Tank::update(double dt)
 	//updating the projectiles
 	for (int i = m_projectiles.size() - 1; i >= 0; i--)
 	{
+		//update 
 		m_projectiles.at(i).update(dt);
-		if (!(m_projectiles.at(i).isAlive(m_wallSprites)))
+		//colision 
+		if (!(m_projectiles.at(i).isAlive(m_wallSprites))) //colision with wall 
 		{
 			//bug with deleting the projectile ------------------------------------
    			m_projectiles.erase(m_projectiles.begin() + i);
+		}
+		else if (m_projectiles.at(i).hitTarget(m_targets)) // colision with target 
+		{
+			//bug with deleting the projectile ------------------------------------
+			m_projectiles.erase(m_projectiles.begin() + i);
 		}
 	}
 

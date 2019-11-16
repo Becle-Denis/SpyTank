@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "MathUtility.h"
 #include "CollisionDetector.h"
+#include "Target.h"
 
 /// <summary>
 /// @brief Projectile class 
@@ -24,6 +25,10 @@ public:
 
 	//check for collision on wall, or projectile outside the map
 	bool isAlive(std::vector<sf::Sprite>& wallSprites);
+
+	//check for collision on Target 
+	//return true if the projectile hit a target 
+	bool hitTarget(std::vector<Target>& targets);
 
 	//draw the projectile
 	void render(sf::RenderWindow& window);

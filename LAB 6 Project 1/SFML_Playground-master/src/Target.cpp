@@ -59,7 +59,7 @@ void Target::update()
 		if (m_timer.isExpired())
 		{
 			m_isDisplayed = false;
-			m_state = TargetState::DeadByHit;
+			m_state = TargetState::DeadByTime;
 		}
 		break;
 	}
@@ -76,12 +76,8 @@ void Target::render(sf::RenderWindow& window)
 
 void Target::hit()
 {
+	m_isDisplayed = false;
 	m_state = TargetState::DeadByHit;
-}
-
-bool Target::isAlive()
-{
-	return m_state >= NotStarted;
 }
 
 bool Target::isColliding(sf::Sprite const& sprite)

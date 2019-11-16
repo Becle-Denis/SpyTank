@@ -28,12 +28,6 @@ public:
 	/// </summary>
 	void hit();
 
-	/// <summary>
-	/// Return the life state of the Target
-	/// Dead only if displayed and hit or diseaper 
-	/// </summary>
-	/// <returns>Return true if the actual Target is or will be displayed on screen</returns>
-	bool isAlive();
 
 	/// <summary>
 	/// return True if the target and the sprite are colliding and the Target is on screen

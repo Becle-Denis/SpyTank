@@ -3,6 +3,7 @@
 #include "CollisionDetector.h"
 #include "MathUtility.h"
 #include "Projectile.h"
+#include "Target.h"
 #include <Thor/Time/CallbackTimer.hpp>
 
 
@@ -21,7 +22,7 @@ public:
 	/// </summary>
 	/// <param name="texture">A reference to the sprite sheet texture</param>
 	///< param name="texture">A reference to the container of wall sprites</param>  
-	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites);
+	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::vector<Target>& targets);
 
 	void update(double dt);
 	void render(sf::RenderWindow & window);
@@ -74,6 +75,9 @@ private:
 
 	// container of the tank projectile
 	std::vector<Projectile> m_projectiles;
+
+	// A Reference to the container of Targets 
+	std::vector<Target>& m_targets;
 
 	/// <summary>
 	/// @brief Processes control keys and applies speed/rotation as appropriate.

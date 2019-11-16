@@ -55,7 +55,7 @@ private:
 	//Timer for blinking
 	thor::Timer m_blinkingTimer;
 
-	//Simply storage values 
+	//Simply storage values for times 
 	sf::Time m_timeOnScreen;
 	sf::Time m_timeToStart;
 	static const sf::Time S_BLINKING_TIME;

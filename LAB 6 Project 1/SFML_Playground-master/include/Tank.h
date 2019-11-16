@@ -6,6 +6,15 @@
 #include "Target.h"
 #include <Thor/Time/CallbackTimer.hpp>
 
+/// <summary>
+/// @brief A simple struct for storing the performance of the player 
+/// 
+/// </summary>
+struct TankPerformance
+{
+	int projectileFired{ 0 };
+	int targetHitted{ 0 };
+};
 
 /// <summary>
 /// @brief A simple tank controller.
@@ -78,6 +87,9 @@ private:
 
 	// A Reference to the container of Targets 
 	std::vector<Target>& m_targets;
+
+	// Performances 
+	TankPerformance m_performances;
 
 	/// <summary>
 	/// @brief Processes control keys and applies speed/rotation as appropriate.

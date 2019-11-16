@@ -29,6 +29,7 @@ void Tank::update(double dt)
 		{
 			//bug with deleting the projectile ------------------------------------
 			m_projectiles.erase(m_projectiles.begin() + i);
+			m_performances.targetHitted++;
 		}
 	}
 
@@ -290,6 +291,7 @@ void Tank::adjustRotation()
 void Tank::fire()
 {
 	m_projectiles.push_back(Projectile(m_texture, m_tankBase.getPosition(), m_turretRotation));
+	m_performances.projectileFired++;
 	canFire = false;
 	m_fireTimer.restart(sf::seconds(1.f));
 }

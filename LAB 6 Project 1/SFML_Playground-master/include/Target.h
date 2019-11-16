@@ -26,7 +26,8 @@ public:
 	/// <summary>
 	/// Change the state of the Target when hitting by a Tank
 	/// </summary>
-	void hit();
+	/// <returns>Remaining Time on screen</returns>
+	sf::Time hit();
 
 
 	/// <summary>
@@ -36,6 +37,10 @@ public:
 	/// <returns>True if collision</returns>
 	bool isColliding(sf::Sprite const& sprite);
 
+	/// <summary>
+	/// Display the target on screen and add the bonus time 
+	/// </summary>
+	void reveal(sf::Time bonusTime = sf::seconds(0));
 
 private:
 	// the sprite of the Target, this will store the position and rotation of the Target

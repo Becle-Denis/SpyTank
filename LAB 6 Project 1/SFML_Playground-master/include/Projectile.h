@@ -28,6 +28,7 @@ public:
 
 	//check for collision on Target 
 	//return true if the projectile hit a target 
+	//Call hit() on the hitted target and reveal on the next target
 	bool hitTarget(std::vector<Target>& targets);
 
 	//draw the projectile

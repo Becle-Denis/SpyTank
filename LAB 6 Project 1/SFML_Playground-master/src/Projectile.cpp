@@ -55,11 +55,15 @@ bool Projectile::isAlive(std::vector<sf::Sprite>& wallSprites)
 
 bool Projectile::hitTarget(std::vector<Target>& targets)
 {
-	for (Target& target : targets)
+	for (unsigned int i = 0; i < targets.size(); i++)
 	{
-		if (target.isColliding(m_projectileSprite))
+		if (targets.at(i).isColliding(m_projectileSprite))
 		{
-			target.hit();
+			sf::Time bonus = targets.at(i).hit();
+			if (i + 1 < targets.size())
+			{
+				targets.at(i + 1).reveal(bonus);
+			}
 			return true;
 		}
 	}

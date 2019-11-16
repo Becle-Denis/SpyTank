@@ -19,6 +19,27 @@ void operator >> (const YAML::Node& obstacleNode, ObstacleData& obstacle)
 }
 
 /// <summary>
+/// @brief Extracts the target position and times values.
+/// calculate the random offset 
+/// 
+/// </summary>
+/// <param name="targetNode">A YAML node</param>
+/// <param name="target">A simple struct to store the target data</param>
+////////////////////////////////////////////////////////////
+void operator >> (const YAML::Node& targetNode, TargetData& target)
+{
+	float randomOffset = targetNode["position"]["randomOffset"].as<float>();
+	float xPos = targetNode["position"]["x"].as<float>();
+	xPos = xPos - randomOffset + rand() % ((int) randomOffset);
+	float yPos = targetNode["position"]["y"].as<float>();
+	yPos = yPos - randomOffset + rand() % ((int)randomOffset);
+	target.m_position.x = xPos;
+	target.m_position.y = yPos;
+	target.secondsToStart = targetNode["secondsToStart"].as<float>();
+	target.secondsOnScreen = targetNode["secondsOnScreen"].as<float>();
+}
+
+/// <summary>
 /// @brief Extracts the filename for the game background texture.
 /// 
 /// </summary>
@@ -43,6 +64,7 @@ void operator >> (const YAML::Node& tankNode, TankData& tank)
 	tank.m_position.y = tankNode["position"]["y"].as<float>();
 }
 
+
 /// <summary>
 /// @brief Top level function that extracts various game data from the YAML data stucture.
 /// 
@@ -64,6 +86,14 @@ void operator >> (const YAML::Node& levelNode, LevelData& level)
 		ObstacleData obstacle;
 		obstaclesNode[i] >> obstacle;
 		level.m_obstacles.push_back(obstacle);
+	}
+
+	const YAML::Node& targetNode = levelNode["targets"].as<YAML::Node>();
+	for (unsigned i = 0; i < targetNode.size(); ++i)
+	{
+		TargetData target;
+		targetNode[i] >> target;
+		level.m_targets.push_back(target);
 	}
 }
 

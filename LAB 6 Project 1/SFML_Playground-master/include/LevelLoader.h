@@ -19,6 +19,17 @@ struct ObstacleData
 };
 
 /// <summary>
+/// @brief A struct to represent Target data in the level.
+/// 
+/// </summary>
+struct TargetData
+{
+	sf::Vector2f m_position;
+	float secondsToStart;
+	float secondsOnScreen;
+};
+
+/// <summary>
 /// @brief A struct to store Background texture information.
 /// 
 /// </summary>
@@ -46,6 +57,7 @@ struct LevelData
 	BackgroundData m_background;
 	TankData m_tank;
 	std::vector<ObstacleData> m_obstacles;
+	std::vector<TargetData> m_targets;
 };
 
 /// <summary>

@@ -136,4 +136,7 @@ protected:
 	//text for the timer 
 	sf::Text m_timerText;
 
+	// Targets 
+	std::vector<Target> m_targets;
+
 };

@@ -84,3 +84,46 @@ obstacles:
    - type: wall
      position: {x: 1032, y: 632}
      rotation: 0
+targets:
+   - position: {x: 100, y: 200, randomOffset: 20}
+     secondsToStart: 1
+     secondsOnScreen: 10
+   - position: {x: 50, y: 75, randomOffset: 50}
+     secondsToStart: 5
+     secondsOnScreen: 15
+   - position: {x: 600, y: 700, randomOffset: 40}
+     secondsToStart: 12
+     secondsOnScreen: 14
+   - position: {x: 100, y: 500, randomOffset: 50}
+     secondsToStart: 20
+     secondsOnScreen: 12
+   - position: {x: 500, y: 100, randomOffset: 45}
+     secondsToStart: 25
+     secondsOnScreen: 10
+   - position: {x: 125, y: 465, randomOffset: 33}
+     secondsToStart: 28
+     secondsOnScreen: 9
+   - position: {x: 786, y: 200, randomOffset: 45}
+     secondsToStart: 30
+     secondsOnScreen: 7
+   - position: {x: 100, y: 756, randomOffset: 40}
+     secondsToStart: 33
+     secondsOnScreen: 12
+   - position: {x: 50, y: 286, randomOffset: 20}
+     secondsToStart: 35
+     secondsOnScreen: 4
+   - position: {x: 800, y: 450, randomOffset: 50}
+     secondsToStart: 40
+     secondsOnScreen: 8
+   - position: {x: 125, y: 356, randomOffset: 100}
+     secondsToStart: 42
+     secondsOnScreen: 9
+   - position: {x: 854, y: 758, randomOffset: 10}
+     secondsToStart: 47
+     secondsOnScreen: 10
+   - position: {x: 520, y: 45, randomOffset: 5}
+     secondsToStart: 52
+     secondsOnScreen: 8
+   - position: {x: 385, y: 354, randomOffset: 150}
+     secondsToStart: 55
+     secondsOnScreen: 5

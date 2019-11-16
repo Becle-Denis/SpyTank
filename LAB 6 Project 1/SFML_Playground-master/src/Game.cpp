@@ -66,7 +66,7 @@ Game::Game()
 	}
 	m_timerText = sf::Text("",m_fontA,50);
 	m_timerText.setFillColor(sf::Color::Red);
-	m_timerText.setPosition(400,50);
+	m_timerText.setPosition(450,50);
 
 	// Set the tank position in one corner randmoly.
 	switch (rand() % 4)
@@ -89,6 +89,7 @@ Game::Game()
 	generateWalls();
 
 	// Construct the Target 
+	generateTarget();
 }
 
 ////////////////////////////////////////////////////////////
@@ -137,7 +138,11 @@ void Game::generateWalls()
 ////////////////////////////////////////////////////////////
 void Game::generateTarget()
 {
-
+	for (TargetData const& target : m_level.m_targets)
+	{
+		Target t(m_targetTexture,target.m_position,sf::seconds(target.secondsToStart),sf::seconds(target.secondsOnScreen));
+		m_targets.push_back(t);
+	}
 }
 
 ////////////////////////////////////////////////////////////
@@ -183,12 +188,16 @@ void Game::update(double dt)
 	{
 		//updating the timer
 		sf::Time timeLeft = m_timerLeft.getRemainingTime();
-		m_timerText.setString("Time left "+std::to_string((int) timeLeft.asSeconds())+" seconds");
+		m_timerText.setString(""+std::to_string((int) timeLeft.asSeconds())+" seconds left");
 
 		//updating the tank 
 		m_tank.update(dt);
 
 		//updating the targets
+		for (Target& target : m_targets)
+		{
+			target.update();
+		}
 	}
 }
 
@@ -213,6 +222,10 @@ void Game::render()
 	m_tank.render(m_window);
 
 	//drawing the target
+	for (Target& target : m_targets)
+	{
+		target.render(m_window);
+	}
 
 	m_window.display();
 }

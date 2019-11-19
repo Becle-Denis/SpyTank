@@ -7,11 +7,11 @@ Target::Target(sf::Texture const& texture, sf::Vector2f position, sf::Time timeT
 	m_isDisplayed(false)
 {
 	m_sprite.setTexture(texture);
-	sf::IntRect baseRect(0, 0, 300, 300);
+	sf::IntRect baseRect(0, 0, 230, 230);
 	m_sprite.setTextureRect(baseRect);
 	m_sprite.setOrigin(baseRect.width / 2.0, baseRect.height / 2.0);
 	m_sprite.setPosition(position);
-	m_sprite.setScale(0.38, 0.38);
+	m_sprite.setScale(0.3, 0.3);
 }
 
 void Target::update()

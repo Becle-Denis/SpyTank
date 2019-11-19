@@ -44,7 +44,7 @@ Game::Game()
 	}
 
 	//loading the Target Texture
-	if (!m_targetTexture.loadFromFile("./resources/images/Hoodblaster.png"))
+	if (!m_targetTexture.loadFromFile("./resources/images/RazorTarget1.png"))
 	{
 		std::string s("Error loading texture");
 		throw std::exception(s.c_str());

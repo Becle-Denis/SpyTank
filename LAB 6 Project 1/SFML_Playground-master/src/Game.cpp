@@ -8,7 +8,7 @@ static double const MS_PER_UPDATE = 10.0;
 ////////////////////////////////////////////////////////////
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
-	m_tank(m_tankTexture2, m_wallSprites, m_targets, m_projectilesPool), m_state(GameState::IN_PROGRESS), m_projectilesPool(m_spriteSheetTexture,10)
+	m_tank(m_spriteSheetTexture, m_wallSprites, m_targets, m_projectilesPool), m_state(GameState::IN_PROGRESS), m_projectilesPool(m_spriteSheetTexture,10)
 {
 	//seed the random 
 	srand(time(nullptr));
@@ -35,14 +35,6 @@ Game::Game()
 		throw std::exception(s.c_str());
 	}
 	m_bgSprite.setTexture(m_bgTexture);
-	
-	
-	//loading the tank texture 
-	if (!m_tankTexture2.loadFromFile("./resources/images/SpriteSheet.png"))
-	{
-		std::string s("Error loading texture");
-		throw std::exception(s.c_str());
-	}
 
 	//loading the sprite sheet texture 
 	if (!m_spriteSheetTexture.loadFromFile("./resources/images/SpriteSheet.png"))

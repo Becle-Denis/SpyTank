@@ -31,7 +31,38 @@ enum GameState{IN_PROGRESS,STOPPED};
 
 class Game
 {
-public:
+protected: //attributes 
+
+	sf::RenderWindow m_window; // main window
+
+	GameState m_state; //state of the game
+
+	LevelData m_level; // Load the game level data.
+
+
+	Tank m_tank; // An instance representing the player controlled tank.
+
+	std::vector<Target> m_targets; // Targets 
+
+	ProjectilePool m_projectilesPool; // Pool of Projectile 
+
+	sf::Sprite m_bgSprite; //backgroud sprite
+
+	std::vector<sf::Sprite> m_wallSprites; // Wall sprites
+
+
+	thor::Timer m_timerLeft; // Timer for the time left in Game
+
+	sf::Font m_fontA; //Font for the text
+
+	sf::Text m_timerText; //text for the timer
+
+	//Textures storages
+	sf::Texture m_spriteSheetTexture; // A texture for the sprite sheet
+	sf::Texture m_targetTexture; // A texture for the Targets
+	sf::Texture m_bgTexture; //background texture
+
+public: // function 
 	/// <summary>
 	/// @brief Default constructor that initialises the SFML window, 
 	///   and sets vertical sync enabled. 
@@ -50,7 +81,7 @@ public:
 	/// </summary>
 	void run();
 
-protected:
+protected: // function 
 	/// <summary>
 	/// @brief Creates the wall sprites and loads them into a vector.
 	/// Note that sf::Sprite is considered a light weight class, so 
@@ -88,58 +119,5 @@ protected:
 	/// </summary>
 	/// <param name="event">system event</param>
 	void processGameEvents(sf::Event&);
-
-	// main window
-	sf::RenderWindow m_window;
-
-	// Load the game level data.
-	LevelData m_level;
-
-
-
-	//tank texture 
-	sf::Texture m_tankTexture;
-
-	sf::Texture m_tankTexture2;
-
-	//background texture 
-	sf::Texture m_bgTexture;
-
-	//tank sprite 
-	sf::Sprite m_tankSprite;
-
-	//backgroud sprite 
-	sf::Sprite m_bgSprite;
-	std::vector<sf::Sprite>  m_sprites;
-	
-	// Wall sprites
-	std::vector<sf::Sprite> m_wallSprites;
-
-	// A texture for the sprite sheet
-	sf::Texture m_spriteSheetTexture;
-
-	// A texture for the Targets
-	sf::Texture m_targetTexture;
-
-	// An instance representing the player controlled tank.
-	Tank m_tank;
-
-	//state of the game
-	GameState m_state;
-
-	// Float for the time left in Game
-	thor::Timer m_timerLeft;
-
-	//Font for the text
-	sf::Font m_fontA;
-
-	//text for the timer 
-	sf::Text m_timerText;
-
-	// Targets 
-	std::vector<Target> m_targets;
-	
-	// Pool of Projectile 
-	ProjectilePool m_projectilesPool;
 
 };

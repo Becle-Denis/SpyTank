@@ -24,29 +24,27 @@ struct TankPerformance
 /// </summary>
 class Tank
 {
-public:	
-	/// <summary>
-	/// @brief Constructor that stores drawable state (texture, sprite) for the tank.
-	/// Stores references to the texture and container of wall sprites. 
-	/// Creates sprites for the tank base and turret from the supplied texture.
-	/// </summary>
-	/// <param name="texture">A reference to the sprite sheet texture</param>
-	///< param name="texture">A reference to the container of wall sprites</param>  
-	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::vector<Target>& targets, ProjectilePool& projectilePool);
+private: // Attributes
 
-	void update(double dt);
-	void render(sf::RenderWindow & window);
-	void setPosition(sf::Vector2f const& pos);
+	//Outsides References
+	sf::Texture const& m_texture; //sprite sheed texture reference
+	std::vector<sf::Sprite>& m_wallSprites; // A reference to the container of wall sprites.	 
+	std::vector<Target>& m_targets; // A Reference to the container of Targets 
+	ProjectilePool& m_projectilesPool; // Reference to the Pool of projectiles
 
-	
-
-	
-private:
-	void initSprites();
+	//Sprites 
 	sf::Sprite m_tankBase;
 	sf::Sprite m_turret;
-	sf::Texture const & m_texture;
+	
+	//Tank fire ttributes 
+	std::vector<Projectile*> m_projectilesPtr; // container of the tank projectile (pointers)
+	bool canFire{ true }; // True if the tank can fire
+	thor::Timer m_fireTimer; // Timer for the time between two fire
 
+	// Performances 
+	TankPerformance m_performances;
+
+	//Tank Movement attributes 
 	// The tank speed.
 	double m_speed{ 0.0 };
 
@@ -67,33 +65,51 @@ private:
 
 	// the previous speed of the tank
 	double m_previousSpeed{ 0.0 };
-	
+
 	// The previous rotation as applied to tank base.
 	double m_previousRotation{ 0.0 };
 
 	// The previous rotation to the turret 
 	double m_previousTurretRotation{ 0.0 };
 
-	// A reference to the container of wall sprites.
-	std::vector<sf::Sprite>& m_wallSprites;
+	
 
-	// True if the tank can fire
-	bool canFire{ true };
 
-	// Timer for the time between two fire
-	thor::Timer m_fireTimer;
+public:	//functions
+	/// <summary>
+	/// @brief Constructor that stores drawable state (texture, sprite) for the tank.
+	/// Stores references to the texture and container of wall sprites. 
+	/// Creates sprites for the tank base and turret from the supplied texture.
+	/// </summary>
+	/// <param name="texture">A reference to the sprite sheet texture</param>
+	///< param name="texture">A reference to the container of wall sprites</param>  
+	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::vector<Target>& targets, ProjectilePool& projectilePool);
 
-	// container of the tank projectile (pointers)
-	std::vector<Projectile*> m_projectilesPtr;
+	/// <summary>
+	/// @brief Update the tank attributes and dependant objects(projectile) and handle the player input
+	/// </summary>
+	/// <param name="dt">Time elpased since the last update</param>
+	void update(double dt);
+	/// <summary>
+	/// @brief Render the Tank and dependant object
+	/// </summary>
+	/// <param name="window">window where to draw the Tank</param>
+	void render(sf::RenderWindow & window);
 
-	// A Reference to the container of Targets 
-	std::vector<Target>& m_targets;
+	/// <summary>
+	/// @brief Set the Position of the tank
+	/// </summary>
+	/// <param name="pos">New position of the tank</param>
+	void setPosition(sf::Vector2f const& pos);
 
-	// Reference to the Pool of projectiles
-	ProjectilePool& m_projectilesPool;
+	
 
-	// Performances 
-	TankPerformance m_performances;
+	
+private: // functions 
+	/// <summary>
+	/// @brief Initialise the tank and turret sprite 
+	/// </summary>
+	void initSprites();
 
 	/// <summary>
 	/// @brief Processes control keys and applies speed/rotation as appropriate.

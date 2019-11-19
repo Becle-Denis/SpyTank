@@ -35,7 +35,7 @@ void Target::update()
 		{
 			m_timer.restart(S_BLINKING_TIME);
 			m_state = TargetState::Blinking;
-			m_blinkingTimer.restart(sf::milliseconds(250));
+			m_blinkingTimer.restart(sf::milliseconds(75));
 		}
 		break;
 
@@ -43,7 +43,7 @@ void Target::update()
 		if (m_blinkingTimer.isExpired())
 		{
 			m_isDisplayed = !m_isDisplayed;
-			m_blinkingTimer.restart(sf::milliseconds(250));
+			m_blinkingTimer.restart(sf::milliseconds(75));
 		}
 		if (m_timer.isExpired())
 		{

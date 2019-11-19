@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "CollisionDetector.h"
 #include "MathUtility.h"
+#include "ProjectilePool.h"
 #include "Projectile.h"
 #include "Target.h"
 #include <Thor/Time/CallbackTimer.hpp>
@@ -31,7 +32,7 @@ public:
 	/// </summary>
 	/// <param name="texture">A reference to the sprite sheet texture</param>
 	///< param name="texture">A reference to the container of wall sprites</param>  
-	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::vector<Target>& targets);
+	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::vector<Target>& targets, ProjectilePool& projectilePool);
 
 	void update(double dt);
 	void render(sf::RenderWindow & window);
@@ -82,11 +83,14 @@ private:
 	// Timer for the time between two fire
 	thor::Timer m_fireTimer;
 
-	// container of the tank projectile
-	std::vector<Projectile> m_projectiles;
+	// container of the tank projectile (pointers)
+	std::vector<Projectile*> m_projectilesPtr;
 
 	// A Reference to the container of Targets 
 	std::vector<Target>& m_targets;
+
+	// Reference to the Pool of projectiles
+	ProjectilePool& m_projectilesPool;
 
 	// Performances 
 	TankPerformance m_performances;

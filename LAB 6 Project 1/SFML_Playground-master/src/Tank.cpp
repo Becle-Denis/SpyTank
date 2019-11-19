@@ -2,10 +2,11 @@
 #include <iostream>
 
 
-Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::vector<Target>& targets)
+Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::vector<Target>& targets, ProjectilePool& projectilePool)
 	: m_texture(texture),
 	m_wallSprites(wallSprites),
 	m_targets(targets),
+	m_projectilesPool(projectilePool),
 	m_maximumSpeed(80)
 {
 	initSprites();
@@ -15,18 +16,20 @@ Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std
 void Tank::update(double dt)
 {	
 	//updating the projectiles
-	for (int i = m_projectiles.size() - 1; i >= 0; i--)
+	for (int i = m_projectilesPtr.size() - 1; i >= 0; i--)
 	{
 		//update 
-		m_projectiles.at(i).update(dt);
+		m_projectilesPtr.at(i)->update(dt);
 		//colision 
-		if (!(m_projectiles.at(i).isAlive(m_wallSprites))) //colision with wall 
+		if (!(m_projectilesPtr.at(i)->isAlive(m_wallSprites))) //colision with wall 
 		{
-   			m_projectiles.erase(m_projectiles.begin() + i);
+			m_projectilesPtr.at(i)->setInactive();
+   			m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
 		}
-		else if (m_projectiles.at(i).hitTarget(m_targets)) // colision with target 
+		else if (m_projectilesPtr.at(i)->hitTarget(m_targets)) // colision with target 
 		{
-			m_projectiles.erase(m_projectiles.begin() + i);
+			m_projectilesPtr.at(i)->setInactive();
+			m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
 			m_performances.targetHitted++;
 		}
 	}
@@ -86,9 +89,9 @@ void Tank::update(double dt)
 
 void Tank::render(sf::RenderWindow & window) 
 {
-	for (Projectile& projectile : m_projectiles)
+	for (Projectile* projectile : m_projectilesPtr)
 	{
-		projectile.render(window);
+		projectile->render(window);
 	}
 	window.draw(m_tankBase);
 	window.draw(m_turret);
@@ -288,13 +291,19 @@ void Tank::adjustRotation()
 ////////////////////////////////////////////////////////////////
 void Tank::fire()
 {
-	Projectile p;
-	p.setSprite(&m_texture);
-	p.launch(m_tankBase.getPosition(), m_turretRotation);
-	m_projectiles.push_back(p);
-	m_performances.projectileFired++;
-	canFire = false;
-	m_fireTimer.restart(sf::seconds(1.f));
+	Projectile* newProjectilePtr = m_projectilesPool.getProjectile();
+	if (newProjectilePtr != nullptr)
+	{
+		newProjectilePtr->launch(m_tankBase.getPosition(),m_turretRotation);
+		m_projectilesPtr.push_back(newProjectilePtr);
+		m_performances.projectileFired++;
+		canFire = false;
+		m_fireTimer.restart(sf::seconds(1.f));
+	}
+	else
+	{
+		std::cout << "Error no Projectile available" << std::endl;
+	}
 }
 
 

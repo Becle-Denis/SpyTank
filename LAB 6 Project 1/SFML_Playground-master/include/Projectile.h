@@ -18,7 +18,7 @@ public:
 	
 	void setInactive();
 
-	bool isActive();
+	bool isInactive();
 
 	//update the displacement of the projectile 
 	void update(double dt);

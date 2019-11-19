@@ -4,8 +4,8 @@
 #include "ScreenSize.h"
 #include "LevelLoader.h"
 #include "Tank.h"
-#include "Projectile.h"
 #include "Target.h"
+#include "ProjectilePool.h"
 
 /// <summary>
 /// @author RP
@@ -138,5 +138,8 @@ protected:
 
 	// Targets 
 	std::vector<Target> m_targets;
+	
+	// Pool of Projectile 
+	ProjectilePool m_projectilesPool;
 
 };

@@ -17,14 +17,9 @@ ProjectilePool::~ProjectilePool()
 
 Projectile* ProjectilePool::getProjectile()
 {
-	for (unsigned int i = 0; i < m_numberOfProjectile; i++)
+	//first loop index to the end
+	for (int i = m_projectileIndex; i < m_numberOfProjectile; i++)
 	{
-		/*
-		if (i == m_projectileIndex)
-		{
-			i = 0;
-		}
-		*/
 		if ((m_projectiles + i)->isInactive())
 		{
 			if (i == m_numberOfProjectile - 1)
@@ -38,5 +33,23 @@ Projectile* ProjectilePool::getProjectile()
 			return m_projectiles + i;
 		}
 	}
+
+	//second loop, 0 to index 
+	for (int i = 0; i < m_projectileIndex; i++)
+	{
+		if ((m_projectiles + i)->isInactive())
+		{
+			if (i == m_numberOfProjectile - 1)
+			{
+				m_projectileIndex = 0;
+			}
+			else
+			{
+				m_projectileIndex = i + 1;
+			}
+			return m_projectiles + i;
+		}
+	}
+	// if all projectiles are actile, return nullptr;
 	return nullptr;
 }

@@ -22,12 +22,10 @@ void Tank::update(double dt)
 		//colision 
 		if (!(m_projectiles.at(i).isAlive(m_wallSprites))) //colision with wall 
 		{
-			//bug with deleting the projectile ------------------------------------
    			m_projectiles.erase(m_projectiles.begin() + i);
 		}
 		else if (m_projectiles.at(i).hitTarget(m_targets)) // colision with target 
 		{
-			//bug with deleting the projectile ------------------------------------
 			m_projectiles.erase(m_projectiles.begin() + i);
 			m_performances.targetHitted++;
 		}
@@ -290,7 +288,10 @@ void Tank::adjustRotation()
 ////////////////////////////////////////////////////////////////
 void Tank::fire()
 {
-	m_projectiles.push_back(Projectile(m_texture, m_tankBase.getPosition(), m_turretRotation));
+	Projectile p;
+	p.setSprite(&m_texture);
+	p.launch(m_tankBase.getPosition(), m_turretRotation);
+	m_projectiles.push_back(p);
 	m_performances.projectileFired++;
 	canFire = false;
 	m_fireTimer.restart(sf::seconds(1.f));

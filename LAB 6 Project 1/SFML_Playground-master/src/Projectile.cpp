@@ -2,7 +2,7 @@
 
 
 double Projectile::s_projectile_speed = 800;
-
+/*
 Projectile::Projectile(sf::Texture const& texture , sf::Vector2f position, double rotation) 
 	: m_texture(texture), m_rotation(rotation)
 {
@@ -24,6 +24,33 @@ Projectile& Projectile::operator=(Projectile const & rhs)
 {
 	Projectile p(rhs);
 	return p;
+}
+*/
+void Projectile::launch(sf::Vector2f position, double rotation)
+{
+	m_rotation = rotation;
+	m_projectileSprite.setRotation(rotation - 90);
+	m_projectileSprite.setPosition(position);
+}
+
+void Projectile::setSprite(sf::Texture const* texturePtr)
+{
+	m_texturePtr = texturePtr;
+	m_projectileSprite.setTexture(*texturePtr);
+	sf::IntRect baseRect(8, 175, 8, 10);
+	m_projectileSprite.setTextureRect(baseRect);
+	m_projectileSprite.setOrigin(baseRect.width / 2.0, baseRect.height / 2.0);
+	setInactive();
+}
+
+void Projectile::setInactive()
+{
+	m_projectileSprite.setPosition(sf::Vector2f(-100, -100));
+}
+
+bool Projectile::isActive()
+{
+	return m_projectileSprite.getPosition() == sf::Vector2f(-100,-100);
 }
 
 void Projectile::update(double dt)

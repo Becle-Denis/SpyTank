@@ -12,13 +12,13 @@
 class Projectile
 {
 public:
-	Projectile(sf::Texture const& texture, sf::Vector2f position, double rotation);
+	void launch(sf::Vector2f position, double rotation);
 
-	//copy contructor, needed for operator= 
-	Projectile(const Projectile & p);
+	void setSprite(sf::Texture const* texturePtr);
+	
+	void setInactive();
 
-	//=operator, needed for vector::erase, because of const menber texture
-	Projectile& operator=(Projectile const& rhs);
+	bool isActive();
 
 	//update the displacement of the projectile 
 	void update(double dt);
@@ -39,7 +39,7 @@ private:
 	sf::Sprite m_projectileSprite;
 
 	//texture
-	sf::Texture const& m_texture;
+	sf::Texture const* m_texturePtr;
 
 	// The tank speed.
 	static double s_projectile_speed;

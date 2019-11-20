@@ -2,16 +2,25 @@
 
 const sf::Time Target::S_BLINKING_TIME = sf::seconds(5);
 
-Target::Target(sf::Texture const& texture, sf::Vector2f position, sf::Time timeToStart, sf::Time timeOnScreen) :
-	m_texture(texture), m_state(TargetState::NotStarted), m_timeOnScreen(timeOnScreen), m_timeToStart(timeToStart),
+Target::Target() :
+	m_state(TargetState::NotInitialised),
 	m_isDisplayed(false)
 {
-	m_sprite.setTexture(texture);
+	
+}
+
+void Target::init(sf::Texture const* texture, sf::Vector2f position, sf::Time timeToStart, sf::Time timeOnScreen)
+{
+	m_timeToStart = timeToStart;
+	m_timeOnScreen = timeOnScreen;
+	m_texture = texture;
+	m_sprite.setTexture(*m_texture);
 	sf::IntRect baseRect(0, 0, 230, 230);
 	m_sprite.setTextureRect(baseRect);
 	m_sprite.setOrigin(baseRect.width / 2.0, baseRect.height / 2.0);
 	m_sprite.setPosition(position);
 	m_sprite.setScale(0.3, 0.3);
+	m_state = TargetState::NotStarted;
 }
 
 void Target::update()
@@ -89,6 +98,7 @@ bool Target::isColliding(sf::Sprite const& sprite)
 
 void Target::reveal(sf::Time bonusTime)
 {
+	if (m_state == TargetState::NotDisplayed)
 	m_timeOnScreen += bonusTime;
 	m_isDisplayed = true;
 	if (m_timeOnScreen > S_BLINKING_TIME)

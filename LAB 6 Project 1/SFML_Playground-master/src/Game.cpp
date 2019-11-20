@@ -8,7 +8,9 @@ static double const MS_PER_UPDATE = 10.0;
 ////////////////////////////////////////////////////////////
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
-	m_tank(m_spriteSheetTexture, m_wallSprites, m_targets, m_projectilesPool), m_state(GameState::IN_PROGRESS), m_projectilesPool(m_spriteSheetTexture,10)
+	m_targets(m_targetTexture),
+	m_tank(m_spriteSheetTexture, m_wallSprites, m_targets, m_projectilesPool),
+	m_state(GameState::IN_PROGRESS), m_projectilesPool(m_spriteSheetTexture,10)
 {
 	//seed the random 
 	srand(time(nullptr));
@@ -79,8 +81,8 @@ Game::Game()
 	// Construct the wall sprites
 	generateWalls();
 
-	// Construct the Target 
-	generateTarget();
+	//Constrcut the targets
+	m_targets.construct(m_level.m_targets);
 }
 
 ////////////////////////////////////////////////////////////
@@ -126,15 +128,6 @@ void Game::generateWalls()
 	}
 }
 
-////////////////////////////////////////////////////////////
-void Game::generateTarget()
-{
-	for (TargetData const& target : m_level.m_targets)
-	{
-		Target t(m_targetTexture,target.m_position,sf::seconds(target.secondsToStart),sf::seconds(target.secondsOnScreen));
-		m_targets.push_back(t);
-	}
-}
 
 ////////////////////////////////////////////////////////////
 void Game::processEvents()
@@ -182,10 +175,7 @@ void Game::update(double dt)
 		m_timerText.setString(""+std::to_string((int) timeLeft.asSeconds())+" seconds left");
 
 		//updating the targets
-		for (Target& target : m_targets)
-		{
-			target.update();
-		}
+		m_targets.update(dt);
 
 		//updating the tank 
 		m_tank.update(dt);
@@ -212,10 +202,7 @@ void Game::render()
 	}
 
 	//drawing the target
-	for (Target& target : m_targets)
-	{
-		target.render(m_window);
-	}
+	m_targets.render(m_window);
 
 	//drawing the tank 
 	m_tank.render(m_window);

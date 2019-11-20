@@ -3,7 +3,7 @@
 #include <Thor/Time/CallbackTimer.hpp>
 #include "CollisionDetector.h"
 
-enum TargetState { DeadByTime, DeadByHit, NotStarted, NotDisplayed, OnScreen, Blinking };
+enum TargetState { DeadByTime, DeadByHit,NotInitialised, NotStarted, NotDisplayed, OnScreen, Blinking };
 
 /// <summary>
 /// @brief A class for target to be hit by the player 
@@ -13,7 +13,9 @@ enum TargetState { DeadByTime, DeadByHit, NotStarted, NotDisplayed, OnScreen, Bl
 class Target
 {
 public:
-	Target(sf::Texture const& texture,sf::Vector2f position,sf::Time timeToStart, sf::Time timeOnScreen);
+	Target();
+
+	void init(sf::Texture const* texture, sf::Vector2f position, sf::Time timeToStart, sf::Time timeOnScreen);
 
 	/// <summary>
 	/// Update the state of the Target 
@@ -47,7 +49,7 @@ private:
 	sf::Sprite m_sprite;
 
 	//The reference of the texture 
-	sf::Texture const& m_texture;
+	sf::Texture const* m_texture;
 
 	//Timer to deal with time on screen and time to display 
 	thor::Timer m_timer;

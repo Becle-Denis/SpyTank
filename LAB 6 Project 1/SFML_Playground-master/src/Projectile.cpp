@@ -20,6 +20,11 @@ void Projectile::setSprite(sf::Texture const* texturePtr)
 	setInactive();
 }
 
+sf::Sprite& const Projectile::getSprite()
+{
+	return m_projectileSprite;
+}
+
 void Projectile::setInactive()
 {
 	m_projectileSprite.setPosition(sf::Vector2f(-100, -100));
@@ -57,22 +62,6 @@ bool Projectile::isAlive(std::vector<sf::Sprite>& wallSprites)
 	return true;
 }
 
-bool Projectile::hitTarget(std::vector<Target>& targets)
-{
-	for (unsigned int i = 0; i < targets.size(); i++)
-	{
-		if (targets.at(i).isColliding(m_projectileSprite))
-		{
-			sf::Time bonus = targets.at(i).hit();
-			if (i + 1 < targets.size())
-			{
-				targets.at(i + 1).reveal(bonus);
-			}
-			return true;
-		}
-	}
-	return false;
-}
 
 void Projectile::render(sf::RenderWindow& window)
 {

@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::vector<Target>& targets, ProjectilePool& projectilePool)
+Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, TargetManager& targets, ProjectilePool& projectilePool)
 	: m_texture(texture),
 	m_wallSprites(wallSprites),
 	m_targets(targets),
@@ -20,17 +20,20 @@ void Tank::update(double dt)
 	{
 		//update 
 		m_projectilesPtr.at(i)->update(dt);
-		//colision 
-		if (!(m_projectilesPtr.at(i)->isAlive(m_wallSprites))) //colision with wall 
+
+		//Collision 
+		int collisionResult = m_targets.checkForCollision(m_projectilesPtr.at(i)->getSprite());
+		if (collisionResult != -1) // Colision with target
 		{
-			m_projectilesPtr.at(i)->setInactive();
-   			m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
-		}
-		else if (m_projectilesPtr.at(i)->hitTarget(m_targets)) // colision with target 
-		{
+			m_targets.hit(collisionResult);
 			m_projectilesPtr.at(i)->setInactive();
 			m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
 			m_performances.targetHitted++;
+		}
+		else if (!(m_projectilesPtr.at(i)->isAlive(m_wallSprites))) //colision with wall or outside the map
+		{
+			m_projectilesPtr.at(i)->setInactive();
+   			m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
 		}
 	}
 

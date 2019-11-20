@@ -4,8 +4,8 @@
 #include "ScreenSize.h"
 #include "LevelLoader.h"
 #include "Tank.h"
-#include "Target.h"
 #include "ProjectilePool.h"
+#include "TargetManager.h"
 
 /// <summary>
 /// @author RP
@@ -42,7 +42,7 @@ protected: //attributes
 
 	Tank m_tank; // An instance representing the player controlled tank.
 
-	std::vector<Target> m_targets; // Targets 
+	TargetManager m_targets; // Targets 
 
 	ProjectilePool m_projectilesPool; // Pool of Projectile 
 
@@ -69,6 +69,7 @@ public: // function
 	/// </summary>
 	Game();
 
+
 	/// <summary>
 	/// @brief the main game loop.
 	/// 
@@ -88,11 +89,6 @@ protected: // function
 	///  storing copies (instead of pointers to sf::Sprite) in std::vector is acceptable.
 	/// </summary>
 	void generateWalls();
-
-	/// <summary>
-	/// @brief Creates the target sprites and loads them into a vector.
-	/// </summary>
-	void generateTarget();
 
 
 	/// <summary>

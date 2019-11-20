@@ -40,9 +40,8 @@ void Target::update()
 		break;
 
 	case TargetState::OnScreen:
-		if (m_timer.isExpired())
+		if (m_timer.getRemainingTime() <= S_BLINKING_TIME)
 		{
-			m_timer.restart(S_BLINKING_TIME);
 			m_state = TargetState::Blinking;
 			m_blinkingTimer.restart(sf::milliseconds(75));
 		}
@@ -74,14 +73,9 @@ void Target::render(sf::RenderWindow& window)
 
 sf::Time Target::hit()
 {
-	sf::Time remaingTime = m_timer.getRemainingTime();
-	if (m_state == TargetState::OnScreen)
-	{
-		remaingTime += S_BLINKING_TIME;
-	}
 	m_isDisplayed = false;
 	m_state = TargetState::DeadByHit;
-	return remaingTime;
+	return m_timer.getRemainingTime();
 }
 
 bool Target::isColliding(sf::Sprite const& sprite)
@@ -101,14 +95,6 @@ void Target::reveal(sf::Time bonusTime)
 	if (m_state == TargetState::NotDisplayed)
 	m_timeOnScreen += bonusTime;
 	m_isDisplayed = true;
-	if (m_timeOnScreen > S_BLINKING_TIME)
-	{
-		m_timer.restart(m_timeOnScreen - S_BLINKING_TIME);
-		m_state = TargetState::OnScreen;
-	}
-	else
-	{
-		m_timer.restart(m_timeOnScreen);
-		m_state = TargetState::Blinking;
-	}
+	m_timer.restart(m_timeOnScreen);
+	m_state = TargetState::OnScreen;
 }

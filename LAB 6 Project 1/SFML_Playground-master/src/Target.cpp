@@ -42,12 +42,12 @@ void Target::update()
 	case TargetState::OnScreen:
 		if (m_timer.getRemainingTime() <= S_BLINKING_TIME)
 		{
-			m_state = TargetState::Blinking;
+			m_state = TargetState::BlinkingOnScreen;
 			m_blinkingTimer.restart(sf::milliseconds(75));
 		}
 		break;
 
-	case TargetState::Blinking:
+	case TargetState::BlinkingOnScreen:
 		if (m_blinkingTimer.isExpired())
 		{
 			m_isDisplayed = !m_isDisplayed;
@@ -97,4 +97,19 @@ void Target::reveal(sf::Time bonusTime)
 	m_isDisplayed = true;
 	m_timer.restart(m_timeOnScreen);
 	m_state = TargetState::OnScreen;
+}
+
+bool Target::isOnScreen()
+{
+	return m_state == TargetState::OnScreen || m_state == TargetState::BlinkingOnScreen;
+}
+
+bool Target::waintingToBeDisplayed(sf::Time& waitingTime)
+{
+	if (m_state == TargetState::NotDisplayed)
+	{
+		waitingTime = m_timer.getRemainingTime();
+		return true;
+	}
+	return false;
 }

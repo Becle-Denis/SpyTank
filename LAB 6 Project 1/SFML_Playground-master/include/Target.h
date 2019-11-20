@@ -3,7 +3,7 @@
 #include <Thor/Time/CallbackTimer.hpp>
 #include "CollisionDetector.h"
 
-enum TargetState { DeadByTime, DeadByHit,NotInitialised, NotStarted, NotDisplayed, OnScreen, Blinking };
+enum TargetState { DeadByTime, DeadByHit, NotInitialised, NotStarted, NotDisplayed, OnScreen, BlinkingOnScreen };
 
 /// <summary>
 /// @brief A class for target to be hit by the player 
@@ -43,6 +43,10 @@ public:
 	/// Display the target on screen and add the bonus time 
 	/// </summary>
 	void reveal(sf::Time bonusTime = sf::seconds(0));
+
+	bool isOnScreen();
+
+	bool waintingToBeDisplayed(sf::Time& waitingTime);
 
 private:
 	// the sprite of the Target, this will store the position and rotation of the Target

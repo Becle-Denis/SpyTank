@@ -51,7 +51,15 @@ void TargetManager::hit(int index)
 {
 	if (index < m_number_of_targets)
 	{
-		(m_targets + index)->hit();
+		sf::Time bonusTime = (m_targets + index)->hit();
+		if (!isOneOnScreen())
+		{
+			int nextIndex = getNextIndex();
+			if (nextIndex != -1)
+			{
+				(m_targets + nextIndex)->reveal(bonusTime);
+			}
+		}
 	}
 }
 
@@ -65,10 +73,31 @@ void TargetManager::render(sf::RenderWindow& window)
 
 bool TargetManager::isOneOnScreen()
 {
+	for (int i = 0; i < m_number_of_targets; i++)
+	{
+		if ((m_targets + i)->isOnScreen())
+		{
+			return true;
+		}
+	}
 	return false;
 }
 
 int TargetManager::getNextIndex()
 {
-	return 0;
+	int minIndex = -1;
+	sf::Time minTime = sf::seconds(100); // not really good but its works
+	sf::Time targetReaminingTime;
+	for (int i = 0; i < m_number_of_targets; i++)
+	{
+		if ((m_targets + i)->waintingToBeDisplayed(targetReaminingTime))
+		{
+			if (targetReaminingTime < minTime)
+			{
+				minTime = targetReaminingTime;
+				minIndex = i;
+			}
+		}
+	}
+	return minIndex;
 }

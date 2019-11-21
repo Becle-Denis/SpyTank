@@ -165,6 +165,11 @@ void Game::setGameOver()
 {
 	m_state = GameState::STOPPED;
 	m_targets.revealResult();
+
+	TankPerformance perf = m_tank.getPerformance();
+	std::cout << "Fired : " << std::to_string(perf.projectileFired) << std::endl;
+	std::cout << "Hit : " << std::to_string(perf.targetHitted) << std::endl;
+	std::cout << "Accuracy : " << std::to_string(perf.accuracy) << std::endl;
 }
 
 ////////////////////////////////////////////////////////////

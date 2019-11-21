@@ -20,7 +20,7 @@ void Projectile::setSprite(sf::Texture const* texturePtr)
 	setInactive();
 }
 
-sf::Sprite& const Projectile::getSprite()
+sf::Sprite const& Projectile::getSprite()
 {
 	return m_projectileSprite;
 }

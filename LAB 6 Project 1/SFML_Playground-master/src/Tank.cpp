@@ -125,6 +125,16 @@ void Tank::setPosition(sf::Vector2f const& pos)
 	m_turret.setPosition(pos);
 }
 
+////////////////////////////////////////////////////////////
+TankPerformance Tank::getPerformance()
+{
+	if (m_performances.projectileFired != 0)
+	{
+		m_performances.accuracy = static_cast<int>((static_cast<double>(m_performances.targetHitted) / static_cast<double>(m_performances.projectileFired)) * 100);
+	}
+	return m_performances;
+}
+
 
 ////////////////////////////////////////////////////////////
 void Tank::increaseSpeed()

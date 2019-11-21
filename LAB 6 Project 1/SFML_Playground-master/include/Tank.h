@@ -15,6 +15,7 @@ struct TankPerformance
 {
 	int projectileFired{ 0 };
 	int targetHitted{ 0 };
+	int accuracy{ 0 };
 };
 
 /// <summary>
@@ -102,7 +103,11 @@ public:	//functions
 	/// <param name="pos">New position of the tank</param>
 	void setPosition(sf::Vector2f const& pos);
 
-	
+	/// <summary>
+	/// Calculate and return the tank performances
+	/// </summary>
+	/// <returns>Actual tank performances</returns>
+	TankPerformance getPerformance();
 
 	
 private: // functions 

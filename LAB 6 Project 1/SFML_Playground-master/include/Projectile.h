@@ -41,7 +41,7 @@ public: //functions
 	/// <summary>
 	/// Return the actual sprite of the projectile 
 	/// </summary>
-	sf::Sprite& const getSprite();
+	sf::Sprite const& getSprite();
 
 	/// <summary>
 	/// Set the Projectile inactive 

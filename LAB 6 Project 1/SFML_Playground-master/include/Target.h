@@ -15,6 +15,13 @@ class Target
 public:
 	Target();
 
+	/// <summary>
+	/// Initialise the target, set the Sprite qnd position
+	/// </summary>
+	/// <param name="texture">Texture of the Tqrget</param>
+	/// <param name="position">Position of the target</param>
+	/// <param name="timeToStart">Time of first apperance of the target</param>
+	/// <param name="timeOnScreen">Time of the target to be on screen</param>
 	void init(sf::Texture const* texture, sf::Vector2f position, sf::Time timeToStart, sf::Time timeOnScreen);
 
 	/// <summary>
@@ -23,6 +30,10 @@ public:
 	/// </summary>
 	void update();
 
+	/// <summary>
+	/// Draw the target if it should be drawn (Status onScreen)
+	/// </summary>
+	/// <param name="window"></param>
 	void render(sf::RenderWindow& window);
 
 	/// <summary>
@@ -44,8 +55,17 @@ public:
 	/// </summary>
 	void reveal(sf::Time bonusTime = sf::seconds(0));
 
+	/// <summary>
+	/// Check the state of the Target 
+	/// </summary>
+	/// <returns>True if the target is Onscreen or Blinking</returns>
 	bool isOnScreen();
 
+	/// <summary>
+	/// Check the state of the Target, and eventually indicate the waintingTime
+	/// </summary>
+	/// <param name="waitingTime">Return Reference, Time left to display the target</param>
+	/// <returns>True if the state is notDisplayed</returns>
 	bool waintingToBeDisplayed(sf::Time& waitingTime);
 
 private:

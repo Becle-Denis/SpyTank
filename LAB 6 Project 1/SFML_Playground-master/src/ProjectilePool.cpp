@@ -50,6 +50,6 @@ Projectile* ProjectilePool::getProjectile()
 			return m_projectiles + i;
 		}
 	}
-	// if all projectiles are actile, return nullptr;
+	// if all projectiles are active, return nullptr;
 	return nullptr;
 }

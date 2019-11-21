@@ -10,14 +10,18 @@ TargetManager::TargetManager(sf::Texture const& targetTexture) :
 
 TargetManager::~TargetManager()
 {
-	delete[] m_targets;
+	if (m_targets != nullptr)
+	{
+		delete[] m_targets;
+	}
 }
 
 void TargetManager::construct(std::vector<TargetData>& targetData)
 {
+	//deletion if reconstruct 
 	if (m_targets != nullptr)
 	{
-		delete[] m_targets;
+		delete[] m_targets; 
 	}
 	m_number_of_targets = targetData.size();
 	m_targets = new Target[m_number_of_targets];
@@ -35,7 +39,7 @@ void TargetManager::update(double dt)
 	}
 }
 
-int TargetManager::checkForCollision(sf::Sprite& const sprite)
+int TargetManager::checkForCollision(sf::Sprite const& sprite)
 {
 	for (int i = 0; i < m_number_of_targets; i++)
 	{
@@ -51,13 +55,13 @@ void TargetManager::hit(int index)
 {
 	if (index < m_number_of_targets)
 	{
-		sf::Time bonusTime = (m_targets + index)->hit();
+		sf::Time bonusTime = (m_targets + index)->hit(); // hit the actual target 
 		if (!isOneOnScreen())
 		{
 			int nextIndex = getNextIndex();
 			if (nextIndex != -1)
 			{
-				(m_targets + nextIndex)->reveal(bonusTime);
+				(m_targets + nextIndex)->reveal(bonusTime); // reveal the next one 
 			}
 		}
 	}
@@ -86,7 +90,7 @@ bool TargetManager::isOneOnScreen()
 int TargetManager::getNextIndex()
 {
 	int minIndex = -1;
-	sf::Time minTime = sf::seconds(100); // not really good but its works
+	sf::Time minTime = sf::seconds(100); // not really good but it works
 	sf::Time targetReaminingTime;
 	for (int i = 0; i < m_number_of_targets; i++)
 	{

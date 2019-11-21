@@ -27,19 +27,19 @@ void Target::update()
 {
 	switch (m_state)
 	{
-	case TargetState::NotStarted:
+	case TargetState::NotStarted: //Start the timer on the first update
 		m_timer.restart(m_timeToStart);
 		m_state = TargetState::NotDisplayed;
 		break;
 
-	case TargetState::NotDisplayed:
+	case TargetState::NotDisplayed: // reveal the target when timer expired 
 		if (m_timer.isExpired())
 		{
 			reveal();
 		}
 		break;
 
-	case TargetState::OnScreen:
+	case TargetState::OnScreen: // check for the timer and set the state to blinking 
 		if (m_timer.getRemainingTime() <= S_BLINKING_TIME)
 		{
 			m_state = TargetState::BlinkingOnScreen;
@@ -47,7 +47,7 @@ void Target::update()
 		}
 		break;
 
-	case TargetState::BlinkingOnScreen:
+	case TargetState::BlinkingOnScreen: // check for the timer and set the state to deadByTime
 		if (m_blinkingTimer.isExpired())
 		{
 			m_isDisplayed = !m_isDisplayed;
@@ -93,10 +93,12 @@ bool Target::isColliding(sf::Sprite const& sprite)
 void Target::reveal(sf::Time bonusTime)
 {
 	if (m_state == TargetState::NotDisplayed)
-	m_timeOnScreen += bonusTime;
-	m_isDisplayed = true;
-	m_timer.restart(m_timeOnScreen);
-	m_state = TargetState::OnScreen;
+	{
+		m_timeOnScreen += bonusTime;
+		m_isDisplayed = true;
+		m_timer.restart(m_timeOnScreen);
+		m_state = TargetState::OnScreen;
+	}
 }
 
 bool Target::isOnScreen()

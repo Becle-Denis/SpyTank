@@ -45,7 +45,7 @@
     <ClInclude Include="include\ProjectilePool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TargetManager.h">
+    <ClInclude Include="include\TargetManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -77,7 +77,7 @@
     <ClCompile Include="src\ProjectilePool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TargetManager.cpp">
+    <ClCompile Include="src\TargetManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -161,27 +161,37 @@ void Game::processGameEvents(sf::Event& event)
 	}
 }
 
+void Game::setGameOver()
+{
+	m_state = GameState::STOPPED;
+	m_targets.revealResult();
+}
+
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 {
-	if (m_timerLeft.isExpired())
+	if (m_state == GameState::IN_PROGRESS)
 	{
-		m_state = GameState::STOPPED;
+		if (m_timerLeft.isExpired())
+		{
+			setGameOver();
+		}
+		else
+		{
+			//updating the timer
+			sf::Time timeLeft = m_timerLeft.getRemainingTime();
+			m_timerText.setString("" + std::to_string((int)timeLeft.asSeconds()) + " seconds left");
+
+			//updating the targets
+			m_targets.update(dt);
+
+			//updating the tank 
+			m_tank.update(dt);
+
+
+		}
 	}
-	else 
-	{
-		//updating the timer
-		sf::Time timeLeft = m_timerLeft.getRemainingTime();
-		m_timerText.setString(""+std::to_string((int) timeLeft.asSeconds())+" seconds left");
 
-		//updating the targets
-		m_targets.update(dt);
-
-		//updating the tank 
-		m_tank.update(dt);
-
-
-	}
 }
 
 ////////////////////////////////////////////////////////////
@@ -206,8 +216,6 @@ void Game::render()
 
 	//drawing the tank 
 	m_tank.render(m_window);
-
-
 
 	m_window.display();
 }

@@ -56,6 +56,13 @@ public:
 	void reveal(sf::Time bonusTime = sf::seconds(0));
 
 	/// <summary>
+	/// Make the Target visible qnd colored
+	/// Green if was dead by hit 
+	/// Red else
+	/// </summary>
+	void setResult();
+
+	/// <summary>
 	/// Check the state of the Target 
 	/// </summary>
 	/// <returns>True if the target is Onscreen or Blinking</returns>

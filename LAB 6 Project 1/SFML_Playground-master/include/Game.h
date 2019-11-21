@@ -116,4 +116,9 @@ protected: // function
 	/// <param name="event">system event</param>
 	void processGameEvents(sf::Event&);
 
+
+	/// <summary>
+	/// Set the game state to gameOver
+	/// </summary>
+	void setGameOver();
 };

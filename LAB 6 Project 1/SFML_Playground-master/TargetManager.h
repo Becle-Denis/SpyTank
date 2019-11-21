@@ -50,6 +50,11 @@ public: // functions
 	/// <param name="window">Window on which the target will be drawn</param>
 	void render(sf::RenderWindow& window);
 
+	/// <summary>
+	/// Reveal the rsult of all the targets 
+	/// </summary>
+	void revealResult();
+
 private: // functions 
 	/// <summary>
 	/// retrun true is there is One or More targets displayed on screen

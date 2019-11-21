@@ -101,6 +101,19 @@ void Target::reveal(sf::Time bonusTime)
 	}
 }
 
+void Target::setResult()
+{
+	if (m_state == TargetState::DeadByHit)
+	{
+		m_sprite.setColor(sf::Color(0, 255, 0));
+	}
+	else 
+	{
+		m_sprite.setColor(sf::Color(255, 0, 0));
+	}
+	m_isDisplayed = true;
+}
+
 bool Target::isOnScreen()
 {
 	return m_state == TargetState::OnScreen || m_state == TargetState::BlinkingOnScreen;

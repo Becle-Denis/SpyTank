@@ -75,6 +75,14 @@ void TargetManager::render(sf::RenderWindow& window)
 	}
 }
 
+void TargetManager::revealResult()
+{
+	for (int i = 0; i < m_number_of_targets; i++)
+	{
+		(m_targets + i)->setResult();
+	}
+}
+
 bool TargetManager::isOneOnScreen()
 {
 	for (int i = 0; i < m_number_of_targets; i++)

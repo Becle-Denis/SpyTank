@@ -124,6 +124,3 @@ targets:
    - position: {x: 520, y: 45, randomOffset: 5}
      secondsToStart: 52
      secondsOnScreen: 8
-   - position: {x: 385, y: 354, randomOffset: 150}
-     secondsToStart: 55
-     secondsOnScreen: 5

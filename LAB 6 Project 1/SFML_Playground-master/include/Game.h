@@ -55,7 +55,7 @@ protected: //attributes
 
 	sf::Font m_fontA; //Font for the text
 
-	sf::Text m_timerText; //text for the timer
+	sf::Text m_bigDisplayedText; //text for the timer
 
 	//Textures storages
 	sf::Texture m_spriteSheetTexture; // A texture for the sprite sheet

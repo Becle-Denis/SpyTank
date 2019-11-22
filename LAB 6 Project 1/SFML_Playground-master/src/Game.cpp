@@ -57,9 +57,9 @@ Game::Game()
 	{
 		std::cout << "problem loading font file" << std::endl;
 	}
-	m_timerText = sf::Text("",m_fontA,50);
-	m_timerText.setFillColor(sf::Color::Red);
-	m_timerText.setPosition(450,50);
+	m_bigDisplayedText = sf::Text("",m_fontA,50);
+	m_bigDisplayedText.setFillColor(sf::Color::Red);
+	m_bigDisplayedText.setPosition(450,50);
 
 	// Set the tank position in one corner randmoly.
 	switch (rand() % 4)
@@ -165,6 +165,7 @@ void Game::setGameOver()
 {
 	m_state = GameState::STOPPED;
 	m_targets.revealResult();
+	m_bigDisplayedText.setString("Game Over !");
 
 	TankPerformance perf = m_tank.getPerformance();
 	std::cout << "Fired : " << std::to_string(perf.projectileFired) << std::endl;
@@ -185,7 +186,7 @@ void Game::update(double dt)
 		{
 			//updating the timer
 			sf::Time timeLeft = m_timerLeft.getRemainingTime();
-			m_timerText.setString("" + std::to_string((int)timeLeft.asSeconds()) + " seconds left");
+			m_bigDisplayedText.setString("" + std::to_string((int)timeLeft.asSeconds()) + " seconds left");
 
 			//updating the targets
 			m_targets.update(dt);
@@ -207,9 +208,7 @@ void Game::render()
 	//drawing the backgroud
 	m_window.draw(m_bgSprite);
 
-	//drawing the timer
-	m_window.draw(m_timerText);
-
+	
 	//drawing the wall
 	for (sf::Sprite const & wallSprite : m_wallSprites)
 	{
@@ -218,6 +217,9 @@ void Game::render()
 
 	//drawing the target
 	m_targets.render(m_window);
+
+	//drawing the timer
+	m_window.draw(m_bigDisplayedText);
 
 	//drawing the tank 
 	m_tank.render(m_window);

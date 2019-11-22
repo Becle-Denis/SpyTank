@@ -55,6 +55,12 @@ public: // functions
 	/// </summary>
 	void revealResult();
 
+	/// <summary>
+	/// Return the number of targets 
+	/// </summary>
+	/// <returns>Number of targets</returns>
+	int getNumberOfDisplayedTarget();
+
 private: // functions 
 	/// <summary>
 	/// retrun true is there is One or More targets displayed on screen

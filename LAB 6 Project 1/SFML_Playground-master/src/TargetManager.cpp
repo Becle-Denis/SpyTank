@@ -83,6 +83,11 @@ void TargetManager::revealResult()
 	}
 }
 
+int TargetManager::getNumberOfDisplayedTarget()
+{
+	return m_number_of_targets;
+}
+
 bool TargetManager::isOneOnScreen()
 {
 	for (int i = 0; i < m_number_of_targets; i++)

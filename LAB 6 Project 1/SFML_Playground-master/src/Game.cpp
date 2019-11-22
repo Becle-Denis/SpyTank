@@ -168,9 +168,12 @@ void Game::setGameOver()
 	m_bigDisplayedText.setString("Game Over !");
 
 	TankPerformance perf = m_tank.getPerformance();
-	std::cout << "Fired : " << std::to_string(perf.projectileFired) << std::endl;
+
 	std::cout << "Hit : " << std::to_string(perf.targetHitted) << std::endl;
-	std::cout << "Accuracy : " << std::to_string(perf.accuracy) << std::endl;
+	std::cout << "Total Targets : " << std::to_string(perf.totalNumberOfTarget) << std::endl;
+	std::cout << "Success : " << std::to_string(perf.sucess) << " %" << std::endl;
+	std::cout << "Fired : " << std::to_string(perf.projectileFired) << std::endl;
+	std::cout << "Accuracy : " << std::to_string(perf.accuracy) << " %" << std::endl;
 }
 
 ////////////////////////////////////////////////////////////

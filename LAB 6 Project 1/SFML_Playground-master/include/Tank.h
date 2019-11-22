@@ -13,9 +13,12 @@
 /// </summary>
 struct TankPerformance
 {
-	int projectileFired{ 0 };
+	int totalNumberOfTarget{ 0 };
 	int targetHitted{ 0 };
+	int sucess{ 0 };
+	int projectileFired{ 0 };
 	int accuracy{ 0 };
+	
 };
 
 /// <summary>

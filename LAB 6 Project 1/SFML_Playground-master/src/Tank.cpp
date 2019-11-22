@@ -128,8 +128,15 @@ void Tank::setPosition(sf::Vector2f const& pos)
 ////////////////////////////////////////////////////////////
 TankPerformance Tank::getPerformance()
 {
-	if (m_performances.projectileFired != 0)
+	m_performances.totalNumberOfTarget = m_targets.getNumberOfDisplayedTarget();
+	if (m_performances.totalNumberOfTarget != 0) //
 	{
+		//calculate success 
+		m_performances.sucess = static_cast<int>((static_cast<double>(m_performances.targetHitted) / static_cast<double>(m_performances.totalNumberOfTarget)) * 100);
+	}
+	if (m_performances.projectileFired != 0) 
+	{
+		//calculate accuracy
 		m_performances.accuracy = static_cast<int>((static_cast<double>(m_performances.targetHitted) / static_cast<double>(m_performances.projectileFired)) * 100);
 	}
 	return m_performances;

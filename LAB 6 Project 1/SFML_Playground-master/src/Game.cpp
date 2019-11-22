@@ -41,16 +41,27 @@ Game::Game()
 	//loading the sprite sheet texture 
 	if (!m_spriteSheetTexture.loadFromFile("./resources/images/SpriteSheet.png"))
 	{
-		std::string s("Error loading texture");
+		std::string s("Error loading Sprite sheet texture");
 		throw std::exception(s.c_str());
 	}
 
 	//loading the Target Texture
 	if (!m_targetTexture.loadFromFile("./resources/images/RazorTarget1.png"))
 	{
-		std::string s("Error loading texture");
+		std::string s("Error loading Target texture");
 		throw std::exception(s.c_str());
 	}
+
+	//loading the Smoked Texture
+	if (!m_smokedScreenTexture.loadFromFile("./resources/images/fumee.jpg"))
+	{
+		std::string s("Error loading Smoked texture");
+		throw std::exception(s.c_str());
+	}
+	m_smokedSprite.setTexture(m_smokedScreenTexture);
+	m_smokedSprite.setTextureRect(sf::IntRect(0, 0, 960, 540));
+	m_smokedSprite.setScale(1.7, 1.7);
+	m_smokedSprite.setColor(sf::Color(255, 255, 255, 150));
 
 	//loading the font 
 	if (!m_fontA.loadFromFile("./resources/fonts/8_bit_fortress.ttf"))
@@ -169,11 +180,23 @@ void Game::setGameOver()
 
 	TankPerformance perf = m_tank.getPerformance();
 
-	std::cout << "Hit : " << std::to_string(perf.targetHitted) << std::endl;
-	std::cout << "Total Targets : " << std::to_string(perf.totalNumberOfTarget) << std::endl;
-	std::cout << "Success : " << std::to_string(perf.sucess) << " %" << std::endl;
-	std::cout << "Fired : " << std::to_string(perf.projectileFired) << std::endl;
-	std::cout << "Accuracy : " << std::to_string(perf.accuracy) << " %" << std::endl;
+	std::string result = "Hit " + std::to_string(perf.targetHitted) + "\n"
+		+ "Total Targets " + std::to_string(perf.totalNumberOfTarget) + "\n"
+		+ "Success " + std::to_string(perf.sucess) + " %" + "\n"
+		+ "Fired " + std::to_string(perf.projectileFired) + "\n"
+		+ "Accuracy " + std::to_string(perf.accuracy) + " %" + "\n";
+
+	m_gameOverStatsText = sf::Text(result, m_fontA, 50);
+	m_gameOverStatsText.setFillColor(sf::Color::Black);
+	m_gameOverStatsText.setPosition(100, 200);
+
+	m_gameOverBestStatsText = sf::Text(result, m_fontA, 50);
+	m_gameOverBestStatsText.setFillColor(sf::Color::Black);
+	m_gameOverBestStatsText.setPosition(750, 200);
+	
+	
+
+	std::cout << result;
 }
 
 ////////////////////////////////////////////////////////////
@@ -218,14 +241,25 @@ void Game::render()
 		m_window.draw(wallSprite);
 	}
 
-	//drawing the target
-	m_targets.render(m_window);
-
 	//drawing the timer
 	m_window.draw(m_bigDisplayedText);
 
+	//drawing the target
+	m_targets.render(m_window);
+
 	//drawing the tank 
 	m_tank.render(m_window);
+
+	
+
+	// GameOver 
+	if (m_state == GameState::STOPPED)
+	{
+		m_window.draw(m_smokedSprite); //smoked sprite
+		m_window.draw(m_bigDisplayedText); // re drawing the game over text
+		m_window.draw(m_gameOverStatsText); // Player Perf
+		m_window.draw(m_gameOverBestStatsText); // Best Perf
+	}
 
 	m_window.display();
 }

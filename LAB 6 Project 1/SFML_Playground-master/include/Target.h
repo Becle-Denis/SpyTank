@@ -18,7 +18,7 @@ public:
 	/// <summary>
 	/// Initialise the target, set the Sprite qnd position
 	/// </summary>
-	/// <param name="texture">Texture of the Tqrget</param>
+	/// <param name="texture">Texture of the Target</param>
 	/// <param name="position">Position of the target</param>
 	/// <param name="timeToStart">Time of first apperance of the target</param>
 	/// <param name="timeOnScreen">Time of the target to be on screen</param>

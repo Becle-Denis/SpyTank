@@ -101,7 +101,7 @@ void Game::run()
 {
 	sf::Clock clock;
 	sf::Int32 lag = 0;
-	m_timerLeft.restart(sf::seconds(60.f));
+	m_timerLeft.restart(sf::seconds(10.f));
 
 	while (m_window.isOpen())
 	{
@@ -180,23 +180,33 @@ void Game::setGameOver()
 
 	TankPerformance perf = m_tank.getPerformance();
 
-	std::string result = "Hit " + std::to_string(perf.targetHitted) + "\n"
-		+ "Total Targets " + std::to_string(perf.totalNumberOfTarget) + "\n"
-		+ "Success " + std::to_string(perf.sucess) + " %" + "\n"
-		+ "Fired " + std::to_string(perf.projectileFired) + "\n"
-		+ "Accuracy " + std::to_string(perf.accuracy) + " %" + "\n";
+	std::string title = "\nHit\nTotal Targets\nSuccess\nFired\nAccuracy";
+	std::string actualStats = "Player\n"
+		+ std::to_string(perf.targetHitted) + "\n" 
+		+ std::to_string(perf.totalNumberOfTarget) + "\n" 
+		+ std::to_string(perf.sucess) + " %" + "\n"
+		+ std::to_string(perf.projectileFired) + "\n"
+		+ std::to_string(perf.accuracy) + " %";
+	std::string bestStats = "Best\n"
+		+ std::to_string(perf.targetHitted) + "\n"
+		+ std::to_string(perf.totalNumberOfTarget) + "\n"
+		+ std::to_string(perf.sucess) + " %" + "\n"
+		+ std::to_string(perf.projectileFired) + "\n"
+		+ std::to_string(perf.accuracy) + " %";
 
-	m_gameOverStatsText = sf::Text(result, m_fontA, 50);
+	m_gameOverStatsText = sf::Text(title, m_fontA, 60);
 	m_gameOverStatsText.setFillColor(sf::Color::Black);
 	m_gameOverStatsText.setPosition(100, 200);
 
-	m_gameOverBestStatsText = sf::Text(result, m_fontA, 50);
-	m_gameOverBestStatsText.setFillColor(sf::Color::Black);
-	m_gameOverBestStatsText.setPosition(750, 200);
-	
-	
+	m_gameOverPLayerStatsText = sf::Text(actualStats, m_fontA, 60);
+	m_gameOverPLayerStatsText.setFillColor(sf::Color(0,80,0));
+	m_gameOverPLayerStatsText.setPosition(700, 200);
 
-	std::cout << result;
+	m_gameOverBestStatsText = sf::Text(bestStats, m_fontA, 60);
+	m_gameOverBestStatsText.setFillColor(sf::Color(100, 0, 0));
+	m_gameOverBestStatsText.setPosition(1000, 200);
+
+	std::cout << actualStats << std::endl;
 }
 
 ////////////////////////////////////////////////////////////
@@ -257,8 +267,9 @@ void Game::render()
 	{
 		m_window.draw(m_smokedSprite); //smoked sprite
 		m_window.draw(m_bigDisplayedText); // re drawing the game over text
-		m_window.draw(m_gameOverStatsText); // Player Perf
-		m_window.draw(m_gameOverBestStatsText); // Best Perf
+		m_window.draw(m_gameOverStatsText); // Stats text
+		m_window.draw(m_gameOverPLayerStatsText); // Actual stats
+		m_window.draw(m_gameOverBestStatsText); // Best stats
 	}
 
 	m_window.display();

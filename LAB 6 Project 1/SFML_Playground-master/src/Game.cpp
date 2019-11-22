@@ -10,7 +10,7 @@ Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
 	m_targets(m_targetTexture),
 	m_tank(m_spriteSheetTexture, m_wallSprites, m_targets, m_projectilesPool),
-	m_state(GameState::IN_PROGRESS), m_projectilesPool(m_spriteSheetTexture,10)
+	m_state(GameState::NOT_STARTED), m_projectilesPool(m_spriteSheetTexture,10)
 {
 	//seed the random 
 	srand(time(nullptr));
@@ -68,7 +68,7 @@ Game::Game()
 	{
 		std::cout << "problem loading font file" << std::endl;
 	}
-	m_bigDisplayedText = sf::Text("",m_fontA,50);
+	m_bigDisplayedText = sf::Text("BLIND TANK",m_fontA,50);
 	m_bigDisplayedText.setFillColor(sf::Color::Red);
 	m_bigDisplayedText.setPosition(450,50);
 
@@ -101,7 +101,6 @@ void Game::run()
 {
 	sf::Clock clock;
 	sf::Int32 lag = 0;
-	m_timerLeft.restart(sf::seconds(10.f));
 
 	while (m_window.isOpen())
 	{
@@ -165,7 +164,11 @@ void Game::processGameEvents(sf::Event& event)
 		case sf::Keyboard::Escape:
 			m_window.close();
 			break;
-
+		case sf::Keyboard::Enter:
+			if (m_state == GameState::NOT_STARTED)
+			{
+				start();
+			}
 		default:
 			break;
 		}
@@ -174,7 +177,7 @@ void Game::processGameEvents(sf::Event& event)
 
 void Game::setGameOver()
 {
-	m_state = GameState::STOPPED;
+	m_state = GameState::OVER;
 	m_targets.revealResult();
 	m_bigDisplayedText.setString("Game Over !");
 
@@ -199,14 +202,20 @@ void Game::setGameOver()
 	m_gameOverStatsText.setPosition(100, 200);
 
 	m_gameOverPLayerStatsText = sf::Text(actualStats, m_fontA, 60);
-	m_gameOverPLayerStatsText.setFillColor(sf::Color(0,80,0));
+	m_gameOverPLayerStatsText.setFillColor(sf::Color(168,152,0));
 	m_gameOverPLayerStatsText.setPosition(700, 200);
 
 	m_gameOverBestStatsText = sf::Text(bestStats, m_fontA, 60);
-	m_gameOverBestStatsText.setFillColor(sf::Color(100, 0, 0));
+	m_gameOverBestStatsText.setFillColor(sf::Color(0, 0, 150));
 	m_gameOverBestStatsText.setPosition(1000, 200);
 
 	std::cout << actualStats << std::endl;
+}
+
+void Game::start()
+{
+	m_state = GameState::IN_PROGRESS;
+	m_timerLeft.restart(sf::seconds(5.f));
 }
 
 ////////////////////////////////////////////////////////////
@@ -260,10 +269,15 @@ void Game::render()
 	//drawing the tank 
 	m_tank.render(m_window);
 
-	
+	//Not Started 
+	if (m_state == GameState::NOT_STARTED)
+	{
+		m_window.draw(m_smokedSprite); //smoked sprite
+		m_window.draw(m_bigDisplayedText); // re drawing the game over text
+	}
 
 	// GameOver 
-	if (m_state == GameState::STOPPED)
+	if (m_state == GameState::OVER)
 	{
 		m_window.draw(m_smokedSprite); //smoked sprite
 		m_window.draw(m_bigDisplayedText); // re drawing the game over text

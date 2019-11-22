@@ -17,7 +17,7 @@
 
 
 //Enum for gameState
-enum GameState{IN_PROGRESS,STOPPED};
+enum GameState{NOT_STARTED,IN_PROGRESS,OVER};
 
 
 /// <summary>
@@ -127,4 +127,9 @@ protected: // function
 	/// Set the game state to gameOver
 	/// </summary>
 	void setGameOver();
+
+	/// <summary>
+	/// Set the Game state to InProgress
+	/// </summary>
+	void start();
 };

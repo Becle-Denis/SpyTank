@@ -39,6 +39,43 @@ std::string UserPerformance::toStringColumnFull()
 		+ std::to_string(m_accuracy) + " %";
 }
 
+bool UserPerformance::saveOnFile(std::string fileName)
+{
+	return false;
+}
+
+UserPerformance UserPerformance::loadFromFile(std::string filePath)
+{
+	UserPerformance perf;
+	try
+	{
+		YAML::Node baseNode = YAML::LoadFile(filePath);
+		if (baseNode.IsNull())
+		{
+			std::string message("Loading Scores : File: " + filePath + " not found");
+			throw std::exception(message.c_str());
+		}
+		// do magic here
+		int totalTargets = baseNode["best"]["totalTarget"].as<int>();
+		int hitted = baseNode["best"]["targetHitted"].as<int>();
+		int fired = baseNode["best"]["projectileFired"].as<int>();
+		perf = UserPerformance(totalTargets,hitted,fired);
+	}
+	catch (YAML::ParserException& e)
+	{
+		std::string message(e.what());
+		message = "Loading Scores :  YAML Parser Error: " + message;
+		std::cout << message << std::endl;
+	}
+	catch (std::exception& e)
+	{
+		std::string message(e.what());
+		message = "Loading Scores : Unexpected Error: " + message;
+		std::cout << message << std::endl;
+	}
+	return perf;
+}
+
 void UserPerformance::calculate()
 {
 	if (m_targetManagerPtr != nullptr)

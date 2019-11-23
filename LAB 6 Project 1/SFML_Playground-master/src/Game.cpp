@@ -190,11 +190,12 @@ void Game::setGameOver()
 	m_targets.revealResult();
 	m_bigDisplayedText.setString("Game Over !");
 
-	UserPerformance perf = m_tank.getPerformance();
+	UserPerformance actualPerf = m_tank.getPerformance();
+	UserPerformance bestPerf = UserPerformance::loadFromFile("./resources/scores/BestOfAllTime.yaml");
 
 	std::string title = "\nHit\nTotal Targets\nSuccess\nFired\nAccuracy";
-	std::string actualStats = "Player\n" + perf.toStringColumnFull();
-	std::string bestStats = "Best\n" + perf.toStringColumnFull();
+	std::string actualStats = "Player\n" + actualPerf.toStringColumnFull();
+	std::string bestStats = "Best\n" + bestPerf.toStringColumnFull();
 
 	m_statTitleText = sf::Text(title, m_fontA, 60);
 	m_statTitleText.setFillColor(sf::Color::Black);
@@ -208,13 +209,12 @@ void Game::setGameOver()
 	m_gameOverBestStatsText.setFillColor(sf::Color(168, 152, 0));
 	m_gameOverBestStatsText.setPosition(1000, 200);
 
-	std::cout << actualStats << std::endl;
 }
 
 void Game::start()
 {
 	m_state = GameState::IN_PROGRESS;
-	m_timerLeft.restart(sf::seconds(60.f));
+	m_timerLeft.restart(sf::seconds(5.f));
 }
 
 ////////////////////////////////////////////////////////////

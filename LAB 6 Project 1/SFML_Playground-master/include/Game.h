@@ -6,6 +6,7 @@
 #include "Tank.h"
 #include "ProjectilePool.h"
 #include "TargetManager.h"
+#include "UserPerformance.h"
 
 /// <summary>
 /// @author RP

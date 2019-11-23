@@ -190,21 +190,11 @@ void Game::setGameOver()
 	m_targets.revealResult();
 	m_bigDisplayedText.setString("Game Over !");
 
-	TankPerformance perf = m_tank.getPerformance();
+	UserPerformance perf = m_tank.getPerformance();
 
 	std::string title = "\nHit\nTotal Targets\nSuccess\nFired\nAccuracy";
-	std::string actualStats = "Player\n"
-		+ std::to_string(perf.targetHitted) + "\n" 
-		+ std::to_string(perf.totalNumberOfTarget) + "\n" 
-		+ std::to_string(perf.sucess) + " %" + "\n"
-		+ std::to_string(perf.projectileFired) + "\n"
-		+ std::to_string(perf.accuracy) + " %";
-	std::string bestStats = "Best\n"
-		+ std::to_string(perf.targetHitted) + "\n"
-		+ std::to_string(perf.totalNumberOfTarget) + "\n"
-		+ std::to_string(perf.sucess) + " %" + "\n"
-		+ std::to_string(perf.projectileFired) + "\n"
-		+ std::to_string(perf.accuracy) + " %";
+	std::string actualStats = "Player\n" + perf.toStringColumnFull();
+	std::string bestStats = "Best\n" + perf.toStringColumnFull();
 
 	m_statTitleText = sf::Text(title, m_fontA, 60);
 	m_statTitleText.setFillColor(sf::Color::Black);
@@ -249,10 +239,8 @@ void Game::update(double dt)
 			m_tank.update(dt);
 
 			//updating the stats 
-			TankPerformance stats = m_tank.getPerformance();
-			m_playerStatsText.setString(std::to_string(stats.targetHitted) 
-				+ "\n" + std::to_string(stats.sucess) + " %" + "\n"
-				+ std::to_string(stats.accuracy) + " %");
+			UserPerformance stats = m_tank.getPerformance();
+			m_playerStatsText.setString(stats.toStringColumn());
 		}
 	}
 

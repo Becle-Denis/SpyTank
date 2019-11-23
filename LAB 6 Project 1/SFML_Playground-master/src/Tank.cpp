@@ -7,7 +7,8 @@ Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, Tar
 	m_wallSprites(wallSprites),
 	m_targets(targets),
 	m_projectilesPool(projectilePool),
-	m_maximumSpeed(80)
+	m_maximumSpeed(80),
+	m_performances(&targets)
 {
 	initSprites();
 	m_fireTimer.restart(sf::seconds(1.f));
@@ -28,7 +29,7 @@ void Tank::update(double dt)
 			m_targets.hit(collisionResult);
 			m_projectilesPtr.at(i)->setInactive();
 			m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
-			m_performances.targetHitted++;
+			m_performances.targetHitted();
 		}
 		else if (!(m_projectilesPtr.at(i)->isAlive(m_wallSprites))) //colision with wall or outside the map
 		{
@@ -126,19 +127,8 @@ void Tank::setPosition(sf::Vector2f const& pos)
 }
 
 ////////////////////////////////////////////////////////////
-TankPerformance Tank::getPerformance()
+UserPerformance& Tank::getPerformance()
 {
-	m_performances.totalNumberOfTarget = m_targets.getNumberOfDisplayedTarget();
-	if (m_performances.totalNumberOfTarget != 0) //
-	{
-		//calculate success 
-		m_performances.sucess = static_cast<int>((static_cast<double>(m_performances.targetHitted) / static_cast<double>(m_performances.totalNumberOfTarget)) * 100);
-	}
-	if (m_performances.projectileFired != 0) 
-	{
-		//calculate accuracy
-		m_performances.accuracy = static_cast<int>((static_cast<double>(m_performances.targetHitted) / static_cast<double>(m_performances.projectileFired)) * 100);
-	}
 	return m_performances;
 }
 
@@ -316,7 +306,7 @@ void Tank::fire()
 	{
 		newProjectilePtr->launch(m_tankBase.getPosition(),m_turretRotation);
 		m_projectilesPtr.push_back(newProjectilePtr);
-		m_performances.projectileFired++;
+		m_performances.projectileFired();
 		canFire = false;
 		m_fireTimer.restart(sf::seconds(1.f));
 	}

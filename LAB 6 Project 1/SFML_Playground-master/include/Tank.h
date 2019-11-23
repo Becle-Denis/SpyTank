@@ -5,21 +5,8 @@
 #include "ProjectilePool.h"
 #include "Projectile.h"
 #include "TargetManager.h"
+#include "UserPerformance.h"
 #include <Thor/Time/CallbackTimer.hpp>
-
-/// <summary>
-/// @brief A simple struct for storing the performance of the player 
-/// 
-/// </summary>
-struct TankPerformance
-{
-	int totalNumberOfTarget{ 0 };
-	int targetHitted{ 0 };
-	int sucess{ 0 };
-	int projectileFired{ 0 };
-	int accuracy{ 0 };
-	
-};
 
 /// <summary>
 /// @brief A simple tank controller.
@@ -46,7 +33,7 @@ private: // Attributes
 	thor::Timer m_fireTimer; // Timer for the time between two fire
 
 	// Performances 
-	TankPerformance m_performances;
+	UserPerformance m_performances;
 
 	//Tank Movement attributes 
 	// The tank speed.
@@ -110,8 +97,7 @@ public:	//functions
 	/// Calculate and return the tank performances
 	/// </summary>
 	/// <returns>Actual tank performances</returns>
-	TankPerformance getPerformance();
-
+	UserPerformance& getPerformance();
 	
 private: // functions 
 	/// <summary>

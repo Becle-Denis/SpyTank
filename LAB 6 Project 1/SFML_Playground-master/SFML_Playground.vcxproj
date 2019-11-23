@@ -30,6 +30,7 @@
     <ClInclude Include="include\Tank.h" />
     <ClInclude Include="include\Target.h" />
     <ClInclude Include="include\TargetManager.h" />
+    <ClInclude Include="include\UserPerformance.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CollisionDetector.cpp" />
@@ -42,6 +43,7 @@
     <ClCompile Include="src\Tank.cpp" />
     <ClCompile Include="src\Target.cpp" />
     <ClCompile Include="src\TargetManager.cpp" />
+    <ClCompile Include="src\UserPerformance.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F10133B9-852C-4A93-A994-DC0D1C009AD5}</ProjectGuid>

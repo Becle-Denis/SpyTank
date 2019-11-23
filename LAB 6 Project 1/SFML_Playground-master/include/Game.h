@@ -58,8 +58,8 @@ protected: //attributes
 	sf::Font m_fontA; //Font for the text
 
 	sf::Text m_bigDisplayedText; //text for the timer
-	sf::Text m_gameOverStatsText; //text for displaying the performances titles
-	sf::Text m_gameOverPLayerStatsText; // text for displaying the actual player performances 
+	sf::Text m_statTitleText; //text for displaying the performances titles
+	sf::Text m_playerStatsText; // text for displaying the actual player performances 
 	sf::Text m_gameOverBestStatsText; //text for displaying the best player performances 
 
 	//Textures storages

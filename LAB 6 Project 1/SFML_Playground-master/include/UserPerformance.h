@@ -28,7 +28,11 @@ public: // functions
 
 	static UserPerformance loadFromFile(std::string fileName);
 
+	friend bool operator<(UserPerformance a, UserPerformance b);
+
 private: // function 
 	void calculate();
+
+
 };
 

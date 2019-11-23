@@ -92,3 +92,20 @@ void UserPerformance::calculate()
 	}
 }
 
+bool operator<(UserPerformance a, UserPerformance b)
+{
+	a.calculate();
+	b.calculate();
+	if (a.m_sucess < b.m_sucess)
+	{
+		return true;
+	}
+	if (a.m_sucess == b.m_sucess)
+	{
+		if (a.m_accuracy < b.m_accuracy)
+		{
+			return true;
+		}
+	}
+	return false;
+}

@@ -192,11 +192,21 @@ void Game::setGameOver()
 
 	UserPerformance actualPerf = m_tank.getPerformance();
 	UserPerformance bestPerf = UserPerformance::loadFromFile("./resources/scores/BestOfAllTime.yaml");
-
+	
 	std::string title = "\nHit\nTotal Targets\nSuccess\nFired\nAccuracy";
 	std::string actualStats = "Player\n" + actualPerf.toStringColumnFull();
 	std::string bestStats = "Best\n" + bestPerf.toStringColumnFull();
 
+	if (bestPerf < actualPerf)
+	{
+		//saving Actual perf 
+		actualPerf.saveOnFile("./resources/scores/BestOfAllTime.yaml");
+
+		//Set the new string
+		bestStats = "Best\n" + actualPerf.toStringColumnFull();
+	}
+
+	
 	m_statTitleText = sf::Text(title, m_fontA, 60);
 	m_statTitleText.setFillColor(sf::Color::Black);
 	m_statTitleText.setPosition(100, 200);
@@ -214,7 +224,7 @@ void Game::setGameOver()
 void Game::start()
 {
 	m_state = GameState::IN_PROGRESS;
-	m_timerLeft.restart(sf::seconds(5.f));
+	m_timerLeft.restart(sf::seconds(60.f));
 }
 
 ////////////////////////////////////////////////////////////

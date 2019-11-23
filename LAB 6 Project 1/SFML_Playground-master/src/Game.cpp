@@ -215,7 +215,7 @@ void Game::setGameOver()
 void Game::start()
 {
 	m_state = GameState::IN_PROGRESS;
-	m_timerLeft.restart(sf::seconds(5.f));
+	m_timerLeft.restart(sf::seconds(60.f));
 }
 
 ////////////////////////////////////////////////////////////

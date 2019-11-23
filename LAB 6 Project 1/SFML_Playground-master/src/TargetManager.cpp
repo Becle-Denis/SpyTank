@@ -56,6 +56,11 @@ void TargetManager::hit(int index)
 	if (index < m_number_of_targets)
 	{
 		sf::Time bonusTime = (m_targets + index)->hit(); // hit the actual target 
+		//limiting the bonus time 
+		if (bonusTime > sf::seconds(4.f))
+		{
+			bonusTime = sf::seconds(4.f);
+		}
 		if (!isOneOnScreen())
 		{
 			int nextIndex = getNextIndex();

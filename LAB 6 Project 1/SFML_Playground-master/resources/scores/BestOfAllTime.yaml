@@ -1,4 +1,4 @@
 best:
-   totalTarget: 13
-   targetHitted: 13
-   projectileFired: 26 
+  projectileFired: 4
+  targetHitted: 5
+  totalTarget: 13

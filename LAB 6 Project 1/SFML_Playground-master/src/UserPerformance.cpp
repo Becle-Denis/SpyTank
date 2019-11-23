@@ -41,7 +41,13 @@ std::string UserPerformance::toStringColumnFull()
 
 bool UserPerformance::saveOnFile(std::string fileName)
 {
-	return false;
+	YAML::Node bestNode;
+	bestNode["best"]["totalTarget"] = m_totalNumberOfTarget;
+	bestNode["best"]["targetHitted"] = m_targetHitted;
+	bestNode["best"]["projectileFired"] = m_projectileFired;
+	std::ofstream fout(fileName);
+	fout << bestNode;
+	return true;
 }
 
 UserPerformance UserPerformance::loadFromFile(std::string filePath)

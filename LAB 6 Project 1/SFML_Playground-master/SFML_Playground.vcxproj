@@ -27,12 +27,14 @@
     <ClInclude Include="include\Projectile.h" />
     <ClInclude Include="include\ProjectilePool.h" />
     <ClInclude Include="include\ScreenSize.h" />
+    <ClInclude Include="include\SoundManager.h" />
     <ClInclude Include="include\Tank.h" />
     <ClInclude Include="include\Target.h" />
     <ClInclude Include="include\TargetManager.h" />
     <ClInclude Include="include\UserPerformance.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\SoundManager.cpp" />
     <ClCompile Include="src\CollisionDetector.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\LevelLoader.cpp" />

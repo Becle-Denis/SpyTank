@@ -7,6 +7,7 @@
 #include "ProjectilePool.h"
 #include "TargetManager.h"
 #include "UserPerformance.h"
+#include "SoundManager.h"
 
 /// <summary>
 /// @author RP
@@ -46,6 +47,8 @@ protected: //attributes
 	TargetManager m_targets; // Targets 
 
 	ProjectilePool m_projectilesPool; // Pool of Projectile 
+
+	SoundManager m_soundManager; // sounds
 
 	sf::Sprite m_bgSprite; //backgroud sprite
 

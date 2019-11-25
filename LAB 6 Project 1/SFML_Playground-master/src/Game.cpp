@@ -112,6 +112,9 @@ void Game::run()
 	sf::Clock clock;
 	sf::Int32 lag = 0;
 
+	//sound stuff
+	m_soundManager.startMenuMusic();
+
 	while (m_window.isOpen())
 	{
 		sf::Time dt = clock.restart();
@@ -194,6 +197,7 @@ void Game::setGameOver()
 
 	//Sounds stuff
 	m_soundManager.stopLevelMusic();
+	m_soundManager.startMenuMusic();
 
 	//Seting the performance display 
 	UserPerformance actualPerf = m_tank.getPerformance();
@@ -230,6 +234,7 @@ void Game::setGameOver()
 void Game::start()
 {
 	m_state = GameState::IN_PROGRESS;
+	m_soundManager.stopMenuMusic();
 	m_soundManager.startLevelMusic();
 	m_timerLeft.restart(sf::seconds(60.f));
 }

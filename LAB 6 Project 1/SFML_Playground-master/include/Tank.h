@@ -6,6 +6,7 @@
 #include "Projectile.h"
 #include "TargetManager.h"
 #include "UserPerformance.h"
+#include "SoundManager.h"
 #include <Thor/Time/CallbackTimer.hpp>
 
 /// <summary>
@@ -22,7 +23,7 @@ private: // Attributes
 	std::vector<sf::Sprite>& m_wallSprites; // A reference to the container of wall sprites.	 
 	TargetManager& m_targets; // A Reference to the container of Targets 
 	ProjectilePool& m_projectilesPool; // Reference to the Pool of projectiles
-
+	SoundManager& m_soundManager; // Reference to the soundManager
 	//Sprites 
 	sf::Sprite m_tankBase;
 	sf::Sprite m_turret;
@@ -74,7 +75,7 @@ public:	//functions
 	/// </summary>
 	/// <param name="texture">A reference to the sprite sheet texture</param>
 	///< param name="texture">A reference to the container of wall sprites</param>  
-	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, TargetManager& targets, ProjectilePool& projectilePool);
+	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager);
 
 	/// <summary>
 	/// @brief Update the tank attributes and dependant objects(projectile) and handle the player input

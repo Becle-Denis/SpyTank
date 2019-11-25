@@ -2,13 +2,14 @@
 #include <iostream>
 
 
-Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, TargetManager& targets, ProjectilePool& projectilePool)
+Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager)
 	: m_texture(texture),
 	m_wallSprites(wallSprites),
 	m_targets(targets),
 	m_projectilesPool(projectilePool),
 	m_maximumSpeed(80),
-	m_performances(&targets)
+	m_performances(&targets),
+	m_soundManager(soundManager)
 {
 	initSprites();
 	m_fireTimer.restart(sf::seconds(1.f));
@@ -307,6 +308,7 @@ void Tank::fire()
 		newProjectilePtr->launch(m_tankBase.getPosition(),m_turretRotation);
 		m_projectilesPtr.push_back(newProjectilePtr);
 		m_performances.projectileFired();
+		m_soundManager.playFireSound();
 		canFire = false;
 		m_fireTimer.restart(sf::seconds(1.f));
 	}

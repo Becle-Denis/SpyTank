@@ -8,7 +8,7 @@ static double const MS_PER_UPDATE = 10.0;
 ////////////////////////////////////////////////////////////
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
-	m_targets(m_targetTexture),
+	m_targets(m_targetTexture, m_soundManager),
 	m_tank(m_spriteSheetTexture, m_wallSprites, m_targets, m_projectilesPool, m_soundManager),
 	m_state(GameState::NOT_STARTED), m_projectilesPool(m_spriteSheetTexture, 10),
 	m_soundManager("./resources/sounds/music/Level1v1.wav")

@@ -1,6 +1,7 @@
 #pragma once
 #include "Target.h"
 #include "LevelLoader.h"
+#include "SoundManager.h"
 
 /// <summary>
 /// @brief A class for store and Manage all the target of a Level
@@ -12,9 +13,10 @@ private: // Attributes
 	Target* m_targets; // Target storage array 
 	int m_number_of_targets; // size of the array
 	sf::Texture const& m_texture; //Texture for the targets 
+	SoundManager& m_soundManager; //Reference to the soundManager
 
 public: // functions 
-	TargetManager(sf::Texture const& targetTexture); //Construct the manager
+	TargetManager(sf::Texture const& targetTexture, SoundManager& soundManager); //Construct the manager
 	~TargetManager(); // Delete all the target 
 
 	/// <summary>

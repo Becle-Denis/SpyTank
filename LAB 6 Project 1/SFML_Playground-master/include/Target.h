@@ -75,6 +75,8 @@ public:
 	/// <returns>True if the state is notDisplayed</returns>
 	bool waintingToBeDisplayed(sf::Time& waitingTime);
 
+	sf::Vector2f getPosition();
+
 private:
 	// the sprite of the Target, this will store the position and rotation of the Target
 	sf::Sprite m_sprite;

@@ -128,3 +128,8 @@ bool Target::waintingToBeDisplayed(sf::Time& waitingTime)
 	}
 	return false;
 }
+
+sf::Vector2f Target::getPosition()
+{
+	return m_sprite.getPosition();
+}

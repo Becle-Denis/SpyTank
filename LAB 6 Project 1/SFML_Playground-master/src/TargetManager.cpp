@@ -1,9 +1,10 @@
 #include "TargetManager.h"
 
-TargetManager::TargetManager(sf::Texture const& targetTexture) :
+TargetManager::TargetManager(sf::Texture const& targetTexture, SoundManager& soundManager) :
 	m_number_of_targets(0),
 	m_texture(targetTexture),
-	m_targets(nullptr)
+	m_targets(nullptr),
+	m_soundManager(soundManager)
 {
 
 }
@@ -56,6 +57,9 @@ void TargetManager::hit(int index)
 	if (index < m_number_of_targets)
 	{
 		sf::Time bonusTime = (m_targets + index)->hit(); // hit the actual target 
+		//sound stuff 
+		m_soundManager.playTargetSound((m_targets + index)->getPosition());
+
 		//limiting the bonus time 
 		if (bonusTime > sf::seconds(4.f))
 		{

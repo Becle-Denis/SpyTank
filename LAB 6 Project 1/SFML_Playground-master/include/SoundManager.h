@@ -15,6 +15,7 @@ private:
 	sf::Sound m_targetSound;
 
 	sf::Vector2f m_listenerPosition;
+	double m_listenerRotation;
 
 public:
 	SoundManager(std::string filePath);

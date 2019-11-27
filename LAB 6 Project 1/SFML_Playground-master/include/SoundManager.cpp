@@ -69,12 +69,14 @@ void SoundManager::playFireSound()
 
 void SoundManager::playTargetSound(sf::Vector2f position)
 {
-	m_targetSound.setPosition(position.x - m_listenerPosition.x, position.y - m_listenerPosition.y, 0);
+	sf::Vector2f positionRelativeToOrigin = position - m_listenerPosition;
+	thor::rotate<float>(positionRelativeToOrigin, -(m_listenerRotation + 90));
+	m_targetSound.setPosition(positionRelativeToOrigin.x, positionRelativeToOrigin.y,0);
 	m_targetSound.play();
 }
 
 void SoundManager::updateListenerPostion(sf::Vector2f position, double rotation)
 {
+	m_listenerRotation = rotation;
 	m_listenerPosition = position;
-	//sf::Listener::setDirection(cos(rotation * MathUtility::DEG_TO_RAD), sin(rotation * MathUtility::DEG_TO_RAD), 0);
 }

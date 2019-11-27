@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Audio.hpp>
+#include "MathUtility.h"
+
 class SoundManager
 {
 private:
@@ -12,6 +14,8 @@ private:
 	sf::SoundBuffer m_targetBuffer;
 	sf::Sound m_targetSound;
 
+	sf::Vector2f m_listenerPosition;
+
 public:
 	SoundManager(std::string filePath);
 	void startLevelMusic();
@@ -20,5 +24,6 @@ public:
 	void stopMenuMusic();
 	void playFireSound();
 	void playTargetSound(sf::Vector2f position);
+	void updateListenerPostion(sf::Vector2f position, double rotation = 0);
 };
 

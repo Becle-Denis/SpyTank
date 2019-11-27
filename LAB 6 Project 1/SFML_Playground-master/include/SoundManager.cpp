@@ -22,9 +22,9 @@ SoundManager::SoundManager(std::string filePath)
 	}
 	m_fireSound.setBuffer(m_fireBuffer);
 
-	if (!m_targetBuffer.loadFromFile("./resources/sounds/fx/targetImpact1.wav"))
+	if (!m_targetBuffer.loadFromFile("./resources/sounds/fx/targetImpact2.wav"))
 	{
-		std::string s("Error loading music ./resources/sounds/fx/targetImpact1.wav");
+		std::string s("Error loading music ./resources/sounds/fx/targetImpact2.wav");
 		throw std::exception(s.c_str());
 	}
 	m_targetSound.setBuffer(m_targetBuffer);
@@ -36,7 +36,9 @@ SoundManager::SoundManager(std::string filePath)
 	m_menuMusic.setVolume(80);
 	m_fireSound.setVolume(100);
 	m_targetSound.setVolume(100);
-	m_targetSound.setRelativeToListener(false);
+	m_targetSound.setRelativeToListener(true);
+	m_targetSound.setMinDistance(100);
+
 }
 
 void SoundManager::startLevelMusic()
@@ -67,6 +69,12 @@ void SoundManager::playFireSound()
 
 void SoundManager::playTargetSound(sf::Vector2f position)
 {
-	//m_targetSound.setPosition(sf::Vector3f(position.x,position.y,0));
+	m_targetSound.setPosition(position.x - m_listenerPosition.x, position.y - m_listenerPosition.y, 0);
 	m_targetSound.play();
+}
+
+void SoundManager::updateListenerPostion(sf::Vector2f position, double rotation)
+{
+	m_listenerPosition = position;
+	//sf::Listener::setDirection(cos(rotation * MathUtility::DEG_TO_RAD), sin(rotation * MathUtility::DEG_TO_RAD), 0);
 }

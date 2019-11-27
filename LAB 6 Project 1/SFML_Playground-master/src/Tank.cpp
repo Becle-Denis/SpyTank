@@ -87,7 +87,8 @@ void Tank::update(double dt)
 		m_enableRotation = true;
 	}
 
-
+	//soundStuff 
+	m_soundManager.updateListenerPostion(m_tankBase.getPosition(), m_rotation);
 
 }
 

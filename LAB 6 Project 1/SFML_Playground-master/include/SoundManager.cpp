@@ -45,9 +45,9 @@ SoundManager::SoundManager(std::string filePath)
 	m_targetSound.setVolume(100);
 	m_targetSound.setRelativeToListener(true);
 	m_targetSound.setMinDistance(100);
-	m_wallImpactSound.setVolume(80);
-	m_wallImpactSound.setRelativeToListener(false);
-	//m_wallImpactSound.setMinDistance(100);
+	m_wallImpactSound.setVolume(100);
+	m_wallImpactSound.setRelativeToListener(true);
+	m_wallImpactSound.setMinDistance(100);
 
 }
 
@@ -79,19 +79,24 @@ void SoundManager::playFireSound()
 
 void SoundManager::playTargetSound(sf::Vector2f position)
 {
-	sf::Vector2f positionRelativeToOrigin = position - m_listenerPosition;
-	thor::rotate<float>(positionRelativeToOrigin, -(m_listenerRotation + 90));
-	m_targetSound.setPosition(positionRelativeToOrigin.x, positionRelativeToOrigin.y,0);
-	m_targetSound.play();
+	playSound(m_targetSound, position);
 }
 
 void SoundManager::playWallImpactSound(sf::Vector2f position)
 {
-	m_wallImpactSound.play();
+	playSound(m_wallImpactSound, position);
 }
 
 void SoundManager::updateListenerPostion(sf::Vector2f position, double rotation)
 {
 	m_listenerRotation = rotation;
 	m_listenerPosition = position;
+}
+
+void SoundManager::playSound(sf::Sound& sound, sf::Vector2f position)
+{
+	sf::Vector2f positionRelativeToOrigin = position - m_listenerPosition;
+	thor::rotate<float>(positionRelativeToOrigin, -(m_listenerRotation + 90));
+	sound.setPosition(positionRelativeToOrigin.x, positionRelativeToOrigin.y, 0);
+	sound.play();
 }

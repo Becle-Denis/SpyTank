@@ -32,6 +32,6 @@ public: // functions
 	void updateListenerPostion(sf::Vector2f position, double rotation = 0);
 
 private: //functions 
-
+	void playSound(sf::Sound& sound, sf::Vector2f position = sf::Vector2f(0, 0));
 };
 

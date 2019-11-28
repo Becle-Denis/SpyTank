@@ -29,6 +29,13 @@ SoundManager::SoundManager(std::string filePath)
 	}
 	m_targetSound.setBuffer(m_targetBuffer);
 
+	if (!m_wallImpactBuffer.loadFromFile("./resources/sounds/fx/WallImpact1.wav"))
+	{
+		std::string s("Error loading music ./resources/sounds/fx/WallImpact1.wav");
+		throw std::exception(s.c_str());
+	}
+	m_wallImpactSound.setBuffer(m_wallImpactBuffer);
+
 	//mixing 
 	m_levelMusic.setRelativeToListener(false);
 	m_levelMusic.setVolume(70);
@@ -38,6 +45,9 @@ SoundManager::SoundManager(std::string filePath)
 	m_targetSound.setVolume(100);
 	m_targetSound.setRelativeToListener(true);
 	m_targetSound.setMinDistance(100);
+	m_wallImpactSound.setVolume(80);
+	m_wallImpactSound.setRelativeToListener(false);
+	//m_wallImpactSound.setMinDistance(100);
 
 }
 
@@ -73,6 +83,11 @@ void SoundManager::playTargetSound(sf::Vector2f position)
 	thor::rotate<float>(positionRelativeToOrigin, -(m_listenerRotation + 90));
 	m_targetSound.setPosition(positionRelativeToOrigin.x, positionRelativeToOrigin.y,0);
 	m_targetSound.play();
+}
+
+void SoundManager::playWallImpactSound(sf::Vector2f position)
+{
+	m_wallImpactSound.play();
 }
 
 void SoundManager::updateListenerPostion(sf::Vector2f position, double rotation)

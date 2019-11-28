@@ -32,10 +32,21 @@ void Tank::update(double dt)
 			m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
 			m_performances.targetHitted();
 		}
-		else if (!(m_projectilesPtr.at(i)->isAlive(m_wallSprites))) //colision with wall or outside the map
+		else  //colision with wall or outside the map
 		{
-			m_projectilesPtr.at(i)->setInactive();
-   			m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
+			int lifeState = m_projectilesPtr.at(i)->lifeState(m_wallSprites);
+			if (lifeState != -1)
+			{
+				if (lifeState == 1)
+				{
+					//playing the impact sound 
+					m_soundManager.playWallImpactSound(m_projectilesPtr.at(i)->getSprite().getPosition());
+				}
+				//removing the projectile 
+				m_projectilesPtr.at(i)->setInactive();
+				m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
+			}
+			
 		}
 	}
 

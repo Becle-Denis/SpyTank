@@ -45,23 +45,23 @@ void Projectile::update(double dt)
 	m_projectileSprite.setPosition(sf::Vector2f(newXPosition, newYPosition));
 }
 
-bool Projectile::isAlive(std::vector<sf::Sprite>& wallSprites)
+int Projectile::lifeState(std::vector<sf::Sprite>& wallSprites)
 {
 	sf::Vector2f position = m_projectileSprite.getPosition();
 	//check for the limit of the screen 
 	if (position.x < 0 || position.y < 0 || position.x > 1600 || position.y > 1000 )
 	{
-		return false;
+		return 2;
 	}
 	//check for collision with wall
 	for (sf::Sprite& wall : wallSprites)
 	{
 		if (CollisionDetector::collision(m_projectileSprite,wall))
 		{
-			return false;
+			return 1;
 		}
 	}
-	return true;
+	return -1;
 }
 
 

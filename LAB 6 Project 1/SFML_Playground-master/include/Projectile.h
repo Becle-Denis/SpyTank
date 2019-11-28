@@ -58,7 +58,11 @@ public: //functions
 	void update(double dt);
 
 	//check for collision on wall, or projectile outside the map
-	bool isAlive(std::vector<sf::Sprite>& wallSprites);
+	// Return : 
+	//			-1 - No Collision 
+	//			1 - Collision with wall 
+	//			2 - Outside the map 
+	int lifeState(std::vector<sf::Sprite>& wallSprites);
 
 	//draw the projectile
 	void render(sf::RenderWindow& window);

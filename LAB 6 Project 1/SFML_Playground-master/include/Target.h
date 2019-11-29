@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <Thor/Time/CallbackTimer.hpp>
 #include "CollisionDetector.h"
+#include "SoundManager.h"
 
 enum TargetState { DeadByTime, DeadByHit, NotInitialised, NotStarted, NotDisplayed, OnScreen, BlinkingOnScreen };
 
@@ -22,7 +23,7 @@ public:
 	/// <param name="position">Position of the target</param>
 	/// <param name="timeToStart">Time of first apperance of the target</param>
 	/// <param name="timeOnScreen">Time of the target to be on screen</param>
-	void init(sf::Texture const* texture, sf::Vector2f position, sf::Time timeToStart, sf::Time timeOnScreen);
+	void init(sf::Texture const* texture, sf::Vector2f position, sf::Time timeToStart, sf::Time timeOnScreen, SoundManager* soundManager = nullptr);
 
 	/// <summary>
 	/// Update the state of the Target 
@@ -100,5 +101,8 @@ private:
 
 	// boolean for displaying the Target 
 	bool m_isDisplayed;
+
+	//soundManager
+	SoundManager* m_soundManagerPtr;
 };
 

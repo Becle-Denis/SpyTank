@@ -22,12 +22,19 @@ SoundManager::SoundManager(std::string filePath)
 	}
 	m_fireSound.setBuffer(m_fireBuffer);
 
-	if (!m_targetBuffer.loadFromFile("./resources/sounds/fx/targetImpact2.wav"))
+	if (!m_targetImpactBuffer.loadFromFile("./resources/sounds/fx/targetImpact2.wav"))
 	{
 		std::string s("Error loading music ./resources/sounds/fx/targetImpact2.wav");
 		throw std::exception(s.c_str());
 	}
-	m_targetSound.setBuffer(m_targetBuffer);
+	m_targetImpactSound.setBuffer(m_targetImpactBuffer);
+
+	if (!m_targetStartBuffer.loadFromFile("./resources/sounds/fx/TargetSonarStart.wav"))
+	{
+		std::string s("Error loading music ./resources/sounds/fx/TargetSonarStart.wav");
+		throw std::exception(s.c_str());
+	}
+	m_targetStartSound.setBuffer(m_targetStartBuffer);
 
 	if (!m_wallImpactBuffer.loadFromFile("./resources/sounds/fx/WallImpact1.wav"))
 	{
@@ -42,9 +49,12 @@ SoundManager::SoundManager(std::string filePath)
 	m_menuMusic.setRelativeToListener(false);
 	m_menuMusic.setVolume(80);
 	m_fireSound.setVolume(100);
-	m_targetSound.setVolume(100);
-	m_targetSound.setRelativeToListener(true);
-	m_targetSound.setMinDistance(100);
+	m_targetImpactSound.setVolume(100);
+	m_targetImpactSound.setRelativeToListener(true);
+	m_targetImpactSound.setMinDistance(100);
+	m_targetStartSound.setVolume(100);
+	m_targetStartSound.setRelativeToListener(true);
+	m_targetStartSound.setMinDistance(100);
 	m_wallImpactSound.setVolume(100);
 	m_wallImpactSound.setRelativeToListener(true);
 	m_wallImpactSound.setMinDistance(100);
@@ -77,9 +87,14 @@ void SoundManager::playFireSound()
 	m_fireSound.play();
 }
 
-void SoundManager::playTargetSound(sf::Vector2f position)
+void SoundManager::playTargetImpactSound(sf::Vector2f position)
 {
-	playSound(m_targetSound, position);
+	playSound(m_targetImpactSound, position);
+}
+
+void SoundManager::playTargetStartSound(sf::Vector2f position)
+{
+	playSound(m_targetStartSound, position);
 }
 
 void SoundManager::playWallImpactSound(sf::Vector2f position)

@@ -4,12 +4,13 @@ const sf::Time Target::S_BLINKING_TIME = sf::seconds(5);
 
 Target::Target() :
 	m_state(TargetState::NotInitialised),
-	m_isDisplayed(false)
+	m_isDisplayed(false),
+	m_soundManagerPtr(nullptr)
 {
 	
 }
 
-void Target::init(sf::Texture const* texture, sf::Vector2f position, sf::Time timeToStart, sf::Time timeOnScreen)
+void Target::init(sf::Texture const* texture, sf::Vector2f position, sf::Time timeToStart, sf::Time timeOnScreen, SoundManager* soundManager)
 {
 	m_timeToStart = timeToStart;
 	m_timeOnScreen = timeOnScreen;
@@ -21,6 +22,7 @@ void Target::init(sf::Texture const* texture, sf::Vector2f position, sf::Time ti
 	m_sprite.setPosition(position);
 	m_sprite.setScale(0.3, 0.3);
 	m_state = TargetState::NotStarted;
+	m_soundManagerPtr = soundManager;
 }
 
 void Target::update()
@@ -75,7 +77,15 @@ sf::Time Target::hit()
 {
 	m_isDisplayed = false;
 	m_state = TargetState::DeadByHit;
+
+	//sound stuff
+	if (m_soundManagerPtr != nullptr)
+	{
+		m_soundManagerPtr->playTargetImpactSound(m_sprite.getPosition());
+	}
+
 	return m_timer.getRemainingTime();
+	
 }
 
 bool Target::isColliding(sf::Sprite const& sprite)
@@ -98,6 +108,11 @@ void Target::reveal(sf::Time bonusTime)
 		m_isDisplayed = true;
 		m_timer.restart(m_timeOnScreen);
 		m_state = TargetState::OnScreen;
+		//sound stuff
+		if (m_soundManagerPtr != nullptr)
+		{
+			m_soundManagerPtr->playTargetStartSound(m_sprite.getPosition());
+		}
 	}
 }
 

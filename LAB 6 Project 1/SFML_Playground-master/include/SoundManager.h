@@ -11,11 +11,14 @@ private: // Attributes
 	sf::SoundBuffer m_fireBuffer;
 	sf::Sound m_fireSound;
 
-	sf::SoundBuffer m_targetBuffer;
-	sf::Sound m_targetSound;
+	sf::SoundBuffer m_targetImpactBuffer;
+	sf::Sound m_targetImpactSound;
 
 	sf::SoundBuffer m_wallImpactBuffer;
 	sf::Sound m_wallImpactSound;
+
+	sf::SoundBuffer m_targetStartBuffer;
+	sf::Sound m_targetStartSound;
 
 	sf::Vector2f m_listenerPosition;
 	double m_listenerRotation;
@@ -27,7 +30,8 @@ public: // functions
 	void startMenuMusic();
 	void stopMenuMusic();
 	void playFireSound();
-	void playTargetSound(sf::Vector2f position);
+	void playTargetImpactSound(sf::Vector2f position);
+	void playTargetStartSound(sf::Vector2f position);
 	void playWallImpactSound(sf::Vector2f position);
 	void updateListenerPostion(sf::Vector2f position, double rotation = 0);
 

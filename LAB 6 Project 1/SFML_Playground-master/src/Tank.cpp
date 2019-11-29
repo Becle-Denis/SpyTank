@@ -7,7 +7,7 @@ Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, Tar
 	m_wallSprites(wallSprites),
 	m_targets(targets),
 	m_projectilesPool(projectilePool),
-	m_maximumSpeed(80),
+	m_maximumSpeed(100),
 	m_performances(&targets),
 	m_soundManager(soundManager)
 {

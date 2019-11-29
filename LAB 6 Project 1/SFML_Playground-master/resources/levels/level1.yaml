@@ -121,9 +121,6 @@ obstacles:
      position: {x: 600, y: 822}
      rotation: 90
    - type: wall
-     position: {x: 1050, y: 750}
-     rotation: 90
-   - type: wall
      position: {x: 1053, y: 716}
      rotation: 100
    - type: wall
@@ -150,66 +147,60 @@ obstacles:
 
 
 targets:
-   - position: {x: 100, y: 200, randomOffset: 20}
+   - position: {x: 722, y: 450, randomOffset: 100}
      secondsToStart: 1
      secondsOnScreen: 8
-   - position: {x: 50, y: 75, randomOffset: 50}
+   - position: {x: 350, y: 700, randomOffset: 50}
      secondsToStart: 7
      secondsOnScreen: 7
-   - position: {x: 600, y: 700, randomOffset: 40}
+   - position: {x: 400, y: 200, randomOffset: 40}
      secondsToStart: 13
      secondsOnScreen: 6
-   - position: {x: 100, y: 500, randomOffset: 50}
-     secondsToStart: 17
-     secondsOnScreen: 6
-   - position: {x: 500, y: 100, randomOffset: 45}
+   - position: {x: 800, y: 700, randomOffset: 50}
+     secondsToStart: 16
+     secondsOnScreen: 5
+   - position: {x: 1300, y: 750, randomOffset: 45}
      secondsToStart: 21
      secondsOnScreen: 6
-   - position: {x: 125, y: 465, randomOffset: 33}
+   - position: {x: 800, y: 465, randomOffset: 70}
      secondsToStart: 24
      secondsOnScreen: 6
-   - position: {x: 786, y: 200, randomOffset: 45}
+   - position: {x: 410, y: 250, randomOffset: 100}
      secondsToStart: 26
      secondsOnScreen: 6
-   - position: {x: 100, y: 756, randomOffset: 40}
+   - position: {x: 900, y: 150, randomOffset: 20}
      secondsToStart: 30
      secondsOnScreen: 6
-   - position: {x: 50, y: 286, randomOffset: 20}
+   - position: {x: 70, y: 286, randomOffset: 10}
      secondsToStart: 32
      secondsOnScreen: 7
-   - position: {x: 800, y: 450, randomOffset: 50}
+   - position: {x: 400, y: 710, randomOffset: 30}
      secondsToStart: 38
      secondsOnScreen: 7
-   - position: {x: 125, y: 356, randomOffset: 100}
+   - position: {x: 100, y: 100, randomOffset: 50}
      secondsToStart: 41
      secondsOnScreen: 7
-   - position: {x: 854, y: 758, randomOffset: 10}
+   - position: {x: 1000, y: 758, randomOffset: 20}
      secondsToStart: 45
      secondsOnScreen: 5
-   - position: {x: 520, y: 45, randomOffset: 5}
+   - position: {x: 1350, y: 300, randomOffset: 30}
      secondsToStart: 49
      secondsOnScreen: 7
-   - position: {x: 125, y: 465, randomOffset: 33}
+   - position: {x: 900, y: 500, randomOffset: 33}
      secondsToStart: 52
      secondsOnScreen: 4
-   - position: {x: 786, y: 200, randomOffset: 45}
-     secondsToStart: 55
-     secondsOnScreen: 8
-   - position: {x: 100, y: 756, randomOffset: 40}
-     secondsToStart: 58
+   - position: {x: 1200, y: 300, randomOffset: 40}
+     secondsToStart: 54
      secondsOnScreen: 3
-   - position: {x: 50, y: 286, randomOffset: 20}
+   - position: {x: 80, y: 500, randomOffset: 20}
      secondsToStart: 60
      secondsOnScreen: 9
-   - position: {x: 800, y: 450, randomOffset: 50}
-     secondsToStart: 65
-     secondsOnScreen: 3
-   - position: {x: 125, y: 356, randomOffset: 100}
+   - position: {x: 1055, y: 356, randomOffset: 50}
      secondsToStart: 70
      secondsOnScreen: 2
-   - position: {x: 854, y: 758, randomOffset: 10}
+   - position: {x: 1200, y: 750, randomOffset: 10}
      secondsToStart: 75
      secondsOnScreen: 1
-   - position: {x: 520, y: 45, randomOffset: 5}
+   - position: {x: 722, y: 400, randomOffset: 90}
      secondsToStart: 80
      secondsOnScreen: 0

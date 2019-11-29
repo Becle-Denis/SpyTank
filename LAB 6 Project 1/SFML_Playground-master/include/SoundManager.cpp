@@ -62,6 +62,7 @@ SoundManager::SoundManager(std::string filePath)
 	m_levelMusic.setVolume(70);
 	m_menuMusic.setVolume(80);
 
+
 	m_fireSound.setVolume(100);
 	m_targetImpactSound.setVolume(100);
 	m_targetStartSound.setVolume(100);
@@ -81,8 +82,8 @@ void SoundManager::stopLevelMusic()
 
 void SoundManager::startMenuMusic()
 {
-	m_menuMusic.play();
 	m_menuMusic.setLoop(true);
+	m_effectsInProgressPtr.push_back(new FadeIn(m_menuMusic, sf::seconds(5), m_menuMusic.getVolume()));
 }
 
 void SoundManager::stopMenuMusic()
@@ -114,6 +115,20 @@ void SoundManager::updateListenerPostion(sf::Vector2f position, double rotation)
 {
 	m_listenerRotation = rotation;
 	m_listenerPosition = position;
+}
+
+void SoundManager::update()
+{
+	//update the audio effets 
+	for (int i = m_effectsInProgressPtr.size() - 1; i >= 0; i--)
+	{
+		if (m_effectsInProgressPtr.at(i)->updateEnd())
+		{
+			//delete the effect 
+			delete m_effectsInProgressPtr.at(i);
+			m_effectsInProgressPtr.erase(m_effectsInProgressPtr.begin() + i);
+		}
+	}
 }
 
 void SoundManager::playSound(sf::Sound& sound, sf::Vector2f position)

@@ -242,6 +242,9 @@ void Game::start()
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 {
+	//updating the sound
+	m_soundManager.update();
+
 	if (m_state == GameState::IN_PROGRESS)
 	{
 		if (m_timerLeft.isExpired())
@@ -263,6 +266,8 @@ void Game::update(double dt)
 			//updating the stats 
 			UserPerformance stats = m_tank.getPerformance();
 			m_playerStatsText.setString(stats.toStringColumn());
+
+			
 		}
 	}
 

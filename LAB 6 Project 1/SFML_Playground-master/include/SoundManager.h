@@ -5,21 +5,23 @@
 class SoundManager
 {
 private: // Attributes 
+	//buffer 
+	sf::SoundBuffer m_fireBuffer;
+	sf::SoundBuffer m_targetImpactBuffer;
+	sf::SoundBuffer m_wallImpactBuffer;
+	sf::SoundBuffer m_targetStartBuffer;
+
+	//music
 	sf::Music m_levelMusic;
 	sf::Music m_menuMusic;
 	
-	sf::SoundBuffer m_fireBuffer;
+	//sounds
 	sf::Sound m_fireSound;
-
-	sf::SoundBuffer m_targetImpactBuffer;
 	sf::Sound m_targetImpactSound;
-
-	sf::SoundBuffer m_wallImpactBuffer;
+	sf::Sound m_targetStartSound;
 	sf::Sound m_wallImpactSound;
 
-	sf::SoundBuffer m_targetStartBuffer;
-	sf::Sound m_targetStartSound;
-
+	//listener
 	sf::Vector2f m_listenerPosition;
 	double m_listenerRotation;
 

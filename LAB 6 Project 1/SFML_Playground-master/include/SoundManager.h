@@ -4,6 +4,7 @@
 #include "SoundEffect.h"
 #include "FadeIn.h"
 #include "FadeOut.h"
+#include "CrossFade.h"
 
 class SoundManager
 {
@@ -33,10 +34,9 @@ private: // Attributes
 
 public: // functions 
 	SoundManager(std::string filePath);
-	void startLevelMusic();
-	void stopLevelMusic();
 	void startMenuMusic();
-	void stopMenuMusic();
+	void switchToLevelMusic();
+	void switchToMenuMusic();
 	void playFireSound();
 	void playTargetImpactSound(sf::Vector2f position);
 	void playTargetStartSound(sf::Vector2f position);

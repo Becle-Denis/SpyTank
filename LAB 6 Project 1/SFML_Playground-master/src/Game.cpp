@@ -196,8 +196,7 @@ void Game::setGameOver()
 	m_bigDisplayedText.setString("Game Over !");
 
 	//Sounds stuff
-	m_soundManager.stopLevelMusic();
-	m_soundManager.startMenuMusic();
+	m_soundManager.switchToMenuMusic();
 
 	//Seting the performance display 
 	UserPerformance actualPerf = m_tank.getPerformance();
@@ -234,8 +233,7 @@ void Game::setGameOver()
 void Game::start()
 {
 	m_state = GameState::IN_PROGRESS;
-	m_soundManager.stopMenuMusic();
-	m_soundManager.startLevelMusic();
+	m_soundManager.switchToLevelMusic();
 	m_timerLeft.restart(sf::seconds(60.f));
 }
 

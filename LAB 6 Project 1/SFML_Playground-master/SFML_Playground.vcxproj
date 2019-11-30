@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\CollisionDetector.h" />
+    <ClInclude Include="include\CrossFade.h" />
     <ClInclude Include="include\FadeIn.h" />
     <ClInclude Include="include\FadeOut.h" />
     <ClInclude Include="include\Game.h" />
@@ -39,6 +40,7 @@
   <ItemGroup>
     <ClCompile Include="include\SoundManager.cpp" />
     <ClCompile Include="src\CollisionDetector.cpp" />
+    <ClCompile Include="src\CrossFade.cpp" />
     <ClCompile Include="src\FadeIn.cpp" />
     <ClCompile Include="src\FadeOut.cpp" />
     <ClCompile Include="src\Game.cpp" />

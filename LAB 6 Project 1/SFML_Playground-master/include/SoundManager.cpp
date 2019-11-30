@@ -91,8 +91,15 @@ void SoundManager::playWallImpactSound(sf::Vector2f position)
 
 void SoundManager::updateListenerPostion(sf::Vector2f position, double rotation)
 {
-	m_listenerRotation = rotation;
-	m_listenerPosition = position;
+	if (m_updatePosition)
+	{
+		m_listenerPosition = position;
+	}
+	if (m_updateRotation)
+	{
+		m_listenerRotation = rotation;
+	}
+	
 }
 
 void SoundManager::update()
@@ -111,6 +118,29 @@ void SoundManager::update()
 
 void SoundManager::setSettings()
 {
+	//setting Listener 
+	sf::Vector2f listenerPosition;
+	if (m_settings.updateListenerPosition(listenerPosition))
+	{
+		m_updatePosition = true;
+	}
+	else
+	{
+		m_listenerPosition = listenerPosition;
+		m_updatePosition = false;
+	}
+
+	double rotation;
+	if (m_settings.updateListenerRotation(rotation))
+	{
+		m_updateRotation = true;
+	}
+	else
+	{
+		m_listenerRotation = rotation;
+		m_updateRotation = false;
+	}
+
 
 	//setting relative 
 	m_levelMusic.setRelativeToListener(false);

@@ -32,6 +32,8 @@ private: // Attributes
 	//listener
 	sf::Vector2f m_listenerPosition;
 	double m_listenerRotation;
+	bool m_updatePosition;
+	bool m_updateRotation;
 
 	//settings 
 	SoundSettings m_settings;

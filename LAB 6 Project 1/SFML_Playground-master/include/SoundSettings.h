@@ -1,4 +1,6 @@
 #pragma once
+#include <SFML/Audio.hpp>
+
 class SoundSettings
 {
 private: //Attributes 
@@ -6,6 +8,12 @@ private: //Attributes
 	float m_masterVol{ 100 };
 	float m_music_masterVol{ 100 };
 	float m_fx_masterVol{ 100 };
+
+	//listener
+	bool m_listener_updateRotation{ true };
+	bool m_listener_updatePosition{ true };
+	sf::Vector2f m_listener_basePosition{ sf::Vector2f(720,450) };
+	double m_listener_baseRotation{ -90 };
 	
 	//Music
 	float m_music_menuMusicVol{ 80 };
@@ -27,6 +35,8 @@ public: //functions
 	float targetStartVol();
 	float targetImpactVol();
 	float wallImpactVol();
+	bool updateListenerPosition(sf::Vector2f& position);
+	bool updateListenerRotation(double& orientation);
 
 };
 

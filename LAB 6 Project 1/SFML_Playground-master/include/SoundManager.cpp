@@ -44,50 +44,27 @@ SoundManager::SoundManager(std::string filePath)
 	m_targetStartSound.setBuffer(m_targetStartBuffer);
 	m_wallImpactSound.setBuffer(m_wallImpactBuffer);
 
-	//setting relative 
-	m_levelMusic.setRelativeToListener(false);
-	m_menuMusic.setRelativeToListener(false);
-	
-	m_targetImpactSound.setRelativeToListener(true);
-	m_targetStartSound.setRelativeToListener(true);
-	m_wallImpactSound.setRelativeToListener(true);
-
-
-	//setting distances 
-	m_targetImpactSound.setMinDistance(100);
-	m_targetStartSound.setMinDistance(100);
-	m_wallImpactSound.setMinDistance(100);
-
-	//mixing 
-	m_levelMusic.setVolume(70);
-	m_menuMusic.setVolume(80);
-
-
-	m_fireSound.setVolume(100);
-	m_targetImpactSound.setVolume(100);
-	m_targetStartSound.setVolume(100);
-	m_wallImpactSound.setVolume(100);
-
+	setSettings();
 }
 
 
 void SoundManager::startMenuMusic()
 {
 	m_menuMusic.setLoop(true);
-	m_effectsInProgressPtr.push_back(new FadeIn(m_menuMusic, sf::seconds(5), 80));
+	m_effectsInProgressPtr.push_back(new FadeIn(m_menuMusic, sf::seconds(5), m_settings.menuMusicVol()));
 }
 
 void SoundManager::switchToLevelMusic()
 {
 	m_levelMusic.setLoop(true);
-	m_effectsInProgressPtr.push_back(new FadeIn(m_levelMusic, sf::seconds(0.25), 80));
+	m_effectsInProgressPtr.push_back(new FadeIn(m_levelMusic, sf::seconds(0.25), m_settings.menuMusicVol()));
 	m_effectsInProgressPtr.push_back(new FadeOut(m_menuMusic, sf::seconds(0.25)));
 	
 }
 
 void SoundManager::switchToMenuMusic()
 {
-	m_effectsInProgressPtr.push_back(new FadeIn(m_menuMusic, sf::seconds(0.25), 70));
+	m_effectsInProgressPtr.push_back(new FadeIn(m_menuMusic, sf::seconds(0.25), m_settings.levelMusicVol()));
 	m_effectsInProgressPtr.push_back(new FadeOut(m_levelMusic, sf::seconds(0.25)));
 }
 
@@ -130,6 +107,35 @@ void SoundManager::update()
 			m_effectsInProgressPtr.erase(m_effectsInProgressPtr.begin() + i);
 		}
 	}
+}
+
+void SoundManager::setSettings()
+{
+
+	//setting relative 
+	m_levelMusic.setRelativeToListener(false);
+	m_menuMusic.setRelativeToListener(false);
+
+	m_targetImpactSound.setRelativeToListener(true);
+	m_targetStartSound.setRelativeToListener(true);
+	m_wallImpactSound.setRelativeToListener(true);
+
+	//setting distances 
+	m_targetImpactSound.setMinDistance(100);
+	m_targetStartSound.setMinDistance(100);
+	m_wallImpactSound.setMinDistance(100);
+
+	//mixing 
+	m_levelMusic.setVolume(m_settings.levelMusicVol());
+	m_menuMusic.setVolume(m_settings.menuMusicVol());
+
+
+	m_fireSound.setVolume(m_settings.fireVol());
+	m_targetImpactSound.setVolume(m_settings.targetImpactVol());
+	m_targetStartSound.setVolume(m_settings.targetStartVol());
+	m_wallImpactSound.setVolume(m_settings.wallImpactVol());
+
+
 }
 
 void SoundManager::playSound(sf::Sound& sound, sf::Vector2f position)

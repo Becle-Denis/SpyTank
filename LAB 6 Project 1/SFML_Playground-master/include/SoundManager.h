@@ -5,6 +5,7 @@
 #include "FadeIn.h"
 #include "FadeOut.h"
 #include "CrossFade.h"
+#include "SoundSettings.h"
 
 class SoundManager
 {
@@ -32,6 +33,9 @@ private: // Attributes
 	sf::Vector2f m_listenerPosition;
 	double m_listenerRotation;
 
+	//settings 
+	SoundSettings m_settings;
+
 public: // functions 
 	SoundManager(std::string filePath);
 	void startMenuMusic();
@@ -46,6 +50,7 @@ public: // functions
 	void update();
 
 private: //functions 
+	void setSettings();
 	void playSound(sf::Sound& sound, sf::Vector2f position = sf::Vector2f(0, 0));
 };
 

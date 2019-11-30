@@ -32,6 +32,7 @@
     <ClInclude Include="include\ScreenSize.h" />
     <ClInclude Include="include\SoundEffect.h" />
     <ClInclude Include="include\SoundManager.h" />
+    <ClInclude Include="include\SoundSettings.h" />
     <ClInclude Include="include\Tank.h" />
     <ClInclude Include="include\Target.h" />
     <ClInclude Include="include\TargetManager.h" />
@@ -49,6 +50,7 @@
     <ClCompile Include="src\OrientedBoundingBox.cpp" />
     <ClCompile Include="src\Projectile.cpp" />
     <ClCompile Include="src\ProjectilePool.cpp" />
+    <ClCompile Include="src\SoundSettings.cpp" />
     <ClCompile Include="src\Tank.cpp" />
     <ClCompile Include="src\Target.cpp" />
     <ClCompile Include="src\TargetManager.cpp" />

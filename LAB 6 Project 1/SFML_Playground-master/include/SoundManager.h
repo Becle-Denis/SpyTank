@@ -3,6 +3,7 @@
 #include "MathUtility.h"
 #include "SoundEffect.h"
 #include "FadeIn.h"
+#include "FadeOut.h"
 
 class SoundManager
 {

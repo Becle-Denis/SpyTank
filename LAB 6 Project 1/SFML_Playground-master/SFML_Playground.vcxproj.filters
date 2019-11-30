@@ -60,6 +60,9 @@
     <ClInclude Include="include\FadeIn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\FadeOut.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp">
@@ -99,6 +102,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\FadeIn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FadeOut.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

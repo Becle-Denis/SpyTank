@@ -72,23 +72,24 @@ SoundManager::SoundManager(std::string filePath)
 
 void SoundManager::startLevelMusic()
 {
-	m_levelMusic.play();
+	m_menuMusic.setLoop(true);
+	m_effectsInProgressPtr.push_back(new FadeIn(m_levelMusic, sf::seconds(1.5), 70));
 }
 
 void SoundManager::stopLevelMusic()
 {
-	m_levelMusic.stop();
+	m_effectsInProgressPtr.push_back(new FadeOut(m_levelMusic, sf::seconds(1.5)));
 }
 
 void SoundManager::startMenuMusic()
 {
 	m_menuMusic.setLoop(true);
-	m_effectsInProgressPtr.push_back(new FadeIn(m_menuMusic, sf::seconds(5), m_menuMusic.getVolume()));
+	m_effectsInProgressPtr.push_back(new FadeIn(m_menuMusic, sf::seconds(1.5), 80));
 }
 
 void SoundManager::stopMenuMusic()
 {
-	m_menuMusic.stop();
+	m_effectsInProgressPtr.push_back(new FadeOut(m_menuMusic, sf::seconds(1.5)));
 }
 
 void SoundManager::playFireSound()

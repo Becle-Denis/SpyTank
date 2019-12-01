@@ -40,6 +40,7 @@ private: // Attributes
 
 public: // functions 
 	SoundManager(std::string filePath);
+	~SoundManager();
 	void startMenuMusic();
 	void switchToLevelMusic();
 	void switchToMenuMusic();

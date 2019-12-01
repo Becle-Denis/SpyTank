@@ -47,6 +47,15 @@ SoundManager::SoundManager(std::string filePath)
 	setSettings();
 }
 
+SoundManager::~SoundManager()
+{
+	for (SoundEffect* e : m_effectsInProgressPtr)
+	{
+		delete e;
+		e = nullptr;
+	}
+}
+
 
 void SoundManager::startMenuMusic()
 {

@@ -5,15 +5,11 @@
 class SoundEffect
 {
 public:
-	SoundEffect(sf::SoundSource& sound) :
-		m_sound(sound)
-	{ };
+	SoundEffect() {};
 
 	virtual bool updateEnd() = 0;
 
 	virtual ~SoundEffect() {};
 
-protected:
-	sf::SoundSource& m_sound;
 };
 

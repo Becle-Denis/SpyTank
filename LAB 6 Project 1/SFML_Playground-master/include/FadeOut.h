@@ -9,6 +9,7 @@ private: // Attributes
 	sf::Time m_totalTime;
 	float m_initialVolume;
 	bool m_stopMusic;
+	sf::SoundSource& m_sound;
 
 
 public: //function

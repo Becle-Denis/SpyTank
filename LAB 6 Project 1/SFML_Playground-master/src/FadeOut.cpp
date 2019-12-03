@@ -1,7 +1,7 @@
 #include "FadeOut.h"
 
 FadeOut::FadeOut(sf::SoundSource& sound, sf::Time fadeTime, bool stopMusic) :
-	SoundEffect(sound),m_totalTime(fadeTime),m_stopMusic(stopMusic)
+	m_sound(sound),m_totalTime(fadeTime),m_stopMusic(stopMusic)
 {
 	m_initialVolume = m_sound.getVolume();
 	m_timer.restart(fadeTime);

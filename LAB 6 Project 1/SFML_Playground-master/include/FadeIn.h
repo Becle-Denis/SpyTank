@@ -8,6 +8,7 @@ private: // Attributes
 	thor::Timer m_timer;
 	sf::Time m_totalTime;
 	float m_finalVolume;
+	sf::SoundSource& m_sound;
 
 
 public: //function

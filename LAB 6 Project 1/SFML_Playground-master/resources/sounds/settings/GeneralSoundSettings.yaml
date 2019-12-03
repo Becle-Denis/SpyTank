@@ -4,8 +4,8 @@ general:
   fxMasterVolume: 100
 
 listener:
-  updatePosition: false
-  updateRotation: false
+  updatePosition: true
+  updateRotation: true
   basePositionX: 720
   basePositionY: 450
   baseRotation: -90

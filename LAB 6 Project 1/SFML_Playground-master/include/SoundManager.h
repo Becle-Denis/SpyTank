@@ -7,6 +7,22 @@
 #include "CrossFade.h"
 #include "SoundSettings.h"
 
+struct SpatializedSound
+{
+	sf::Vector2f position;
+	sf::Sound sound;
+
+	SpatializedSound(sf::SoundBuffer& buffer, sf::Vector2f position, float volume = 0, bool relativeToListener = true)
+	{
+		sound.setBuffer(buffer);
+		sound.setRelativeToListener(relativeToListener);
+		sound.setMinDistance(100);
+		sound.setVolume(volume);
+		this->position = sf::Vector2f(position.x, position.y);
+	}
+};
+
+
 class SoundManager
 {
 private: // Attributes 
@@ -20,11 +36,8 @@ private: // Attributes
 	sf::Music m_levelMusic;
 	sf::Music m_menuMusic;
 	
-	//sounds
-	sf::Sound m_fireSound;
-	sf::Sound m_targetImpactSound;
-	sf::Sound m_targetStartSound;
-	sf::Sound m_wallImpactSound;
+	//sounds 
+	std::vector<SpatializedSound*> m_soundsInProgressPtr;
 
 	//effects
 	std::vector<SoundEffect*> m_effectsInProgressPtr;
@@ -54,6 +67,7 @@ public: // functions
 
 private: //functions 
 	void setSettings();
-	void playSound(sf::Sound& sound, sf::Vector2f position = sf::Vector2f(0, 0));
+	void playSound(sf::SoundBuffer& buffer, sf::Vector2f position = sf::Vector2f(0, 0), float volume = 0, bool relativeToListener = true);
+	void updateSpatialisation(SpatializedSound* sound);
 };
 

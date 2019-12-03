@@ -37,12 +37,6 @@ SoundManager::SoundManager(std::string filePath)
 		std::string s("Error loading music ./resources/sounds/fx/WallImpact1.wav");
 		throw std::exception(s.c_str());
 	}
-	
-	//setting buffer
-	m_fireSound.setBuffer(m_fireBuffer);
-	m_targetImpactSound.setBuffer(m_targetImpactBuffer);
-	m_targetStartSound.setBuffer(m_targetStartBuffer);
-	m_wallImpactSound.setBuffer(m_wallImpactBuffer);
 
 	m_settings = SoundSettings::loadGeneralSettings();
 	setSettings();
@@ -54,6 +48,11 @@ SoundManager::~SoundManager()
 	{
 		delete e;
 		e = nullptr;
+	}
+	for (SpatializedSound* s : m_soundsInProgressPtr)
+	{
+		delete s;
+		s = nullptr;
 	}
 }
 
@@ -81,22 +80,22 @@ void SoundManager::switchToMenuMusic()
 
 void SoundManager::playFireSound()
 {
-	m_fireSound.play();
+	playSound(m_fireBuffer, sf::Vector2f(0, 0), m_settings.fireVol(), false);
 }
 
 void SoundManager::playTargetImpactSound(sf::Vector2f position)
 {
-	playSound(m_targetImpactSound, position);
+	playSound(m_targetImpactBuffer,position,m_settings.targetImpactVol());
 }
 
 void SoundManager::playTargetStartSound(sf::Vector2f position)
 {
-	playSound(m_targetStartSound, position);
+	playSound(m_targetStartBuffer, position, m_settings.targetStartVol());
 }
 
 void SoundManager::playWallImpactSound(sf::Vector2f position)
 {
-	playSound(m_wallImpactSound, position);
+	playSound(m_wallImpactBuffer, position, m_settings.wallImpactVol());
 }
 
 void SoundManager::updateListenerPostion(sf::Vector2f position, double rotation)
@@ -121,7 +120,20 @@ void SoundManager::update()
 		{
 			//delete the effect 
 			delete m_effectsInProgressPtr.at(i);
+			m_effectsInProgressPtr.at(i) = nullptr;
 			m_effectsInProgressPtr.erase(m_effectsInProgressPtr.begin() + i);
+		}
+	}
+
+	//update the sounds Spatializations 
+	for (int i = m_soundsInProgressPtr.size() - 1; i >= 0; i--)
+	{
+		updateSpatialisation(m_soundsInProgressPtr.at(i));
+		if (m_soundsInProgressPtr.at(i)->sound.getStatus() != sf::Sound::Status::Playing)
+		{
+			delete m_soundsInProgressPtr.at(i);
+			m_soundsInProgressPtr.at(i) = nullptr;
+			m_soundsInProgressPtr.erase(m_soundsInProgressPtr.begin() + i);
 		}
 	}
 }
@@ -156,32 +168,24 @@ void SoundManager::setSettings()
 	m_levelMusic.setRelativeToListener(false);
 	m_menuMusic.setRelativeToListener(false);
 
-	m_targetImpactSound.setRelativeToListener(true);
-	m_targetStartSound.setRelativeToListener(true);
-	m_wallImpactSound.setRelativeToListener(true);
-
-	//setting distances 
-	m_targetImpactSound.setMinDistance(100);
-	m_targetStartSound.setMinDistance(100);
-	m_wallImpactSound.setMinDistance(100);
-
 	//mixing 
 	m_levelMusic.setVolume(m_settings.levelMusicVol());
 	m_menuMusic.setVolume(m_settings.menuMusicVol());
 
-
-	m_fireSound.setVolume(m_settings.fireVol());
-	m_targetImpactSound.setVolume(m_settings.targetImpactVol());
-	m_targetStartSound.setVolume(m_settings.targetStartVol());
-	m_wallImpactSound.setVolume(m_settings.wallImpactVol());
-
-
 }
 
-void SoundManager::playSound(sf::Sound& sound, sf::Vector2f position)
+void SoundManager::playSound(sf::SoundBuffer& buffer, sf::Vector2f position, float volume, bool relativeToListener)
 {
-	sf::Vector2f positionRelativeToOrigin = position - m_listenerPosition;
+	SpatializedSound* soundPtr = new SpatializedSound(buffer, position, volume, relativeToListener);
+	updateSpatialisation(soundPtr);
+	soundPtr->sound.play();
+	m_soundsInProgressPtr.push_back(soundPtr);
+	
+}
+
+void SoundManager::updateSpatialisation(SpatializedSound* sound)
+{
+	sf::Vector2f positionRelativeToOrigin = sound->position - m_listenerPosition;
 	thor::rotate<float>(positionRelativeToOrigin, -(m_listenerRotation + 90));
-	sound.setPosition(positionRelativeToOrigin.x, positionRelativeToOrigin.y, 0);
-	sound.play();
+	sound->sound.setPosition(positionRelativeToOrigin.x, positionRelativeToOrigin.y, 0);
 }

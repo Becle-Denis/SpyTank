@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Audio.hpp>
+#include "LevelLoader.h"
 
 class SoundSettings
 {
@@ -10,8 +11,8 @@ private: //Attributes
 	float m_fx_masterVol{ 100 };
 
 	//listener
-	bool m_listener_updateRotation{ true };
 	bool m_listener_updatePosition{ true };
+	bool m_listener_updateRotation{ true };
 	sf::Vector2f m_listener_basePosition{ sf::Vector2f(720,450) };
 	double m_listener_baseRotation{ -90 };
 	
@@ -37,6 +38,9 @@ public: //functions
 	float wallImpactVol();
 	bool updateListenerPosition(sf::Vector2f& position);
 	bool updateListenerRotation(double& orientation);
+
+	static SoundSettings loadGeneralSettings();
+	static SoundSettings loadFromFile(std::string filePath);
 
 };
 

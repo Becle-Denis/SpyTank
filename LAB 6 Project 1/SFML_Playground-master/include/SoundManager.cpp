@@ -44,6 +44,7 @@ SoundManager::SoundManager(std::string filePath)
 	m_targetStartSound.setBuffer(m_targetStartBuffer);
 	m_wallImpactSound.setBuffer(m_wallImpactBuffer);
 
+	m_settings = SoundSettings::loadGeneralSettings();
 	setSettings();
 }
 

@@ -1,0 +1,21 @@
+general:
+  masterVolume: 100
+  musicMasterVolume: 100
+  fxMasterVolume: 100
+
+listener:
+  updatePosition: false
+  updateRotation: false
+  basePositionX: 720
+  basePositionY: 450
+  baseRotation: -90
+
+music:
+  menuVolume: 80
+  levelVolume: 70
+
+fx:
+  fireVolume: 100
+  targetStartVolume: 80
+  targetImpactVolume: 100
+  wallImpactVolume: 100

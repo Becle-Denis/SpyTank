@@ -2,7 +2,7 @@
 
 SoundManager::SoundManager(std::string filePath)
 {
-	//loading
+	//loading buffers and Musics 
 	if (!m_levelMusic.openFromFile(filePath))
 	{
 		std::string s("Error loading music "+ filePath);
@@ -13,7 +13,6 @@ SoundManager::SoundManager(std::string filePath)
 		std::string s("Error loading music ./resources/sounds/music/MenuMusic.ogg");
 		throw std::exception(s.c_str());
 	}
-
 	if (!m_fireBuffer.loadFromFile("./resources/sounds/fx/fire1.wav"))
 	{
 		std::string s("Error loading music ./resources/sounds/fx/fire1.wav");
@@ -38,6 +37,7 @@ SoundManager::SoundManager(std::string filePath)
 		throw std::exception(s.c_str());
 	}
 
+	//load settings 
 	m_settings = SoundSettings::loadGeneralSettings();
 	setSettings();
 }
@@ -129,6 +129,7 @@ void SoundManager::update()
 	for (int i = m_soundsInProgressPtr.size() - 1; i >= 0; i--)
 	{
 		updateSpatialisation(m_soundsInProgressPtr.at(i));
+		//delete the non playing sounds 
 		if (m_soundsInProgressPtr.at(i)->sound.getStatus() != sf::Sound::Status::Playing)
 		{
 			delete m_soundsInProgressPtr.at(i);

@@ -58,6 +58,8 @@ SoundSettings SoundSettings::loadFromFile(std::string filePath)
 			std::string message("Loading Sound Settings : File: " + filePath + " not found\nDefault Sounds settings loaded");
 			throw std::exception(message.c_str());
 		}
+
+		//Magic here
 		settings.m_masterVol = baseNode["general"]["masterVolume"].as<float>();
 		settings.m_music_masterVol = baseNode["general"]["musicMasterVolume"].as<float>();
 		settings.m_fx_masterVol = baseNode["general"]["fxMasterVolume"].as<float>();
@@ -91,5 +93,5 @@ SoundSettings SoundSettings::loadFromFile(std::string filePath)
 		message = "Loading Sound Settings : Unexpected Error: " + message;
 		std::cout << message << std::endl;
 	}
-	return settings;
+	return settings; 
 }

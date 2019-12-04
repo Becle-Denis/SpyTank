@@ -66,15 +66,12 @@ void SoundManager::startMenuMusic()
 void SoundManager::switchToLevelMusic()
 {
 	m_levelMusic.setLoop(true);
-	m_effectsInProgressPtr.push_back(new FadeIn(m_levelMusic, sf::seconds(0.25), m_settings.menuMusicVol()));
-	m_effectsInProgressPtr.push_back(new FadeOut(m_menuMusic, sf::seconds(0.25)));
-	
+	m_effectsInProgressPtr.push_back(new CrossFade(m_menuMusic, m_levelMusic, m_settings.menuMusicVol(), sf::seconds(0.25)));
 }
 
 void SoundManager::switchToMenuMusic()
 {
-	m_effectsInProgressPtr.push_back(new FadeIn(m_menuMusic, sf::seconds(0.25), m_settings.levelMusicVol()));
-	m_effectsInProgressPtr.push_back(new FadeOut(m_levelMusic, sf::seconds(0.25)));
+	m_effectsInProgressPtr.push_back(new CrossFade(m_levelMusic, m_menuMusic, m_settings.levelMusicVol(), sf::seconds(0.25)));
 }
 
 

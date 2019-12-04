@@ -6,7 +6,7 @@
 #include "FadeOut.h"
 #include "CrossFade.h"
 #include "SoundSettings.h"
-
+#include "CrossFade.h"
 
 /// <summary>
 /// Represent a sound in a local position for the game world 

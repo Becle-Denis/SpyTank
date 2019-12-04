@@ -10,5 +10,7 @@ CrossFade::CrossFade(sf::SoundSource& outSound, sf::SoundSource& inSound, int in
 
 bool CrossFade::updateEnd()
 {
-	return m_in.updateEnd() && m_out.updateEnd();
+	bool inEnded = m_in.updateEnd();
+	bool outEnded = m_out.updateEnd();
+	return inEnded && outEnded;
 }

@@ -324,7 +324,15 @@ void Tank::fire()
 		m_fireTimer.restart(sf::seconds(1.f));
 
 		//sound stuff
-		m_soundManager.playFireSound(m_tankBase.getPosition());
+
+		//get a vector position at the end of the turret
+		sf::Vector2f initialPosition = m_turret.getPosition();
+		initialPosition.x += 10;
+		initialPosition -= m_turret.getPosition();
+		thor::rotate<float>(initialPosition, m_turretRotation);
+		initialPosition += m_turret.getPosition();
+
+		m_soundManager.playFireSound(initialPosition);
 	}
 	else
 	{

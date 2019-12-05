@@ -8,6 +8,7 @@
 #include "SoundSettings.h"
 #include "CrossFade.h"
 #include "MovingSound.h"
+#include "MovingMotorEffect.h"
 
 /// <summary>
 /// Represent a sound in a local position for the game world 
@@ -37,6 +38,7 @@ private: // Attributes
 	sf::SoundBuffer m_wallImpactBuffer;
 	sf::SoundBuffer m_targetStartBuffer;
 	sf::SoundBuffer m_projectileBuffer;
+	sf::SoundBuffer m_tankMotorBuffer;
 
 	//musics
 	sf::Music m_levelMusic;
@@ -78,8 +80,11 @@ public: // functions
 	/// </summary>
 	void switchToMenuMusic();
 
-	//Fx stuff
+	// Updated fx 
+	MovingMotorEffect* tankMotorEffect();
 	MovingSound* startProjectileSound(sf::Vector2f position);
+
+	//FX
 	void playFireSound(sf::Vector2f position);
 	void playTargetImpactSound(sf::Vector2f position);
 	void playTargetStartSound(sf::Vector2f position);

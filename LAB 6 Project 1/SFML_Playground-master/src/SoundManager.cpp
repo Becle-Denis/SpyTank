@@ -42,8 +42,14 @@ SoundManager::SoundManager(std::string filePath)
 		std::string s("Error loading music ./resources/sounds/fx/TestPinkNoise.wav");
 		throw std::exception(s.c_str());
 	}
-	
 
+	if (!m_tankMotorBuffer.loadFromFile("./resources/sounds/fx/TestPinkNoise.wav"))
+	{
+		std::string s("Error loading music ./resources/sounds/fx/TestPinkNoise.wav");
+		throw std::exception(s.c_str());
+	}
+	
+	
 	//load settings 
 	m_settings = SoundSettings::loadGeneralSettings();
 	setSettings();
@@ -82,11 +88,22 @@ void SoundManager::switchToMenuMusic()
 }
 
 
+MovingMotorEffect* SoundManager::tankMotorEffect()
+{
+	SpatializedSound* motorSoundPtr = playSound(m_tankMotorBuffer,sf::Vector2f());
+	motorSoundPtr->sound.setLoop(true);
+	MovingMotorEffect* motorEffectPtr = new MovingMotorEffect(motorSoundPtr, m_settings.motorMaxVolume());
+
+	m_effectsInProgressPtr.push_back(motorEffectPtr);
+	return motorEffectPtr;
+}
+
 MovingSound* SoundManager::startProjectileSound(sf::Vector2f position)
 {
 	SpatializedSound* soundPtr = playSound(m_projectileBuffer, position, m_settings.projectileVol());
 	soundPtr->sound.setLoop(true);
 	MovingSound* effectPtr = new MovingSound(soundPtr);
+	m_effectsInProgressPtr.push_back(effectPtr);
 	return effectPtr;
 }
 

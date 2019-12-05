@@ -12,6 +12,11 @@ Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, Tar
 	m_soundManager(soundManager)
 {
 	initSprites();
+}
+
+void Tank::initialise()
+{
+	m_motorSound = m_soundManager.tankMotorEffect();
 	m_fireTimer.restart(sf::seconds(1.f));
 }
 
@@ -74,9 +79,6 @@ void Tank::update(double dt)
 	m_tankBase.setRotation(m_rotation);
 	m_turret.setRotation(m_turretRotation);
 
-
-
-	
 	//decrease speed 
 	m_speed = 0.99 * m_speed;
 
@@ -100,6 +102,7 @@ void Tank::update(double dt)
 
 	//soundStuff 
 	m_soundManager.updateListenerPostion(m_tankBase.getPosition(), m_rotation);
+	m_motorSound->updateState(m_tankBase.getPosition(), m_speed / m_maximumSpeed);
 
 }
 

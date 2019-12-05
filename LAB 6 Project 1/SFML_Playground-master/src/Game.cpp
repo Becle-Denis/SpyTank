@@ -99,6 +99,9 @@ Game::Game()
 		break;
 	}
 
+	//initialise the tank 
+	m_tank.initialise();
+
 	// Construct the wall sprites
 	generateWalls();
 

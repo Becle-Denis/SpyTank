@@ -35,6 +35,11 @@ float SoundSettings::projectileVol() const
 	return (m_masterVol / 100) * (m_fx_masterVol / 100) * m_fx_projectileVol;
 }
 
+float SoundSettings::motorMaxVolume() const
+{
+	return (m_masterVol / 100) * (m_fx_masterVol / 100) * m_fx_motorVol;
+}
+
 bool SoundSettings::updateListenerPosition(sf::Vector2f& position) const
 {
 	position = m_listener_basePosition;
@@ -85,6 +90,7 @@ SoundSettings SoundSettings::loadFromFile(std::string filePath)
 		settings.m_fx_targetImpactVol = baseNode["fx"]["targetImpactVolume"].as<float>();
 		settings.m_fx_wallImpactVol = baseNode["fx"]["wallImpactVolume"].as<float>();
 		settings.m_fx_projectileVol = baseNode["fx"]["projectileVolume"].as<float>();
+		settings.m_fx_motorVol = baseNode["fx"]["motorMaximumVolume"].as<float>();
 
 	}
 	catch (YAML::ParserException& e)

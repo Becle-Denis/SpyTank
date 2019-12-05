@@ -77,7 +77,7 @@ public: // functions
 	void switchToMenuMusic();
 
 	//Fx stuff
-	void playFireSound();
+	void playFireSound(sf::Vector2f position);
 	void playTargetImpactSound(sf::Vector2f position);
 	void playTargetStartSound(sf::Vector2f position);
 	void playWallImpactSound(sf::Vector2f position);

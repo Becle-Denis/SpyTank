@@ -1,6 +1,6 @@
 general:
   masterVolume: 80
-  musicMasterVolume: 60
+  musicMasterVolume: 70
   fxMasterVolume: 90
 
 listener:
@@ -16,6 +16,6 @@ music:
 
 fx:
   fireVolume: 100
-  targetStartVolume: 20
-  targetImpactVolume: 20
-  wallImpactVolume: 20
+  targetStartVolume: 60
+  targetImpactVolume: 100
+  wallImpactVolume: 50

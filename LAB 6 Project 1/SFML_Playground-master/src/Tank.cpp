@@ -320,9 +320,11 @@ void Tank::fire()
 		newProjectilePtr->launch(m_tankBase.getPosition(),m_turretRotation);
 		m_projectilesPtr.push_back(newProjectilePtr);
 		m_performances.projectileFired();
-		m_soundManager.playFireSound();
 		canFire = false;
 		m_fireTimer.restart(sf::seconds(1.f));
+
+		//sound stuff
+		m_soundManager.playFireSound(m_tankBase.getPosition());
 	}
 	else
 	{

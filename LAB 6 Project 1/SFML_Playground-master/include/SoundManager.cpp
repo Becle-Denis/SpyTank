@@ -75,9 +75,9 @@ void SoundManager::switchToMenuMusic()
 }
 
 
-void SoundManager::playFireSound()
+void SoundManager::playFireSound(sf::Vector2f position)
 {
-	playSound(m_fireBuffer, sf::Vector2f(0, 0), m_settings.fireVol(), false);
+	playSound(m_fireBuffer, position, m_settings.fireVol());
 }
 
 void SoundManager::playTargetImpactSound(sf::Vector2f position)
@@ -121,7 +121,6 @@ void SoundManager::update()
 			m_effectsInProgressPtr.erase(m_effectsInProgressPtr.begin() + i);
 		}
 	}
-
 	//update the sounds Spatializations 
 	for (int i = m_soundsInProgressPtr.size() - 1; i >= 0; i--)
 	{

@@ -172,7 +172,7 @@ void SoundManager::setSettings()
 
 }
 
-void SoundManager::playSound(sf::SoundBuffer& buffer, sf::Vector2f position, float volume, bool relativeToListener)
+void SoundManager::playSound(sf::SoundBuffer const& buffer, sf::Vector2f position, float volume, bool relativeToListener)
 {
 	SpatializedSound* soundPtr = new SpatializedSound(buffer, position, volume, relativeToListener);
 	updateSpatialisation(soundPtr);

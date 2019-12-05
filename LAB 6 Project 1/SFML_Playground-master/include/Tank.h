@@ -86,7 +86,7 @@ public:	//functions
 	/// @brief Render the Tank and dependant object
 	/// </summary>
 	/// <param name="window">window where to draw the Tank</param>
-	void render(sf::RenderWindow & window);
+	void render(sf::RenderWindow & window) const;
 
 	/// <summary>
 	/// @brief Set the Position of the tank

@@ -35,7 +35,7 @@ public: // functions
 	/// </summary>
 	/// <param name="sprite">Sprite to check</param>
 	/// <returns>the index of the Target colliding with the sprite, - 1 if no collision</returns>
-	int checkForCollision(sf::Sprite const& sprite); 
+	int checkForCollision(sf::Sprite const& sprite) const; 
 	
 	/// <summary>
 	/// Hit the target corresponding to the index, 
@@ -48,7 +48,7 @@ public: // functions
 	/// Draw all the targets
 	/// </summary>
 	/// <param name="window">Window on which the target will be drawn</param>
-	void render(sf::RenderWindow& window);
+	void render(sf::RenderWindow& window) const;
 
 	/// <summary>
 	/// Reveal the rsult of all the targets 
@@ -59,18 +59,18 @@ public: // functions
 	/// Return the number of targets 
 	/// </summary>
 	/// <returns>Number of targets</returns>
-	int getNumberOfDisplayedTarget();
+	int getNumberOfDisplayedTarget() const;
 
 private: // functions 
 	/// <summary>
 	/// retrun true is there is One or More targets displayed on screen
 	/// </summary>
-	bool isOneOnScreen();
+	bool isOneOnScreen() const;
 
 	/// <summary>
 	/// Calculate the next target waiting to be displayed on screen
 	/// </summary>
 	/// <returns>the index of the next target, -1 if there is no more target</returns>
-	int getNextIndex();
+	int getNextIndex() const;
 };
 

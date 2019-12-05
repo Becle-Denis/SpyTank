@@ -20,7 +20,7 @@ void Projectile::setSprite(sf::Texture const* texturePtr)
 	setInactive();
 }
 
-sf::Sprite const& Projectile::getSprite()
+sf::Sprite const& Projectile::getSprite() const
 {
 	return m_projectileSprite;
 }
@@ -30,7 +30,7 @@ void Projectile::setInactive()
 	m_projectileSprite.setPosition(sf::Vector2f(-100, -100));
 }
 
-bool Projectile::isInactive()
+bool Projectile::isInactive() const
 {
 	return m_projectileSprite.getPosition() == sf::Vector2f(-100,-100);
 }
@@ -45,7 +45,7 @@ void Projectile::update(double dt)
 	m_projectileSprite.setPosition(sf::Vector2f(newXPosition, newYPosition));
 }
 
-int Projectile::lifeState(std::vector<sf::Sprite>& wallSprites)
+int Projectile::lifeState(std::vector<sf::Sprite>& wallSprites) const
 {
 	sf::Vector2f position = m_projectileSprite.getPosition();
 	//check for the limit of the screen 
@@ -65,7 +65,7 @@ int Projectile::lifeState(std::vector<sf::Sprite>& wallSprites)
 }
 
 
-void Projectile::render(sf::RenderWindow& window)
+void Projectile::render(sf::RenderWindow& window) const
 {
 	window.draw(m_projectileSprite);
 }

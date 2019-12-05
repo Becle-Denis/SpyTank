@@ -39,7 +39,7 @@ void TargetManager::update(double dt)
 	}
 }
 
-int TargetManager::checkForCollision(sf::Sprite const& sprite)
+int TargetManager::checkForCollision(sf::Sprite const& sprite) const
 {
 	for (int i = 0; i < m_number_of_targets; i++)
 	{
@@ -72,7 +72,7 @@ void TargetManager::hit(int index)
 	}
 }
 
-void TargetManager::render(sf::RenderWindow& window)
+void TargetManager::render(sf::RenderWindow& window) const
 {
 	for (int i = 0; i < m_number_of_targets; i++)
 	{
@@ -88,12 +88,12 @@ void TargetManager::revealResult()
 	}
 }
 
-int TargetManager::getNumberOfDisplayedTarget()
+int TargetManager::getNumberOfDisplayedTarget() const
 {
 	return m_number_of_targets;
 }
 
-bool TargetManager::isOneOnScreen()
+bool TargetManager::isOneOnScreen() const
 {
 	for (int i = 0; i < m_number_of_targets; i++)
 	{
@@ -105,7 +105,7 @@ bool TargetManager::isOneOnScreen()
 	return false;
 }
 
-int TargetManager::getNextIndex()
+int TargetManager::getNextIndex() const
 {
 	int minIndex = -1;
 	sf::Time minTime = sf::seconds(100); // not really good but it works

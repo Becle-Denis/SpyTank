@@ -16,7 +16,7 @@ struct SpatializedSound
 	sf::Vector2f position; //Local position
 	sf::Sound sound; 
 
-	SpatializedSound(sf::SoundBuffer& buffer, sf::Vector2f position, float volume = 0, bool relativeToListener = true)
+	SpatializedSound(sf::SoundBuffer const& buffer, sf::Vector2f position, float volume = 0, bool relativeToListener = true)
 	{
 		sound.setBuffer(buffer);
 		sound.setRelativeToListener(relativeToListener);
@@ -105,7 +105,7 @@ private: //functions
 	/// <param name="position">Local Position of the sound</param>
 	/// <param name="volume">Volume of the sound</param>
 	/// <param name="relativeToListener">Is Spatialized or Not</param>
-	void playSound(sf::SoundBuffer& buffer, sf::Vector2f position = sf::Vector2f(0, 0), float volume = 0, bool relativeToListener = true);
+	void playSound(sf::SoundBuffer const& buffer, sf::Vector2f position = sf::Vector2f(0, 0), float volume = 0, bool relativeToListener = true);
 	
 	/// <summary>
 	/// Update the position of the sound according to the position of the listener 

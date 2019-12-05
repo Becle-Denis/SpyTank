@@ -31,12 +31,12 @@ public: //functions
 
 	//accessers 
 	//volume accessers
-	float menuMusicVol();
-	float levelMusicVol();
-	float fireVol();
-	float targetStartVol();
-	float targetImpactVol();
-	float wallImpactVol();
+	float menuMusicVol() const;
+	float levelMusicVol() const;
+	float fireVol() const;
+	float targetStartVol() const;
+	float targetImpactVol() const;
+	float wallImpactVol() const;
 
 	//Listener accessers 
 	/// <summary>
@@ -44,14 +44,14 @@ public: //functions
 	/// </summary>
 	/// <param name="position">Return by reference the base position of the listener</param>
 	/// <returns>True if the listener position should be updated</returns>
-	bool updateListenerPosition(sf::Vector2f& position);
+	bool updateListenerPosition(sf::Vector2f& position) const;
 
 	/// <summary>
 	/// accesser to the Listener Rotation settings 
 	/// </summary>
 	/// <param name="orientation">Return by reference the base rotation of the listener</param>
 	/// <returns>True if the listener rotation should be updated</returns>
-	bool updateListenerRotation(double& orientation);
+	bool updateListenerRotation(double& orientation) const;
 
 	/// <summary>
 	/// Load the general settings stored in a YAML file,

@@ -41,7 +41,7 @@ public: //functions
 	/// <summary>
 	/// Return the actual sprite of the projectile 
 	/// </summary>
-	sf::Sprite const& getSprite();
+	sf::Sprite const& getSprite() const;
 
 	/// <summary>
 	/// Set the Projectile inactive 
@@ -52,7 +52,7 @@ public: //functions
 	/// Check if the projectile is inactive 
 	/// </summary>
 	/// <returns></returns>
-	bool isInactive();
+	bool isInactive() const;
 
 	//update the displacement of the projectile 
 	void update(double dt);
@@ -62,10 +62,10 @@ public: //functions
 	//			-1 - No Collision 
 	//			1 - Collision with wall 
 	//			2 - Outside the map 
-	int lifeState(std::vector<sf::Sprite>& wallSprites);
+	int lifeState(std::vector<sf::Sprite>& wallSprites) const;
 
 	//draw the projectile
-	void render(sf::RenderWindow& window);
+	void render(sf::RenderWindow& window ) const;
 
 };
 

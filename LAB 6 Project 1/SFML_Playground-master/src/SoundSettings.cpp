@@ -1,42 +1,42 @@
 #include "SoundSettings.h"
 
-float SoundSettings::menuMusicVol()
+float SoundSettings::menuMusicVol() const
 {
 	return (m_masterVol / 100) * (m_music_masterVol / 100) * m_music_menuMusicVol;
 }
 
-float SoundSettings::levelMusicVol()
+float SoundSettings::levelMusicVol() const
 {
 	return (m_masterVol / 100) * (m_music_masterVol / 100)* m_music_levelMusicVol;
 }
 
-float SoundSettings::fireVol()
+float SoundSettings::fireVol() const
 {
 	return (m_masterVol / 100) * (m_fx_masterVol / 100) * m_fx_fireVol;
 }
 
-float SoundSettings::targetStartVol()
+float SoundSettings::targetStartVol() const
 {
 	return (m_masterVol / 100) * (m_fx_masterVol / 100) * m_fx_targetStartVol;
 }
 
-float SoundSettings::targetImpactVol()
+float SoundSettings::targetImpactVol() const
 {
 	return (m_masterVol / 100) * (m_fx_masterVol / 100) * m_fx_targetStartVol;
 }
 
-float SoundSettings::wallImpactVol()
+float SoundSettings::wallImpactVol() const
 {
 	return (m_masterVol / 100) * (m_fx_masterVol / 100) * m_fx_wallImpactVol;
 }
 
-bool SoundSettings::updateListenerPosition(sf::Vector2f& position)
+bool SoundSettings::updateListenerPosition(sf::Vector2f& position) const
 {
 	position = m_listener_basePosition;
 	return m_listener_updatePosition;
 }
 
-bool SoundSettings::updateListenerRotation(double& orientation)
+bool SoundSettings::updateListenerRotation(double& orientation) const
 {
 	orientation = m_listener_baseRotation;
 	return m_listener_updateRotation;

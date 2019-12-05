@@ -104,7 +104,7 @@ void Tank::update(double dt)
 }
 
 
-void Tank::render(sf::RenderWindow & window) 
+void Tank::render(sf::RenderWindow & window)  const
 {
 	for (Projectile* projectile : m_projectilesPtr)
 	{

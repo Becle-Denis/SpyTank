@@ -26,6 +26,7 @@
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\LevelLoader.h" />
     <ClInclude Include="include\MathUtility.h" />
+    <ClInclude Include="include\MovingSound.h" />
     <ClInclude Include="include\OrientedBoundingBox.h" />
     <ClInclude Include="include\Projectile.h" />
     <ClInclude Include="include\ProjectilePool.h" />
@@ -39,7 +40,6 @@
     <ClInclude Include="include\UserPerformance.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\SoundManager.cpp" />
     <ClCompile Include="src\CollisionDetector.cpp" />
     <ClCompile Include="src\CrossFade.cpp" />
     <ClCompile Include="src\FadeIn.cpp" />
@@ -47,9 +47,11 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\LevelLoader.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MovingSound.cpp" />
     <ClCompile Include="src\OrientedBoundingBox.cpp" />
     <ClCompile Include="src\Projectile.cpp" />
     <ClCompile Include="src\ProjectilePool.cpp" />
+    <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\SoundSettings.cpp" />
     <ClCompile Include="src\Tank.cpp" />
     <ClCompile Include="src\Target.cpp" />

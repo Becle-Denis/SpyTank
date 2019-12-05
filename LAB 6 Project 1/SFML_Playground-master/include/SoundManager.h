@@ -35,6 +35,7 @@ private: // Attributes
 	sf::SoundBuffer m_targetImpactBuffer;
 	sf::SoundBuffer m_wallImpactBuffer;
 	sf::SoundBuffer m_targetStartBuffer;
+	sf::SoundBuffer m_projectileBuffer;
 
 	//musics
 	sf::Music m_levelMusic;

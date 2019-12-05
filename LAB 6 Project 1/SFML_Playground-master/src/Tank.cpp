@@ -327,7 +327,7 @@ void Tank::fire()
 
 		//get a vector position at the end of the turret
 		sf::Vector2f initialPosition = m_turret.getPosition();
-		initialPosition.x += 10;
+		initialPosition.x += 30;
 		initialPosition -= m_turret.getPosition();
 		thor::rotate<float>(initialPosition, m_turretRotation);
 		initialPosition += m_turret.getPosition();

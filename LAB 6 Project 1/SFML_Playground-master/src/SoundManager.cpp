@@ -82,6 +82,14 @@ void SoundManager::switchToMenuMusic()
 }
 
 
+MovingSound* SoundManager::startProjectileSound(sf::Vector2f position)
+{
+	SpatializedSound* soundPtr = playSound(m_projectileBuffer, position, m_settings.projectileVol());
+	soundPtr->sound.setLoop(true);
+	MovingSound* effectPtr = new MovingSound(soundPtr);
+	return effectPtr;
+}
+
 void SoundManager::playFireSound(sf::Vector2f position)
 {
 	playSound(m_fireBuffer, position, m_settings.fireVol());
@@ -178,13 +186,13 @@ void SoundManager::setSettings()
 
 }
 
-void SoundManager::playSound(sf::SoundBuffer const& buffer, sf::Vector2f position, float volume, bool relativeToListener)
+SpatializedSound* SoundManager::playSound(sf::SoundBuffer const& buffer, sf::Vector2f position, float volume, bool relativeToListener)
 {
 	SpatializedSound* soundPtr = new SpatializedSound(buffer, position, volume, relativeToListener);
 	updateSpatialisation(soundPtr);
 	soundPtr->sound.play();
 	m_soundsInProgressPtr.push_back(soundPtr);
-	
+	return soundPtr;
 }
 
 void SoundManager::updateSpatialisation(SpatializedSound* sound)

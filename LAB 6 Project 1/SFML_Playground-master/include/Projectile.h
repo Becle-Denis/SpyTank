@@ -3,6 +3,8 @@
 #include "MathUtility.h"
 #include "CollisionDetector.h"
 #include "Target.h"
+#include "SoundManager.h"
+#include "MovingSound.h"
 
 /// <summary>
 /// @brief Projectile class 
@@ -24,12 +26,16 @@ private: //Attributes
 	// The rotation of the projectile.
 	double m_rotation{ 0.0 };
 
+	//sound stuffs 
+	SoundManager* m_soundManagerPtr{ nullptr };
+	MovingSound* m_soundPtr{ nullptr };
+
 public: //functions 
 	/// <summary>
 	/// Set the Sprite of the Projectile
 	/// </summary>
 	/// <param name="texturePtr">Texture of the sprite</param>
-	void setSprite(sf::Texture const* texturePtr);
+	void setProjectile(sf::Texture const* texturePtr, SoundManager* soundManager = nullptr);
 
 	/// <summary>
 	/// Launch the projectile, set the position and the orientation

@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Projectile.h"
+#include "SoundManager.h"
 
 /// <summary>
 /// A class to store all the Projectiles 
@@ -25,7 +26,7 @@ public: //functions
 	/// </summary>
 	/// <param name="texture">Texture of the projectiles</param>
 	/// <param name="poolSize">Maximum number of projetiles that can be used at the same time</param>
-	ProjectilePool(sf::Texture const& texture,unsigned int poolSize = 15);
+	ProjectilePool(sf::Texture const& texture,unsigned int poolSize = 15, SoundManager* soundManager = nullptr);
 
 	/// <summary>
 	/// delete all the projectiles 

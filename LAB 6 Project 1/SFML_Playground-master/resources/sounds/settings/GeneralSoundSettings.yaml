@@ -18,4 +18,5 @@ fx:
   fireVolume: 100
   targetStartVolume: 60
   targetImpactVolume: 100
-  wallImpactVolume: 50
+  wallImpactVolume: 90
+  projectileVolume: 40

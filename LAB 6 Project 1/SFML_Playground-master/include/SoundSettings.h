@@ -25,6 +25,7 @@ private: //Attributes
 	float m_fx_targetStartVol{ 80 }; // target start 
 	float m_fx_targetImpactVol{ 100 }; // target impact 
 	float m_fx_wallImpactVol{ 100 }; // wall impact 
+	float m_fx_projectileVol{ 80 }; // projectile volume
 
 public: //functions
 	SoundSettings() = default; 
@@ -37,6 +38,7 @@ public: //functions
 	float targetStartVol() const;
 	float targetImpactVol() const;
 	float wallImpactVol() const;
+	float projectileVol() const;
 
 	//Listener accessers 
 	/// <summary>

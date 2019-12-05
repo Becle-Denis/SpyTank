@@ -1,12 +1,12 @@
 #include "ProjectilePool.h"
 
-ProjectilePool::ProjectilePool(sf::Texture const& texture, unsigned int poolSize) :
+ProjectilePool::ProjectilePool(sf::Texture const& texture, unsigned int poolSize, SoundManager* soundManager) :
 	m_texture(texture), m_numberOfProjectile(poolSize), m_projectileIndex(0)
 {
 	m_projectiles = new Projectile[m_numberOfProjectile];
 	for (int i = 0; i < m_numberOfProjectile; i++)
 	{
-		(m_projectiles + i)->setSprite(&m_texture);
+		(m_projectiles + i)->setProjectile(&m_texture,soundManager);
 	}
 }
 

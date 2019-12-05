@@ -30,6 +30,11 @@ float SoundSettings::wallImpactVol() const
 	return (m_masterVol / 100) * (m_fx_masterVol / 100) * m_fx_wallImpactVol;
 }
 
+float SoundSettings::projectileVol() const
+{
+	return (m_masterVol / 100) * (m_fx_masterVol / 100) * m_fx_projectileVol;
+}
+
 bool SoundSettings::updateListenerPosition(sf::Vector2f& position) const
 {
 	position = m_listener_basePosition;
@@ -75,10 +80,11 @@ SoundSettings SoundSettings::loadFromFile(std::string filePath)
 		settings.m_music_menuMusicVol = baseNode["music"]["menuVolume"].as<float>();
 		settings.m_music_levelMusicVol = baseNode["music"]["levelVolume"].as<float>();
 
-		settings.m_fx_fireVol = baseNode["fx"]["fireVolume"].as<float>();;
-		settings.m_fx_targetStartVol = baseNode["fx"]["targetStartVolume"].as<float>();;
-		settings.m_fx_targetImpactVol = baseNode["fx"]["targetImpactVolume"].as<float>();;
-		settings.m_fx_wallImpactVol = baseNode["fx"]["wallImpactVolume"].as<float>();;
+		settings.m_fx_fireVol = baseNode["fx"]["fireVolume"].as<float>();
+		settings.m_fx_targetStartVol = baseNode["fx"]["targetStartVolume"].as<float>();
+		settings.m_fx_targetImpactVol = baseNode["fx"]["targetImpactVolume"].as<float>();
+		settings.m_fx_wallImpactVol = baseNode["fx"]["wallImpactVolume"].as<float>();
+		settings.m_fx_projectileVol = baseNode["fx"]["projectileVolume"].as<float>();
 
 	}
 	catch (YAML::ParserException& e)

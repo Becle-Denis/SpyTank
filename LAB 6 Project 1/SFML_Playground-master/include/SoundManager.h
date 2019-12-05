@@ -7,6 +7,7 @@
 #include "CrossFade.h"
 #include "SoundSettings.h"
 #include "CrossFade.h"
+#include "MovingSound.h"
 
 /// <summary>
 /// Represent a sound in a local position for the game world 
@@ -78,6 +79,7 @@ public: // functions
 	void switchToMenuMusic();
 
 	//Fx stuff
+	MovingSound* startProjectileSound(sf::Vector2f position);
 	void playFireSound(sf::Vector2f position);
 	void playTargetImpactSound(sf::Vector2f position);
 	void playTargetStartSound(sf::Vector2f position);
@@ -106,7 +108,7 @@ private: //functions
 	/// <param name="position">Local Position of the sound</param>
 	/// <param name="volume">Volume of the sound</param>
 	/// <param name="relativeToListener">Is Spatialized or Not</param>
-	void playSound(sf::SoundBuffer const& buffer, sf::Vector2f position = sf::Vector2f(0, 0), float volume = 0, bool relativeToListener = true);
+	SpatializedSound* playSound(sf::SoundBuffer const& buffer, sf::Vector2f position = sf::Vector2f(0, 0), float volume = 0, bool relativeToListener = true);
 	
 	/// <summary>
 	/// Update the position of the sound according to the position of the listener 

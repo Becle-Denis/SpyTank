@@ -109,7 +109,7 @@ MovingSound* SoundManager::startProjectileSound(sf::Vector2f position)
 
 void SoundManager::playFireSound(sf::Vector2f position)
 {
-	playSound(m_fireBuffer, position, m_settings.fireVol());
+	playSound(m_fireBuffer, position, m_settings.fireVol(),false);
 }
 
 void SoundManager::playTargetImpactSound(sf::Vector2f position)
@@ -165,6 +165,17 @@ void SoundManager::update()
 			m_soundsInProgressPtr.erase(m_soundsInProgressPtr.begin() + i);
 		}
 	}
+
+	//delete the finished non updated sound 
+	for (int i = m_nonUpdatedSoundInProgressPtr.size() - 1; i >= 0; i--)
+	{
+		if (m_nonUpdatedSoundInProgressPtr.at(i)->sound.getStatus() != sf::Sound::Status::Playing)
+		{
+			delete m_nonUpdatedSoundInProgressPtr.at(i);
+			m_nonUpdatedSoundInProgressPtr.at(i) = nullptr;
+			m_nonUpdatedSoundInProgressPtr.erase(m_nonUpdatedSoundInProgressPtr.begin() + i);
+		}
+	}
 }
 
 void SoundManager::setSettings()
@@ -203,12 +214,19 @@ void SoundManager::setSettings()
 
 }
 
-SpatializedSound* SoundManager::playSound(sf::SoundBuffer const& buffer, sf::Vector2f position, float volume, bool relativeToListener)
+SpatializedSound* SoundManager::playSound(sf::SoundBuffer const& buffer, sf::Vector2f position, float volume, bool SpatializationUpdated)
 {
-	SpatializedSound* soundPtr = new SpatializedSound(buffer, position, volume, relativeToListener);
+	SpatializedSound* soundPtr = new SpatializedSound(buffer, position, volume);
 	updateSpatialisation(soundPtr);
 	soundPtr->sound.play();
-	m_soundsInProgressPtr.push_back(soundPtr);
+	if (SpatializationUpdated)
+	{
+		m_soundsInProgressPtr.push_back(soundPtr);
+	}
+	else
+	{
+		m_nonUpdatedSoundInProgressPtr.push_back(soundPtr);
+	}
 	return soundPtr;
 }
 

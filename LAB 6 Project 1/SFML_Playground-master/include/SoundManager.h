@@ -46,6 +46,7 @@ private: // Attributes
 	
 	//sounds 
 	std::vector<SpatializedSound*> m_soundsInProgressPtr; //Storage for spatializerd sound
+	std::vector<SpatializedSound*> m_nonUpdatedSoundInProgressPtr; //Storage for spatialized sound moving with the listener
 
 	//Sound effects
 	std::vector<SoundEffect*> m_effectsInProgressPtr; //Storage for sound Effects 
@@ -113,7 +114,7 @@ private: //functions
 	/// <param name="position">Local Position of the sound</param>
 	/// <param name="volume">Volume of the sound</param>
 	/// <param name="relativeToListener">Is Spatialized or Not</param>
-	SpatializedSound* playSound(sf::SoundBuffer const& buffer, sf::Vector2f position = sf::Vector2f(0, 0), float volume = 0, bool relativeToListener = true);
+	SpatializedSound* playSound(sf::SoundBuffer const& buffer, sf::Vector2f position = sf::Vector2f(0, 0), float volume = 0, bool SpatializationUpdated = true);
 	
 	/// <summary>
 	/// Update the position of the sound according to the position of the listener 

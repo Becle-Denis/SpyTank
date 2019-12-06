@@ -100,9 +100,10 @@ void Tank::update(double dt)
 		m_enableRotation = true;
 	}
 
+	
 	//soundStuff 
 	m_soundManager.updateListenerPostion(m_tankBase.getPosition(), m_rotation);
-	m_motorSound->updateState(m_tankBase.getPosition(), m_speed / m_maximumSpeed);
+	m_motorSound->updateState(m_tankBase.getPosition(), abs(m_speed / m_maximumSpeed));
 
 }
 

@@ -20,4 +20,4 @@ fx:
   targetImpactVolume: 100
   wallImpactVolume: 90
   projectileVolume: 60
-  motorMaximumVolume: 15
+  motorMaximumVolume: 40

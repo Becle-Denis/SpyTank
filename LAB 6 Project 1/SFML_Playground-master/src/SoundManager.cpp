@@ -43,9 +43,9 @@ SoundManager::SoundManager(std::string filePath)
 		throw std::exception(s.c_str());
 	}
 
-	if (!m_tankMotorBuffer.loadFromFile("./resources/sounds/fx/TestPinkNoise.wav"))
+	if (!m_tankMotorBuffer.loadFromFile("./resources/sounds/fx/Motor1.wav"))
 	{
-		std::string s("Error loading music ./resources/sounds/fx/TestPinkNoise.wav");
+		std::string s("Error loading music ./resources/sounds/fx/Motor1.wav");
 		throw std::exception(s.c_str());
 	}
 	

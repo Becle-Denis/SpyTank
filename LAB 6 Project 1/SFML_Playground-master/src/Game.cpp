@@ -196,6 +196,7 @@ void Game::setGameOver()
 	//stopping the game
 	m_state = GameState::OVER;
 	m_targets.revealResult();
+	m_tank.clearDependantObjects();
 	m_bigDisplayedText.setString("Game Over !");
 
 	//Sounds stuff

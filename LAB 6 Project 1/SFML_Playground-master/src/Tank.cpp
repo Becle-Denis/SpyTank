@@ -14,12 +14,14 @@ Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, Tar
 	initSprites();
 }
 
+////////////////////////////////////////////////////////////
 void Tank::initialise()
 {
 	m_motorSound = m_soundManager.tankMotorEffect();
 	m_fireTimer.restart(sf::seconds(1.f));
 }
 
+////////////////////////////////////////////////////////////
 void Tank::update(double dt)
 {	
 	//updating the projectiles
@@ -103,11 +105,13 @@ void Tank::update(double dt)
 	
 	//soundStuff 
 	m_soundManager.updateListenerPostion(m_tankBase.getPosition(), m_rotation);
-	m_motorSound->updateState(m_tankBase.getPosition(), abs(m_speed / m_maximumSpeed));
-
+	if (m_motorSound != nullptr)
+	{
+		m_motorSound->updateState(m_tankBase.getPosition(), abs(m_speed / m_maximumSpeed));
+	}
 }
 
-
+////////////////////////////////////////////////////////////
 void Tank::render(sf::RenderWindow & window)  const
 {
 	for (Projectile* projectile : m_projectilesPtr)
@@ -118,7 +122,7 @@ void Tank::render(sf::RenderWindow & window)  const
 	window.draw(m_turret);
 }
 
-
+////////////////////////////////////////////////////////////
 void Tank::initSprites()
 {
 	// Initialise the tank base
@@ -137,6 +141,7 @@ void Tank::initSprites()
 
 }
 
+////////////////////////////////////////////////////////////
 void Tank::setPosition(sf::Vector2f const& pos)
 {
 	m_tankBase.setPosition(pos);
@@ -147,6 +152,26 @@ void Tank::setPosition(sf::Vector2f const& pos)
 UserPerformance& Tank::getPerformance()
 {
 	return m_performances;
+}
+
+////////////////////////////////////////////////////////////
+void Tank::clearDependantObjects()
+{
+	//deleting the projectiles 
+	for (Projectile* projPtr : m_projectilesPtr)
+	{
+		projPtr->setInactive();
+		projPtr = nullptr;
+	}
+	m_projectilesPtr.clear();
+
+	//stopping the sound motor effect
+	if (m_motorSound != nullptr)
+	{
+		m_motorSound->setEnd();
+		m_motorSound = nullptr;
+	}
+	
 }
 
 

@@ -104,6 +104,8 @@ public:	//functions
 	/// </summary>
 	/// <returns>Actual tank performances</returns>
 	UserPerformance& getPerformance();
+
+	void clearDependantObjects();
 	
 private: // functions 
 	/// <summary>

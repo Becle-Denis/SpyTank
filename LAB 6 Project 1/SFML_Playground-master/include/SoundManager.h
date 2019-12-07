@@ -81,7 +81,7 @@ public: // functions
 	/// </summary>
 	void switchToMenuMusic();
 
-	// Updated fx 
+	// Updated fx, returns pointer to sound effect 
 	MovingMotorEffect* tankMotorEffect();
 	MovingSound* startProjectileSound(sf::Vector2f position);
 

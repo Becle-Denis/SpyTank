@@ -63,7 +63,7 @@ void Projectile::update(double dt)
 	}
 }
 
-int Projectile::lifeState(std::vector<sf::Sprite>& wallSprites) const
+int Projectile::lifeState(std::map<int, std::list< sf::Sprite> >& wallMap) const
 {
 	sf::Vector2f position = m_projectileSprite.getPosition();
 	//check for the limit of the screen 
@@ -72,11 +72,19 @@ int Projectile::lifeState(std::vector<sf::Sprite>& wallSprites) const
 		return 2;
 	}
 	//check for collision with wall
-	for (sf::Sprite& wall : wallSprites)
+	//find the cell number
+	int cellN = floor(position.x / (ScreenSize::s_width / 10)) + (floor(position.y / (ScreenSize::s_height / 10)) * 10);
+	
+	if (wallMap.count(cellN) > 0)
 	{
-		if (CollisionDetector::collision(m_projectileSprite,wall))
+		std::cout << wallMap[cellN].size() << std::endl;
+		//check for collision
+		for (sf::Sprite& wall : wallMap[cellN])
 		{
-			return 1;
+			if (CollisionDetector::collision(m_projectileSprite, wall))
+			{
+				return 1;
+			}
 		}
 	}
 	return -1;

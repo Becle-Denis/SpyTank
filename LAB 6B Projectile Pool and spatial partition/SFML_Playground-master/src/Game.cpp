@@ -9,7 +9,7 @@ static double const MS_PER_UPDATE = 10.0;
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
 	m_targets(m_targetTexture),
-	m_tank(m_spriteSheetTexture, m_wallSprites, m_targets, m_projectilesPool, m_soundManager),
+	m_tank(m_spriteSheetTexture, m_wallSprites, m_wallSpatialMap, m_targets, m_projectilesPool, m_soundManager),
 	m_state(GameState::NOT_STARTED), m_projectilesPool(m_spriteSheetTexture, 10, &m_soundManager),
 	m_soundManager("./resources/sounds/music/Level1v1.wav")
 {
@@ -138,19 +138,55 @@ void Game::run()
 }
 
 ////////////////////////////////////////////////////////////
+int Game::calculateSpatialMapCell(sf::Vector2f gamePosition)
+{
+	int numberOfspatialDivision = 10;
+	return floor(gamePosition.x / (ScreenSize::s_width / numberOfspatialDivision)) + (floor(gamePosition.y / (ScreenSize::s_height / numberOfspatialDivision)) * numberOfspatialDivision) ;
+}
+
+////////////////////////////////////////////////////////////
 void Game::generateWalls()
 {
 	sf::IntRect wallRect(2, 129, 33, 23);
 	// Create the Walls 
 	for (ObstacleData const& obstacle : m_level.m_obstacles)
 	{
+		//creating the sprite 
 		sf::Sprite sprite;
 		sprite.setTexture(m_spriteSheetTexture);
 		sprite.setTextureRect(wallRect);
 		sprite.setOrigin(wallRect.width / 2.0, wallRect.height / 2.0);
 		sprite.setPosition(obstacle.m_position);
 		sprite.setRotation(obstacle.m_rotation);
+
+		//adding to the vector 
 		m_wallSprites.push_back(sprite);
+
+		//adding to the spatial map 
+		//left top corner 
+		sf::Vector2f topLeftCorner = obstacle.m_position;
+		int topLeftCell = calculateSpatialMapCell(topLeftCorner);
+		m_wallSpatialMap[topLeftCell].push_back(sprite);
+
+		//right top corner 
+		sf::Vector2f topRightCorner = obstacle.m_position;
+		topRightCorner.x += 33;
+		int topRightCell = calculateSpatialMapCell(topRightCorner);
+		m_wallSpatialMap[topRightCell].push_back(sprite);
+
+		//left bottom corner 
+		sf::Vector2f bottomLeftCorner = obstacle.m_position;
+		bottomLeftCorner.y += 23;
+		int bottomLeftCell = calculateSpatialMapCell(bottomLeftCorner);
+		m_wallSpatialMap[bottomLeftCell].push_back(sprite);
+
+		//right bottom corner 
+		sf::Vector2f bottomRightCorner = obstacle.m_position;
+		bottomRightCorner.x += 33;
+		bottomRightCorner.y += 23;
+		int bottomRightCell = calculateSpatialMapCell(bottomRightCorner);
+		m_wallSpatialMap[bottomRightCell].push_back(sprite);
+
 	}
 }
 
@@ -307,7 +343,7 @@ void Game::render()
 	if (m_state == GameState::NOT_STARTED)
 	{
 		m_window.draw(m_smokedSprite); //smoked sprite
-		m_window.draw(m_bigDisplayedText); // re drawing the game over text
+		m_window.draw(m_bigDisplayedText); // re drawing the text
 	}
 
 	// GameOver 

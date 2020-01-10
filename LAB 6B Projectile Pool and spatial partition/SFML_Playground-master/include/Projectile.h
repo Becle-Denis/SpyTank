@@ -5,6 +5,7 @@
 #include "Target.h"
 #include "SoundManager.h"
 #include "MovingSound.h"
+#include "ScreenSize.h"
 
 /// <summary>
 /// @brief Projectile class 
@@ -68,7 +69,7 @@ public: //functions
 	//			-1 - No Collision 
 	//			1 - Collision with wall 
 	//			2 - Outside the map 
-	int lifeState(std::vector<sf::Sprite>& wallSprites) const;
+	int lifeState(std::map<int, std::list< sf::Sprite> >& wallMap) const;
 
 	//draw the projectile
 	void render(sf::RenderWindow& window ) const;

@@ -24,6 +24,7 @@ private: // Attributes
 	std::vector<sf::Sprite>& m_wallSprites; // A reference to the container of wall sprites.	 
 	TargetManager& m_targets; // A Reference to the container of Targets 
 	ProjectilePool& m_projectilesPool; // Reference to the Pool of projectiles
+	std::map<int, std::list< sf::Sprite> >& m_wallSpatialMap; // Reference to the Spatial map of projectiles
 	SoundManager& m_soundManager; // Reference to the soundManager
 	MovingMotorEffect* m_motorSound; // Pointer to the motor sound effect
 
@@ -78,7 +79,7 @@ public:	//functions
 	/// </summary>
 	/// <param name="texture">A reference to the sprite sheet texture</param>
 	///< param name="texture">A reference to the container of wall sprites</param>  
-	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager);
+	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager);
 
 	void initialise();
 

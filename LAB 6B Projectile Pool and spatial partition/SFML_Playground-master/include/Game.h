@@ -8,6 +8,8 @@
 #include "TargetManager.h"
 #include "UserPerformance.h"
 #include "SoundManager.h"
+#include <map>
+#include <list>
 
 /// <summary>
 /// @author RP
@@ -54,13 +56,16 @@ protected: //attributes
 
 	sf::Sprite m_smokedSprite;
 
-	std::vector<sf::Sprite> m_wallSprites; // Wall sprites
+	//Wall sprites storages 
+	std::vector<sf::Sprite> m_wallSprites; // Vector 
+	std::map<int, std::list< sf::Sprite> > m_wallSpatialMap; // map 
 
 
 	thor::Timer m_timerLeft; // Timer for the time left in Game
 
 	sf::Font m_fontA; //Font for the text
 
+	//Text 
 	sf::Text m_bigDisplayedText; //text for the timer
 	sf::Text m_statTitleText; //text for displaying the performances titles
 	sf::Text m_playerStatsText; // text for displaying the actual player performances 
@@ -92,7 +97,15 @@ public: // function
 	/// </summary>
 	void run();
 
-protected: // function 
+protected: // functions
+
+	/// <summary>
+	/// @brief Calculate the spatial cell of the given position
+	/// </summary>
+	/// <param name="GamePosition">Position to find the cell</param>
+	/// <returns>spatial cell nuber</returns>
+	int calculateSpatialMapCell(sf::Vector2f gamePosition);
+
 	/// <summary>
 	/// @brief Creates the wall sprites and loads them into a vector.
 	/// Note that sf::Sprite is considered a light weight class, so 

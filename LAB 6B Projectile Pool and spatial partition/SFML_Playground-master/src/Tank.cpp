@@ -2,9 +2,10 @@
 #include <iostream>
 
 
-Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager)
+Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager)
 	: m_texture(texture),
 	m_wallSprites(wallSprites),
+	m_wallSpatialMap(wallMap),
 	m_targets(targets),
 	m_projectilesPool(projectilePool),
 	m_maximumSpeed(100),
@@ -41,7 +42,7 @@ void Tank::update(double dt)
 		}
 		else  //colision with wall or outside the map
 		{
-			int lifeState = m_projectilesPtr.at(i)->lifeState(m_wallSprites);
+			int lifeState = m_projectilesPtr.at(i)->lifeState(m_wallSpatialMap);
 			if (lifeState != -1)
 			{
 				if (lifeState == 1)

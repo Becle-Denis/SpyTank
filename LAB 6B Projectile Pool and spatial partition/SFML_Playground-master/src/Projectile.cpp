@@ -73,7 +73,7 @@ int Projectile::lifeState(std::map<int, std::list< sf::Sprite> >& wallMap) const
 	}
 	//check for collision with wall
 	//find the cell number
-	int cellN = floor(position.x / (ScreenSize::s_width / 10)) + (floor(position.y / (ScreenSize::s_height / 10)) * 10);
+	int cellN = (floor(position.y / (ScreenSize::s_width / 10)) * 10) + (floor(position.x / (ScreenSize::s_height / 10)));
 	
 	if (wallMap.count(cellN) > 0)
 	{

@@ -141,7 +141,7 @@ void Game::run()
 int Game::calculateSpatialMapCell(sf::Vector2f gamePosition)
 {
 	int numberOfspatialDivision = 10;
-	return floor(gamePosition.x / (ScreenSize::s_width / numberOfspatialDivision)) + (floor(gamePosition.y / (ScreenSize::s_height / numberOfspatialDivision)) * numberOfspatialDivision) ;
+	return (floor(gamePosition.y / (ScreenSize::s_width / numberOfspatialDivision)) * numberOfspatialDivision) + (floor(gamePosition.x / (ScreenSize::s_height / numberOfspatialDivision))) ;
 }
 
 ////////////////////////////////////////////////////////////

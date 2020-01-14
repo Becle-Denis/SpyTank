@@ -161,29 +161,28 @@ void Game::generateWalls()
 
 		//adding to the vector 
 		m_wallSprites.push_back(sprite);
+		
+		sf::FloatRect spriteRect = sprite.getGlobalBounds();
+		
 
 		//adding to the spatial map 
 		//left top corner 
-		sf::Vector2f topLeftCorner = obstacle.m_position;
+		sf::Vector2f topLeftCorner(spriteRect.left,spriteRect.top);
 		int topLeftCell = calculateSpatialMapCell(topLeftCorner);
 		m_wallSpatialMap[topLeftCell].push_back(sprite);
 
 		//right top corner 
-		sf::Vector2f topRightCorner = obstacle.m_position;
-		topRightCorner.x += 33;
+		sf::Vector2f topRightCorner(spriteRect.left + spriteRect.width, spriteRect.top);
 		int topRightCell = calculateSpatialMapCell(topRightCorner);
 		m_wallSpatialMap[topRightCell].push_back(sprite);
 
 		//left bottom corner 
-		sf::Vector2f bottomLeftCorner = obstacle.m_position;
-		bottomLeftCorner.y += 23;
+		sf::Vector2f bottomLeftCorner(spriteRect.left, spriteRect.top + spriteRect.height);
 		int bottomLeftCell = calculateSpatialMapCell(bottomLeftCorner);
 		m_wallSpatialMap[bottomLeftCell].push_back(sprite);
 
 		//right bottom corner 
-		sf::Vector2f bottomRightCorner = obstacle.m_position;
-		bottomRightCorner.x += 33;
-		bottomRightCorner.y += 23;
+		sf::Vector2f bottomRightCorner(spriteRect.left + spriteRect.width, spriteRect.top + spriteRect.height);
 		int bottomRightCell = calculateSpatialMapCell(bottomRightCorner);
 		m_wallSpatialMap[bottomRightCell].push_back(sprite);
 

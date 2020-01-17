@@ -115,10 +115,15 @@ sf::Vector2f TankAi::collisionAvoidance()
 	sf::Vector2f avoidance(0, 0);
 	if (mostThreatening.getRadius() != 0.0)
 	{		
-		avoidance.x = m_ahead.x - mostThreatening.getPosition().x;
-		avoidance.y = m_ahead.y - mostThreatening.getPosition().y;
-		avoidance = thor::unitVector(avoidance);
-		avoidance *= MAX_AVOID_FORCE;
+		double distanceAheadFromObstacleCenter = MathUtility::distance(m_ahead, mostThreatening.getPosition());
+		bool outOfDeadZone = ! ((distanceAheadFromObstacleCenter > mostThreatening.getRadius() * 0.95) && (distanceAheadFromObstacleCenter < mostThreatening.getRadius() * 1.05));
+		if (outOfDeadZone)
+		{
+			avoidance.x = m_ahead.x - mostThreatening.getPosition().x;
+			avoidance.y = m_ahead.y - mostThreatening.getPosition().y;
+			avoidance = thor::unitVector(avoidance);
+			avoidance *= MAX_AVOID_FORCE;
+		}
 	}
 	return avoidance;
 }

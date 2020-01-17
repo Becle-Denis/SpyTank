@@ -10,6 +10,7 @@ Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
 	m_targets(m_targetTexture),
 	m_tank(m_spriteSheetTexture, m_wallSprites, m_wallSpatialMap, m_targets, m_projectilesPool, m_soundManager),
+	m_aiTank(m_spriteSheetTexture, m_wallSprites),
 	m_state(GameState::NOT_STARTED), m_projectilesPool(m_spriteSheetTexture, 10, &m_soundManager),
 	m_soundManager("./resources/sounds/music/Level1v1.wav")
 {
@@ -99,11 +100,14 @@ Game::Game()
 		break;
 	}
 
+	// Construct the wall sprites
+	generateWalls();
+
 	//initialise the tank 
 	m_tank.initialise();
 
-	// Construct the wall sprites
-	generateWalls();
+	// Populate the obstacle list and set the AI tank position.
+	m_aiTank.init(m_level.m_aiTank.m_position);
 
 	//Constrcut the targets
 	m_targets.construct(m_level.m_targets,&m_soundManager);
@@ -300,6 +304,9 @@ void Game::update(double dt)
 			//updating the tank 
 			m_tank.update(dt);
 
+			//updating the Ai tank 
+			m_aiTank.update(m_tank, dt);
+
 			//updating the stats 
 			UserPerformance stats = m_tank.getPerformance();
 			m_playerStatsText.setString(stats.toStringColumn());
@@ -337,6 +344,9 @@ void Game::render()
 
 	//drawing the tank 
 	m_tank.render(m_window);
+
+	//drawing the AI tank 
+	m_aiTank.render(m_window);
 
 	//Not Started 
 	if (m_state == GameState::NOT_STARTED)

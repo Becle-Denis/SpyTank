@@ -4,6 +4,7 @@
 #include "ScreenSize.h"
 #include "LevelLoader.h"
 #include "Tank.h"
+#include "TankAI.h"
 #include "ProjectilePool.h"
 #include "TargetManager.h"
 #include "UserPerformance.h"
@@ -45,6 +46,7 @@ protected: //attributes
 
 
 	Tank m_tank; // An instance representing the player controlled tank.
+	TankAi m_aiTank; // An instance representing the AI controlled tank.
 
 	TargetManager m_targets; // Targets 
 

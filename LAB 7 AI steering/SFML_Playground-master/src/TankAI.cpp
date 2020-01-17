@@ -122,8 +122,8 @@ sf::Vector2f TankAi::collisionAvoidance()
 ////////////////////////////////////////////////////////////
 const sf::CircleShape TankAi::findMostThreateningObstacle()
 {
-	// The initialisation of mostThreatening is just a placeholder...
-	sf::CircleShape mostThreatening;
+	
+	sf::CircleShape mostThreatening; //set to 0 radius, (null)
 	for (sf::CircleShape obstacle : m_obstacles)
 	{
 		bool collides = MathUtility::lineIntersectsCircle(m_ahead, m_halfAhead, obstacle);
@@ -131,7 +131,7 @@ const sf::CircleShape TankAi::findMostThreateningObstacle()
 		if (collides && (mostThreatening.getRadius() == 0 ||
 			MathUtility::distance(m_tankBase.getPosition(),obstacle.getPosition()) < MathUtility::distance(m_tankBase.getPosition(),mostThreatening.getPosition())))
 		{
-			mostThreatening = obstacle;
+			mostThreatening = obstacle; //finding the new most threating obstacle 
 		}
 	}
 

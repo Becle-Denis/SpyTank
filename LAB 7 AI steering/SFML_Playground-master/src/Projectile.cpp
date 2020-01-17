@@ -65,6 +65,7 @@ void Projectile::update(double dt)
 
 int Projectile::lifeState(std::map<int, std::list< sf::Sprite> >& wallMap) const
 {
+	
 	sf::Vector2f position = m_projectileSprite.getPosition();
 	//check for the limit of the screen 
 	if (position.x < -1000 || position.y < -1000 || position.x > 2440 || position.y > 1900 )

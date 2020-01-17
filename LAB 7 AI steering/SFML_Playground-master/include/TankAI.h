@@ -93,8 +93,11 @@ private:
 	// The maximum avoidance turn rate.
 	static float constexpr MAX_AVOID_FORCE{ 50.0f };
 
-	// 
+	// maximum steering force of the tank
 	static float constexpr MAX_FORCE{ 10.0f };
+
+	// the mass of the tank, used for acceleration calculation 
+	static float constexpr MASS{ 10.0f };
 
 	// The maximum speed for this tank.
 	float MAX_SPEED = 50.0f;

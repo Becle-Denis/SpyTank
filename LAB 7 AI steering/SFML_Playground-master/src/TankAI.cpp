@@ -116,10 +116,6 @@ sf::Vector2f TankAi::collisionAvoidance()
 		avoidance = thor::unitVector(avoidance);
 		avoidance *= MAX_AVOID_FORCE;
 	}
-	else
-	{
-		avoidance *= 0.0f;
-	}
 	return avoidance;
 }
 
@@ -127,8 +123,18 @@ sf::Vector2f TankAi::collisionAvoidance()
 const sf::CircleShape TankAi::findMostThreateningObstacle()
 {
 	// The initialisation of mostThreatening is just a placeholder...
-	//sf::CircleShape mostThreatening = m_obstacles.at(0);
 	sf::CircleShape mostThreatening;
+	for (sf::CircleShape obstacle : m_obstacles)
+	{
+		bool collides = MathUtility::lineIntersectsCircle(m_ahead, m_halfAhead, obstacle);
+
+		if (collides && (mostThreatening.getRadius() == 0 ||
+			MathUtility::distance(m_tankBase.getPosition(),obstacle.getPosition()) < MathUtility::distance(m_tankBase.getPosition(),mostThreatening.getPosition())))
+		{
+			mostThreatening = obstacle;
+		}
+	}
+
 
 	return mostThreatening;
 }

@@ -75,6 +75,9 @@
     <ClInclude Include="include\MovingMotorEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\TankAI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp">
@@ -129,6 +132,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MovingMotorEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TankAI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MathUtility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

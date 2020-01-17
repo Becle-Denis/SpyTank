@@ -106,6 +106,12 @@ public:	//functions
 	/// <returns>Actual tank performances</returns>
 	UserPerformance& getPerformance();
 
+	/// <summary>
+	/// @brief Reads the player tank position.
+	/// <returns>The tank base position.</returns>
+	/// </summary>
+	sf::Vector2f getPosition() const;
+
 	void clearDependantObjects();
 	
 private: // functions 

@@ -155,6 +155,11 @@ UserPerformance& Tank::getPerformance()
 	return m_performances;
 }
 
+sf::Vector2f Tank::getPosition() const
+{
+	return m_tankBase.getPosition();
+}
+
 ////////////////////////////////////////////////////////////
 void Tank::clearDependantObjects()
 {

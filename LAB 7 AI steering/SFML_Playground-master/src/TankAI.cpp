@@ -97,8 +97,7 @@ void TankAi::init(sf::Vector2f position)
 ////////////////////////////////////////////////////////////
 sf::Vector2f TankAi::seek(sf::Vector2f playerPosition) const
 {
-	// This line is simply a placeholder...
-	return sf::Vector2f(0, 1);
+	return (playerPosition - m_tankBase.getPosition()); 
 }
 
 ////////////////////////////////////////////////////////////
@@ -128,7 +127,8 @@ sf::Vector2f TankAi::collisionAvoidance()
 const sf::CircleShape TankAi::findMostThreateningObstacle()
 {
 	// The initialisation of mostThreatening is just a placeholder...
-	sf::CircleShape mostThreatening = m_obstacles.at(0);
+	//sf::CircleShape mostThreatening = m_obstacles.at(0);
+	sf::CircleShape mostThreatening;
 
 	return mostThreatening;
 }

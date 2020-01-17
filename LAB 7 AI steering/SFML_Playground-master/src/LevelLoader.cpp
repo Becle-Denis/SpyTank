@@ -80,6 +80,8 @@ void operator >> (const YAML::Node& levelNode, LevelData& level)
 
 	levelNode["tank"] >> level.m_tank;
 
+	levelNode["ai_tank"] >> level.m_aiTank;
+
 	const YAML::Node& obstaclesNode = levelNode["obstacles"].as<YAML::Node>();
 	for (unsigned i = 0; i < obstaclesNode.size(); ++i)
 	{

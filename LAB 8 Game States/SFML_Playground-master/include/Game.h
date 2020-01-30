@@ -11,6 +11,7 @@
 #include "SoundManager.h"
 #include <map>
 #include <list>
+#include "GameState.h"
 
 /// <summary>
 /// @author RP
@@ -20,9 +21,6 @@
 /// @completed September 2019 / Becle Denis C00254311 / Lab Exercices 
 /// </summary>
 
-
-//Enum for gameState
-enum GameState{NOT_STARTED,IN_PROGRESS,OVER};
 
 
 /// <summary>

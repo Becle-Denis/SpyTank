@@ -234,7 +234,7 @@ void Game::processGameEvents(sf::Event& event)
 void Game::setGameOver()
 {
 	//stopping the game
-	m_state = GameState::OVER;
+	m_state = GameState::OVER_WIN;
 	m_targets.revealResult();
 	m_tank.clearDependantObjects();
 	m_bigDisplayedText.setString("Game Over !");
@@ -276,7 +276,7 @@ void Game::setGameOver()
 
 void Game::start()
 {
-	m_state = GameState::IN_PROGRESS;
+	m_state = GameState::RUNNING;
 	m_soundManager.switchToLevelMusic();
 	m_timerLeft.restart(sf::seconds(60.f));
 }
@@ -287,7 +287,7 @@ void Game::update(double dt)
 	//updating the sound
 	m_soundManager.update();
 
-	if (m_state == GameState::IN_PROGRESS)
+	if (m_state == GameState::RUNNING)
 	{
 		if (m_timerLeft.isExpired())
 		{
@@ -357,7 +357,7 @@ void Game::render()
 	}
 
 	// GameOver 
-	if (m_state == GameState::OVER)
+	if (m_state == GameState::OVER_WIN)
 	{
 		m_window.draw(m_smokedSprite); //smoked sprite
 		m_window.draw(m_bigDisplayedText); // re drawing the game over text

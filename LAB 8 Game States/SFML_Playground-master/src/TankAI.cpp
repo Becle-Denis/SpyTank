@@ -76,6 +76,19 @@ void TankAi::update(Tank const & playerTank, double dt)
 }
 
 ////////////////////////////////////////////////////////////
+bool TankAi::collidesWithPlayer(Tank const & playerTank) const
+{
+    // Checks if the AI tank has collided with the player tank.
+    if (CollisionDetector::collision(m_turret, playerTank.getTurret()) ||
+        CollisionDetector::collision(m_tankBase, playerTank.getBaseTank()))
+    {
+        return true;
+    }
+    return false;
+}
+
+
+////////////////////////////////////////////////////////////
 void TankAi::render(sf::RenderWindow & window)
 {
 	// TODO: Don't draw if off-screen...

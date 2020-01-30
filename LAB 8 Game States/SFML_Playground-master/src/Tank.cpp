@@ -160,6 +160,16 @@ sf::Vector2f Tank::getPosition() const
 	return m_tankBase.getPosition();
 }
 
+sf::Sprite Tank::getBaseTank() const
+{
+	return m_tankBase;
+}
+
+sf::Sprite Tank::getTurret() const
+{
+	return m_turret;
+}
+
 ////////////////////////////////////////////////////////////
 void Tank::clearDependantObjects()
 {

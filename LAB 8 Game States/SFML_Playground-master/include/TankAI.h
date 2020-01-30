@@ -1,6 +1,7 @@
 #pragma once
 #include "MathUtility.h"
 #include "Tank.h"
+#include "CollisionDetector.h"
 #include <SFML/Graphics.hpp>
 #include <Thor/Vectors.hpp>
 #include <iostream>
@@ -29,6 +30,14 @@ public:
 	/// <param name="playerTank">A reference to the player tank</param>
 	/// <param name="dt">update delta time</param>
 	void update(Tank const & playerTank, double dt);
+
+	/// <summary>
+	/// @brief Checks for collision between the AI and player tanks.
+	///
+	/// </summary>
+	/// <param name="player">The player tank instance</param>
+	/// <returns>True if collision detected between AI and player tanks.</returns>
+	bool collidesWithPlayer(Tank const& playerTank) const;
 
 	/// <summary>
 	/// @brief Draws the tank base and turret.

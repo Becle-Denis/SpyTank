@@ -112,6 +112,18 @@ public:	//functions
 	/// </summary>
 	sf::Vector2f getPosition() const;
 
+	/// <summary>
+	/// @brief Return the tank base sprite 
+	/// </summary>
+	/// <returns>sf::Sprite Tank base Sprite</returns>
+	sf::Sprite getBaseTank() const;
+
+	/// <summary>
+	/// @brief Return the tank turret sprite 
+	/// </summary>
+	/// <returns>sf::Sprite Tank turret Sprite</returns>
+	sf::Sprite getTurret() const;
+
 	void clearDependantObjects();
 	
 private: // functions 

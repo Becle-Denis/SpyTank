@@ -311,8 +311,6 @@ void Game::update(double dt)
 			//updating the stats 
 			UserPerformance stats = m_tank.getPerformance();
 			m_playerStatsText.setString(stats.toStringColumn());
-
-			
 		}
 	}
 

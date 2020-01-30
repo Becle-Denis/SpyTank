@@ -1,0 +1,206 @@
+background:
+   file: ./resources/images/Background.jpg # Sample comment
+tank:
+   position: {x: 800, y: 100}
+   max_projectiles: 10
+   reload_time: 1000  
+ai_tank:
+   position: {x: 400, y: 700}
+   max_projectiles: 10
+   reload_time: 1000  
+projectile:
+   speed: 1000
+   damage: 10	
+obstacles: 
+   - type: wall
+     position: {x: 750, y: 200}
+     rotation: 0
+   - type: wall
+     position: {x: 783, y: 200}
+     rotation: 0
+   - type: wall
+     position: {x: 816, y: 200}
+     rotation: 0
+   - type: wall
+     position: {x: 849, y: 200}
+     rotation: 0
+   - type: wall
+     position: {x: 882, y: 200}
+     rotation: 0
+   - type: wall
+     position: {x: 915, y: 200}
+     rotation: 0
+   - type: wall
+     position: {x: 1120, y: 120}
+     rotation: 90
+   - type: wall
+     position: {x: 1120, y: 153}
+     rotation: 90
+   - type: wall
+     position: {x: 1120, y: 186}
+     rotation: 90
+   - type: wall
+     position: {x: 1120, y: 219}
+     rotation: 90
+   - type: wall
+     position: {x: 1120, y: 252}
+     rotation: 90
+   - type: wall
+     position: {x: 1120, y: 285}
+     rotation: 90
+   - type: wall
+     position: {x: 1120, y: 318}
+     rotation: 90
+   - type: wall
+     position: {x: 1120, y: 351}
+     rotation: 90
+   - type: wall
+     position: {x: 1120, y: 384}
+     rotation: 90
+   - type: wall
+     position: {x: 230, y: 280}
+     rotation: 90
+   - type: wall
+     position: {x: 230, y: 313}
+     rotation: 90
+   - type: wall
+     position: {x: 230, y: 347}
+     rotation: 90
+   - type: wall
+     position: {x: 230, y: 380}
+     rotation: 90
+   - type: wall
+     position: {x: 230, y: 413}
+     rotation: 90
+   - type: wall
+     position: {x: 230, y: 446}
+     rotation: 90
+   - type: wall
+     position: {x: 230, y: 479}
+     rotation: 90
+   - type: wall
+     position: {x: 230, y: 512}
+     rotation: 90
+   - type: wall
+     position: {x: 230, y: 545}
+     rotation: 90
+   - type: wall
+     position: {x: 500, y: 500}
+     rotation: 0
+   - type: wall
+     position: {x: 533, y: 500}
+     rotation: 0
+   - type: wall
+     position: {x: 566, y: 500}
+     rotation: 0
+   - type: wall
+     position: {x: 599, y: 500}
+     rotation: 0
+   - type: wall
+     position: {x: 632, y: 500}
+     rotation: 0
+   - type: wall
+     position: {x: 665, y: 500}
+     rotation: 0
+   - type: wall
+     position: {x: 698, y: 500}
+     rotation: 0
+   - type: wall
+     position: {x: 600, y: 690}
+     rotation: 90
+   - type: wall
+     position: {x: 600, y: 723}
+     rotation: 90
+   - type: wall
+     position: {x: 600, y: 756}
+     rotation: 90
+   - type: wall
+     position: {x: 600, y: 789}
+     rotation: 90
+   - type: wall
+     position: {x: 600, y: 822}
+     rotation: 90
+   - type: wall
+     position: {x: 1053, y: 716}
+     rotation: 100
+   - type: wall
+     position: {x: 1063, y: 683}
+     rotation: 110
+   - type: wall
+     position: {x: 1077, y: 652}
+     rotation: 120
+   - type: wall
+     position: {x: 1097, y: 624}
+     rotation: 130
+   - type: wall
+     position: {x: 1122, y: 601}
+     rotation: 140
+   - type: wall
+     position: {x: 1150, y: 581}
+     rotation: 150
+   - type: wall
+     position: {x: 1182, y: 566}
+     rotation: 160
+   - type: wall
+     position: {x: 1216, y: 557}
+     rotation: 170
+
+
+targets:
+   - position: {x: 722, y: 450, randomOffset: 100}
+     secondsToStart: 1
+     secondsOnScreen: 8
+   - position: {x: 350, y: 700, randomOffset: 50}
+     secondsToStart: 7
+     secondsOnScreen: 7
+   - position: {x: 400, y: 200, randomOffset: 40}
+     secondsToStart: 13
+     secondsOnScreen: 6
+   - position: {x: 800, y: 700, randomOffset: 50}
+     secondsToStart: 16
+     secondsOnScreen: 5
+   - position: {x: 1300, y: 750, randomOffset: 45}
+     secondsToStart: 21
+     secondsOnScreen: 6
+   - position: {x: 800, y: 465, randomOffset: 70}
+     secondsToStart: 24
+     secondsOnScreen: 6
+   - position: {x: 410, y: 250, randomOffset: 100}
+     secondsToStart: 26
+     secondsOnScreen: 6
+   - position: {x: 900, y: 150, randomOffset: 20}
+     secondsToStart: 30
+     secondsOnScreen: 6
+   - position: {x: 70, y: 286, randomOffset: 10}
+     secondsToStart: 32
+     secondsOnScreen: 7
+   - position: {x: 400, y: 710, randomOffset: 30}
+     secondsToStart: 38
+     secondsOnScreen: 7
+   - position: {x: 100, y: 100, randomOffset: 50}
+     secondsToStart: 41
+     secondsOnScreen: 7
+   - position: {x: 1000, y: 758, randomOffset: 20}
+     secondsToStart: 45
+     secondsOnScreen: 5
+   - position: {x: 1350, y: 300, randomOffset: 30}
+     secondsToStart: 49
+     secondsOnScreen: 7
+   - position: {x: 900, y: 500, randomOffset: 33}
+     secondsToStart: 52
+     secondsOnScreen: 4
+   - position: {x: 1200, y: 300, randomOffset: 40}
+     secondsToStart: 54
+     secondsOnScreen: 3
+   - position: {x: 80, y: 500, randomOffset: 20}
+     secondsToStart: 60
+     secondsOnScreen: 9
+   - position: {x: 1055, y: 356, randomOffset: 50}
+     secondsToStart: 70
+     secondsOnScreen: 2
+   - position: {x: 1200, y: 750, randomOffset: 10}
+     secondsToStart: 75
+     secondsOnScreen: 1
+   - position: {x: 722, y: 400, randomOffset: 90}
+     secondsToStart: 80
+     secondsOnScreen: 0

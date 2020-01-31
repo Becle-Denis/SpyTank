@@ -12,6 +12,7 @@
 #include <map>
 #include <list>
 #include "GameState.h"
+#include "HUD.h"
 
 /// <summary>
 /// @author RP
@@ -64,6 +65,9 @@ protected: //attributes
 	thor::Timer m_timerLeft; // Timer for the time left in Game
 
 	sf::Font m_fontA; //Font for the text
+
+	// The game HUD instance.
+	HUD m_hud;
 
 	//Text 
 	sf::Text m_bigDisplayedText; //text for the timer

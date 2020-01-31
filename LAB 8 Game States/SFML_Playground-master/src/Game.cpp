@@ -12,6 +12,7 @@ Game::Game()
 	m_tank(m_spriteSheetTexture, m_wallSprites, m_wallSpatialMap, m_targets, m_projectilesPool, m_soundManager),
 	m_aiTank(m_spriteSheetTexture, m_wallSprites),
 	m_state(GameState::NOT_STARTED), m_projectilesPool(m_spriteSheetTexture, 10, &m_soundManager),
+	m_hud(m_fontA),
 	m_soundManager("./resources/sounds/music/Level1v1.wav")
 {
 	//seed the random 
@@ -69,6 +70,7 @@ Game::Game()
 	if (!m_fontA.loadFromFile("./resources/fonts/8_bit_fortress.ttf"))
 	{
 		std::cout << "problem loading font file" << std::endl;
+		throw std::exception("problem loading font file");
 	}
 	m_bigDisplayedText = sf::Text("BLIND TANK",m_fontA,50);
 	m_bigDisplayedText.setFillColor(sf::Color::Red);
@@ -308,6 +310,9 @@ void Game::update(double dt)
 			//updating the Ai tank 
 			m_aiTank.update(m_tank, dt);
 
+			//updating the HUD
+			m_hud.update(m_state);
+
 			//updating the stats 
 			UserPerformance stats = m_tank.getPerformance();
 			m_playerStatsText.setString(stats.toStringColumn());
@@ -346,6 +351,9 @@ void Game::render()
 
 	//drawing the AI tank 
 	m_aiTank.render(m_window);
+
+	//draeing the HUD
+	m_hud.render(m_window);
 
 	//Not Started 
 	if (m_state == GameState::NOT_STARTED)

@@ -25,6 +25,12 @@ public:
 	/// <param name="timeOnScreen">Time of the target to be on screen</param>
 	void init(sf::Texture const* texture, sf::Vector2f position, sf::Time timeToStart, sf::Time timeOnScreen, SoundManager* soundManager = nullptr);
 
+
+	/// <summary>
+	/// Launch the timer
+	/// </summary>
+	void start();
+
 	/// <summary>
 	/// Update the state of the Target 
 	/// The first Update will launch the timer

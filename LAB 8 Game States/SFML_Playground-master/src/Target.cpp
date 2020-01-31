@@ -25,15 +25,18 @@ void Target::init(sf::Texture const* texture, sf::Vector2f position, sf::Time ti
 	m_soundManagerPtr = soundManager;
 }
 
+void Target::start()
+{
+	m_timer.restart(m_timeToStart);
+	m_state = TargetState::NotDisplayed;
+	m_isDisplayed = false;
+	m_sprite.setColor(sf::Color(255, 255, 255));
+}
+
 void Target::update()
 {
 	switch (m_state)
 	{
-	case TargetState::NotStarted: //Start the timer on the first update
-		m_timer.restart(m_timeToStart);
-		m_state = TargetState::NotDisplayed;
-		break;
-
 	case TargetState::NotDisplayed: // reveal the target when timer expired 
 		if (m_timer.isExpired())
 		{

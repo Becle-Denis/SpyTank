@@ -24,6 +24,12 @@ public: // functions
 	/// <param name="targetData">Data of the target to be created</param>
 	void construct(std::vector<TargetData>& targetData, SoundManager* soundManager = nullptr);
 
+
+	/// <summary>
+	/// Start each Target
+	/// </summary>
+	void start();
+
 	/// <summary>
 	/// Update all the targets
 	/// </summary>
@@ -51,7 +57,7 @@ public: // functions
 	void render(sf::RenderWindow& window) const;
 
 	/// <summary>
-	/// Reveal the rsult of all the targets 
+	/// Reveal the result of all the targets 
 	/// </summary>
 	void revealResult();
 

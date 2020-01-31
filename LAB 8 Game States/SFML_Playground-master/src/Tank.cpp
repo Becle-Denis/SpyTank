@@ -9,7 +9,6 @@ Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std
 	m_targets(targets),
 	m_projectilesPool(projectilePool),
 	m_maximumSpeed(100),
-	m_performances(&targets),
 	m_soundManager(soundManager)
 {
 	initSprites();
@@ -21,7 +20,7 @@ void Tank::initialise()
 	m_motorSound = m_soundManager.tankMotorEffect();
 	//reseting values 
 	m_fireTimer.restart(sf::seconds(1.f));
-	m_performances = UserPerformance();
+	m_performances = UserPerformance(&m_targets);
 	m_enableRotation = true;
 	m_rotation = 0;
 	m_turretRotation = 0;

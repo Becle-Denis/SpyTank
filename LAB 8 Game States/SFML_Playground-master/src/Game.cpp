@@ -266,6 +266,7 @@ void Game::start()
 	m_hud.start();
 	m_timerLeft.restart(sf::seconds(60.f));
 	m_tank.initialise();
+	m_targets.start();
 }
 
 ////////////////////////////////////////////////////////////

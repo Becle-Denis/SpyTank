@@ -141,7 +141,7 @@ protected: // functions
 	/// <summary>
 	/// Set the game state to gameOver
 	/// </summary>
-	void setGameOver();
+	void setGameOver(bool win);
 
 	/// <summary>
 	/// Set the Game state to InProgress

@@ -222,10 +222,17 @@ void Game::processGameEvents(sf::Event& event)
 	}
 }
 
-void Game::setGameOver()
+void Game::setGameOver(bool win)
 {
 	//stopping the game
-	m_state = GameState::OVER_WIN;
+	if (win)
+	{
+		m_state = GameState::OVER_WIN;
+	}
+	else
+	{
+		m_state = GameState::OVER_LOSE;
+	}
 	m_targets.revealResult();
 	m_tank.clearDependantObjects();
 
@@ -265,11 +272,16 @@ void Game::update(double dt)
 	//updating the sound
 	m_soundManager.update();
 
-	if (m_state == GameState::RUNNING)
+	switch (m_state)
 	{
-		if (m_timerLeft.isExpired())
+	case GameState::RUNNING:
+		if (m_timerLeft.isExpired()) //Winning game over
 		{
-			setGameOver();
+			setGameOver(true);
+		}
+		else if (m_aiTank.collidesWithPlayer(m_tank)) //Losing
+		{
+			setGameOver(false);
 		}
 		else
 		{
@@ -284,8 +296,8 @@ void Game::update(double dt)
 
 			//updating the HUD
 			m_hud.update(m_timerLeft.getRemainingTime(), m_tank.getPerformance());
-
 		}
+		break;
 	}
 
 }

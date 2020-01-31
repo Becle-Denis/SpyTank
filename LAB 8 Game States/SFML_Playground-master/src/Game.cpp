@@ -72,18 +72,7 @@ Game::Game()
 		std::cout << "problem loading font file" << std::endl;
 		throw std::exception("problem loading font file");
 	}
-	m_bigDisplayedText = sf::Text("BLIND TANK",m_fontA,50);
-	m_bigDisplayedText.setFillColor(sf::Color::Red);
-	m_bigDisplayedText.setPosition(450,50);
 
-	//set the texts for realTime stats
-	m_statTitleText = sf::Text("Hits\nSuccess\nAccuracy", m_fontA, 30);
-	m_statTitleText.setFillColor(sf::Color(0, 0, 125));
-	m_statTitleText.setPosition(150, 40);
-
-	m_playerStatsText = sf::Text("", m_fontA, 30);
-	m_playerStatsText.setFillColor(sf::Color(0, 0, 125));
-	m_playerStatsText.setPosition(50, 40);
 
 	// Set the tank position in one corner randmoly.
 	switch (rand() % 4)
@@ -239,7 +228,6 @@ void Game::setGameOver()
 	m_state = GameState::OVER_WIN;
 	m_targets.revealResult();
 	m_tank.clearDependantObjects();
-	m_bigDisplayedText.setString("Game Over !");
 
 	//Sounds stuff
 	m_soundManager.switchToMenuMusic();
@@ -247,32 +235,20 @@ void Game::setGameOver()
 	//Seting the performance display 
 	UserPerformance actualPerf = m_tank.getPerformance();
 	UserPerformance bestPerf = UserPerformance::loadFromFile("./resources/scores/BestOfAllTime.yaml");
-	
-	std::string title = "\nHit\nTotal Targets\nSuccess\nFired\nAccuracy";
-	std::string actualStats = "Player\n" + actualPerf.toStringColumnFull();
-	std::string bestStats = "Best\n" + bestPerf.toStringColumnFull();
 
+	//checking for best Performance 
 	if (bestPerf < actualPerf)
 	{
 		//saving Actual perf 
 		actualPerf.saveOnFile("./resources/scores/BestOfAllTime.yaml");
 
-		//Set the new string
-		bestStats = "Best\n" + actualPerf.toStringColumnFull();
+		//Changing the best Perf
+		bestPerf = actualPerf;
 	}
-
 	
-	m_statTitleText = sf::Text(title, m_fontA, 60);
-	m_statTitleText.setFillColor(sf::Color::Black);
-	m_statTitleText.setPosition(100, 200);
-
-	m_playerStatsText = sf::Text(actualStats, m_fontA, 60);
-	m_playerStatsText.setFillColor(sf::Color(0, 0, 150));
-	m_playerStatsText.setPosition(700, 200);
-
-	m_gameOverBestStatsText = sf::Text(bestStats, m_fontA, 60);
-	m_gameOverBestStatsText.setFillColor(sf::Color(168, 152, 0));
-	m_gameOverBestStatsText.setPosition(1000, 200);
+	//setting the hud
+	m_hud.setOver(m_state, actualPerf, bestPerf);
+	
 
 }
 
@@ -297,10 +273,6 @@ void Game::update(double dt)
 		}
 		else
 		{
-			//updating the timer
-			sf::Time timeLeft = m_timerLeft.getRemainingTime();
-			m_bigDisplayedText.setString("" + std::to_string((int)timeLeft.asSeconds()) + " seconds left");
-
 			//updating the targets
 			m_targets.update(dt);
 
@@ -311,11 +283,8 @@ void Game::update(double dt)
 			m_aiTank.update(m_tank, dt);
 
 			//updating the HUD
-			m_hud.update(m_state);
+			m_hud.update(m_timerLeft.getRemainingTime(), m_tank.getPerformance());
 
-			//updating the stats 
-			UserPerformance stats = m_tank.getPerformance();
-			m_playerStatsText.setString(stats.toStringColumn());
 		}
 	}
 
@@ -335,13 +304,8 @@ void Game::render()
 	{
 		m_window.draw(wallSprite);
 	}
-
-	//drawing the timer
-	m_window.draw(m_bigDisplayedText);
-
-	//drawing the stats 
-	m_window.draw(m_statTitleText);
-	m_window.draw(m_playerStatsText);
+	//drawing the HUD
+	m_hud.render(m_window);
 
 	//drawing the target
 	m_targets.render(m_window);
@@ -352,24 +316,13 @@ void Game::render()
 	//drawing the AI tank 
 	m_aiTank.render(m_window);
 
-	//draeing the HUD
-	m_hud.render(m_window);
+	
 
 	//Not Started 
-	if (m_state == GameState::NOT_STARTED)
+	if (m_state != GameState::RUNNING)
 	{
 		m_window.draw(m_smokedSprite); //smoked sprite
-		m_window.draw(m_bigDisplayedText); // re drawing the text
-	}
-
-	// GameOver 
-	if (m_state == GameState::OVER_WIN)
-	{
-		m_window.draw(m_smokedSprite); //smoked sprite
-		m_window.draw(m_bigDisplayedText); // re drawing the game over text
-		m_window.draw(m_statTitleText); // Stats text
-		m_window.draw(m_playerStatsText); // Actual stats
-		m_window.draw(m_gameOverBestStatsText); // Best stats
+		m_hud.render(m_window);; // re drawing the HUD
 	}
 
 	m_window.display();

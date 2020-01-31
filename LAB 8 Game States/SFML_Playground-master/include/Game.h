@@ -69,12 +69,6 @@ protected: //attributes
 	// The game HUD instance.
 	HUD m_hud;
 
-	//Text 
-	sf::Text m_bigDisplayedText; //text for the timer
-	sf::Text m_statTitleText; //text for displaying the performances titles
-	sf::Text m_playerStatsText; // text for displaying the actual player performances 
-	sf::Text m_gameOverBestStatsText; //text for displaying the best player performances 
-
 	//Textures storages
 	sf::Texture m_spriteSheetTexture; // A texture for the sprite sheet
 	sf::Texture m_targetTexture; // A texture for the Targets

@@ -68,6 +68,8 @@ private: // Attributes
 	// The previous rotation to the turret 
 	double m_previousTurretRotation{ 0.0 };
 
+	//Original Starting position 
+	sf::Vector2f m_startingPosition;
 	
 
 
@@ -98,7 +100,7 @@ public:	//functions
 	/// @brief Set the Position of the tank
 	/// </summary>
 	/// <param name="pos">New position of the tank</param>
-	void setPosition(sf::Vector2f const& pos);
+	void setStartingPosition(sf::Vector2f const& pos);
 
 	/// <summary>
 	/// Calculate and return the tank performances

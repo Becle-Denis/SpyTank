@@ -78,16 +78,16 @@ Game::Game()
 	switch (rand() % 4)
 	{
 	case 0:
-		m_tank.setPosition(sf::Vector2f(150, 150));
+		m_tank.setStartingPosition(sf::Vector2f(150, 150));
 		break;
 	case 1:
-		m_tank.setPosition(sf::Vector2f(ScreenSize::s_height - 150, 150));
+		m_tank.setStartingPosition(sf::Vector2f(ScreenSize::s_height - 150, 150));
 		break;
 	case 2:
-		m_tank.setPosition(sf::Vector2f(150, ScreenSize::s_width - 150));
+		m_tank.setStartingPosition(sf::Vector2f(150, ScreenSize::s_width - 150));
 		break;
 	case 3:
-		m_tank.setPosition(sf::Vector2f(ScreenSize::s_height - 150, ScreenSize::s_width - 150));
+		m_tank.setStartingPosition(sf::Vector2f(ScreenSize::s_height - 150, ScreenSize::s_width - 150));
 		break;
 	}
 
@@ -212,7 +212,7 @@ void Game::processGameEvents(sf::Event& event)
 			m_window.close();
 			break;
 		case sf::Keyboard::Enter:
-			if (m_state == GameState::NOT_STARTED)
+			if (m_state != GameState::RUNNING)
 			{
 				start();
 			}
@@ -263,7 +263,9 @@ void Game::start()
 {
 	m_state = GameState::RUNNING;
 	m_soundManager.switchToLevelMusic();
+	m_hud.start();
 	m_timerLeft.restart(sf::seconds(60.f));
+	m_tank.initialise();
 }
 
 ////////////////////////////////////////////////////////////

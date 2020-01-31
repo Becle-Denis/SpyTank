@@ -18,6 +18,10 @@ public:
 	/// </summary>
 	HUD(sf::Font& hudFont);
 
+	/// <summary>
+	/// Start or restart the HUD
+	/// </summary>
+	void start();
 
 	/// <summary>
 	/// Set the HUD Game Over text

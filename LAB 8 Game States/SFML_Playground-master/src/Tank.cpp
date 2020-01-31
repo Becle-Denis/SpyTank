@@ -19,7 +19,19 @@ Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std
 void Tank::initialise()
 {
 	m_motorSound = m_soundManager.tankMotorEffect();
+	//reseting values 
 	m_fireTimer.restart(sf::seconds(1.f));
+	m_performances = UserPerformance();
+	m_enableRotation = true;
+	m_rotation = 0;
+	m_turretRotation = 0;
+	m_speed = 0;
+
+	//resetting sprite 
+	m_tankBase.setPosition(m_startingPosition);
+	m_turret.setPosition(m_startingPosition);
+	m_tankBase.setRotation(m_rotation);
+	m_turret.setRotation(m_turretRotation);
 }
 
 ////////////////////////////////////////////////////////////
@@ -143,10 +155,11 @@ void Tank::initSprites()
 }
 
 ////////////////////////////////////////////////////////////
-void Tank::setPosition(sf::Vector2f const& pos)
+void Tank::setStartingPosition(sf::Vector2f const& pos)
 {
 	m_tankBase.setPosition(pos);
 	m_turret.setPosition(pos);
+	m_startingPosition = pos;
 }
 
 ////////////////////////////////////////////////////////////

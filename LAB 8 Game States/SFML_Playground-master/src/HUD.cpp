@@ -7,6 +7,12 @@ HUD::HUD(sf::Font& hudFont)
 	m_bigDisplayedText = sf::Text("BLIND TANK", m_textFont, 50);
 	m_bigDisplayedText.setFillColor(sf::Color::Red);
 	m_bigDisplayedText.setPosition(450, 50);
+	start();
+}
+
+void HUD::start()
+{
+	m_over = false;
 
 	//set the texts for realTime stats
 	m_statTitleText = sf::Text("Hits\nSuccess\nAccuracy", m_textFont, 30);

@@ -266,6 +266,7 @@ void Game::start()
 	m_hud.start();
 	m_timerLeft.restart(sf::seconds(60.f));
 	m_tank.initialise();
+	m_aiTank.start();
 	m_targets.start();
 }
 
@@ -278,7 +279,8 @@ void Game::update(double dt)
 	switch (m_state)
 	{
 	case GameState::RUNNING:
-		if (m_timerLeft.isExpired()) //Winning game over
+		float aiLifePoint = m_aiTank.getLifePoint();
+		if (m_timerLeft.isExpired() || aiLifePoint <= 0) //Winning game over
 		{
 			setGameOver(true);
 		}
@@ -298,7 +300,7 @@ void Game::update(double dt)
 			m_aiTank.update(m_tank, dt);
 
 			//updating the HUD
-			m_hud.update(m_timerLeft.getRemainingTime(), m_tank.getPerformance());
+			m_hud.update(m_timerLeft.getRemainingTime(), m_tank.getPerformance(),aiLifePoint);
 		}
 		break;
 	}

@@ -35,7 +35,8 @@ public:
 	/// @brief Checks the current game state and sets the appropriate status text on the HUD.
 	/// </summary>
 	/// <param name="gameState">The current game state</param>
-	void update(sf::Time remainingTime, UserPerformance userPerf);
+	/// <param name="aiLifePoint">The current life points of the ai</param>
+	void update(sf::Time remainingTime, UserPerformance userPerf, float aiLifePoint);
 
 	/// <summary>
 	/// @brief Draws the HUD outline and text.
@@ -56,7 +57,9 @@ private:
 	sf::Text m_statTitleText; //text for displaying the performances titles
 	sf::Text m_playerStatsText; // text for displaying the actual player performances 
 	sf::Text m_gameOverBestStatsText; //text for displaying the best player performances 
-
+	sf::Text m_aiTankLifeTitleText; //text for displaying the ai tank life points title
+	sf::Text m_aiTankLifeText; //text for displaying the ai tank life points 
+	
 
 };
 

@@ -20,6 +20,8 @@ public:
 	///< param name="wallSprites">A reference to the container of wall sprites</param>
 	TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprites);
 
+	void start();
+
 	/// <summary>
 	/// @brief Steers the AI tank towards the player tank avoiding obstacles along the way.
 	/// Gets a vector to the player tank and sets steering and velocity vectors towards
@@ -53,7 +55,29 @@ public:
 	/// </summary>
 	void init(sf::Vector2f position);
 
+	/// <summary>
+	/// Return the 2 Sprite of the tank, can be used for collision  
+	/// </summary>
+	/// <returns>Pair of the tank sprites</returns>
 	std::pair<sf::Sprite, sf::Sprite> getSprites();
+
+	/// <summary>
+	/// Apply the damage to the tank health
+	/// </summary>
+	/// <param name="damage">damage applied to the tank</param>
+	void takeDamage(float damage);
+
+	/// <summary>
+	/// Return the tank lifePoint
+	/// </summary>
+	/// <returns>Tank actual life Points</returns>
+	float getLifePoint() const;
+
+	/// <summary>
+	/// @brief Set the Position of the tank
+	/// </summary>
+	/// <param name="pos">New position of the tank</param>
+	void setStartingPosition(sf::Vector2f const& pos);
 
 	enum class AiType
 	{
@@ -111,8 +135,15 @@ private:
 	// the mass of the tank, used for acceleration calculation 
 	static float constexpr MASS{ 10.0f };
 
+	static float constexpr LIFE_POINTS{ 80.0f };
+
 	// The maximum speed for this tank.
 	float MAX_SPEED = 50.0f;
+
+	float m_lifePoint{ 80.f };
+
+	//Original Starting position 
+	sf::Vector2f m_startingPosition;
 
 	// A container of circles that represent the obstacles to avoid.
 	std::vector<sf::CircleShape> m_obstacles;

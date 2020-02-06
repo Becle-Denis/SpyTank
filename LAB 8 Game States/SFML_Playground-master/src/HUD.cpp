@@ -15,13 +15,23 @@ void HUD::start()
 	m_over = false;
 
 	//set the texts for realTime stats
-	m_statTitleText = sf::Text("Hits\nSuccess\nAccuracy\nEnemy Hitted", m_textFont, 30);
+	m_statTitleText = sf::Text("Hits\nSuccess\nAccuracy", m_textFont, 30);
 	m_statTitleText.setFillColor(sf::Color(0, 0, 125));
 	m_statTitleText.setPosition(150, 40);
 
 	m_playerStatsText = sf::Text("", m_textFont, 30);
 	m_playerStatsText.setFillColor(sf::Color(0, 0, 125));
 	m_playerStatsText.setPosition(50, 40);
+
+	m_aiTankLifeTitleText = sf::Text("Enemy Life ", m_textFont, 30);
+	m_aiTankLifeTitleText.setFillColor(sf::Color(125,0,0));
+	m_aiTankLifeTitleText.setPosition(1100, 40);
+
+	m_aiTankLifeText = sf::Text("", m_textFont, 30);
+	m_aiTankLifeText.setFillColor(sf::Color(125, 0, 0));
+	m_aiTankLifeText.setPosition(1350, 40);
+
+
 }
 
 void HUD::setOver(GameState state, UserPerformance playerPerf, UserPerformance bestPerf)
@@ -39,7 +49,7 @@ void HUD::setOver(GameState state, UserPerformance playerPerf, UserPerformance b
 
 
 	//Set The game Over texts 
-	std::string title = "\nHit\nTotal Targets\nSuccess\nFired\nAccuracy\nEnemy Hitted";
+	std::string title = "\nHit\nTotal Targets\nSuccess\nFired\nAccuracy";
 	std::string actualStats = "Player\n" + playerPerf.toStringColumnFull();
 	std::string bestStats = "Best\n" + bestPerf.toStringColumnFull();
 
@@ -58,23 +68,30 @@ void HUD::setOver(GameState state, UserPerformance playerPerf, UserPerformance b
 }
 
 ////////////////////////////////////////////////////////////
-void HUD::update(sf::Time remainingTime, UserPerformance userPerf)
+void HUD::update(sf::Time remainingTime, UserPerformance userPerf, float aiLifePoint)
 {
 	//updating timer 
 	m_bigDisplayedText.setString("" + std::to_string((int)remainingTime.asSeconds()) + " seconds left");
 
 	//updating Stats
 	m_playerStatsText.setString(userPerf.toStringColumn());
+
+	//updating Ai life Point 
+	m_aiTankLifeText.setString(std::to_string((int) aiLifePoint));
 }
 
 void HUD::render(sf::RenderWindow& window)
 {
 	window.draw(m_playerStatsText);
 	window.draw(m_statTitleText);
-
 	if (m_over)
 	{
 		window.draw(m_gameOverBestStatsText);
+	}
+	else
+	{
+		window.draw(m_aiTankLifeTitleText);
+		window.draw(m_aiTankLifeText);
 	}
 	window.draw(m_bigDisplayedText);
 }

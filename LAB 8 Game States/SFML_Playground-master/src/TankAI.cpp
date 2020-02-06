@@ -12,6 +12,18 @@ TankAi::TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprite
 }
 
 ////////////////////////////////////////////////////////////
+void TankAi::start()
+{
+	m_tankBase.setPosition(m_startingPosition);
+	m_turret.setPosition(m_startingPosition);
+	m_tankBase.setRotation(0);
+	m_turret.setRotation(0);
+	m_lifePoint = LIFE_POINTS;
+	m_rotation = 0;
+
+}
+
+////////////////////////////////////////////////////////////
 void TankAi::update(Tank const & playerTank, double dt)
 {
 	sf::Vector2f vectorToPlayer = seek(playerTank.getPosition());
@@ -99,8 +111,9 @@ void TankAi::render(sf::RenderWindow & window)
 ////////////////////////////////////////////////////////////
 void TankAi::init(sf::Vector2f position)
 {
-	m_tankBase.setPosition(position);
-	m_turret.setPosition(position);
+	m_startingPosition = position;
+	m_tankBase.setPosition(m_startingPosition);
+	m_turret.setPosition(m_startingPosition);
 
 	for (sf::Sprite const wallSprite : m_wallSprites)
 	{
@@ -115,6 +128,15 @@ void TankAi::init(sf::Vector2f position)
 std::pair<sf::Sprite, sf::Sprite> TankAi::getSprites()
 {
 	return std::pair<sf::Sprite, sf::Sprite>(m_tankBase,m_turret);
+}
+
+////////////////////////////////////////////////////////////
+void TankAi::takeDamage(float damage)
+{
+	if (damage > 0)
+	{
+		m_lifePoint -= damage;
+	}
 }
 
 ////////////////////////////////////////////////////////////
@@ -165,6 +187,12 @@ const sf::CircleShape TankAi::findMostThreateningObstacle()
 
 
 	return mostThreatening;
+}
+
+////////////////////////////////////////////////////////////
+float TankAi::getLifePoint() const
+{
+	return m_lifePoint;
 }
 
 ////////////////////////////////////////////////////////////

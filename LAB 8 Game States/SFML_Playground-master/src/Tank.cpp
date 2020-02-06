@@ -64,7 +64,7 @@ void Tank::update(double dt)
 				}
 				if (lifeState == 3) //Colision with AITank 
 				{
-					m_performances.enemyHitted();
+					m_aiTank.takeDamage(20);
 				}
 				//removing the projectile 
 				m_projectilesPtr.at(i)->setInactive();

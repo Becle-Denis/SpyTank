@@ -73,12 +73,6 @@ public:
 	/// <returns>Tank actual life Points</returns>
 	float getLifePoint() const;
 
-	/// <summary>
-	/// @brief Set the Position of the tank
-	/// </summary>
-	/// <param name="pos">New position of the tank</param>
-	void setStartingPosition(sf::Vector2f const& pos);
-
 	enum class AiType
 	{
 		AI_ID_NONE,

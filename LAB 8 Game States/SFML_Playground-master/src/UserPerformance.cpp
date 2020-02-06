@@ -21,12 +21,18 @@ void UserPerformance::targetHitted()
 	m_targetHitted++;
 }
 
+void UserPerformance::enemyHitted()
+{
+	m_enemyHitted++;
+}
+
 std::string UserPerformance::toStringColumn()
 {
 	calculate();
 	return std::to_string(m_targetHitted)
 		+ "\n" + std::to_string(m_sucess) + " %" + "\n"
-		+ std::to_string(m_accuracy) + " %";
+		+ std::to_string(m_accuracy) + " %" + "\n"
+		+ std::to_string(m_enemyHitted);
 }
 
 std::string UserPerformance::toStringColumnFull()
@@ -36,7 +42,8 @@ std::string UserPerformance::toStringColumnFull()
 		+ std::to_string(m_totalNumberOfTarget) + "\n"
 		+ std::to_string(m_sucess) + " %" + "\n"
 		+ std::to_string(m_projectileFired) + "\n"
-		+ std::to_string(m_accuracy) + " %";
+		+ std::to_string(m_accuracy) + " %" + "\n"
+		+ std::to_string(m_enemyHitted);
 }
 
 bool UserPerformance::saveOnFile(std::string fileName)

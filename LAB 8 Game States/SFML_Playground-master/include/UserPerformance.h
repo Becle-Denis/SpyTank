@@ -12,6 +12,7 @@ private: // Attribute
 	int m_sucess{ 0 };
 	int m_projectileFired{ 0 };
 	int m_accuracy{ 0 };
+	int m_enemyHitted{ 0 };
 	TargetManager* m_targetManagerPtr; //for accessing real time statistique 
 
 public: // functions 
@@ -21,6 +22,7 @@ public: // functions
 
 	void projectileFired();
 	void targetHitted();
+	void enemyHitted();
 	std::string toStringColumn();
 	std::string toStringColumnFull();
 

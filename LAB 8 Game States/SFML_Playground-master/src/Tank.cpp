@@ -64,7 +64,7 @@ void Tank::update(double dt)
 				}
 				if (lifeState == 3) //Colision with AITank 
 				{
-					std::cout << "Hit" << std::endl;
+					m_performances.enemyHitted();
 				}
 				//removing the projectile 
 				m_projectilesPtr.at(i)->setInactive();

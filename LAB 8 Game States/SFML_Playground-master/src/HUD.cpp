@@ -15,7 +15,7 @@ void HUD::start()
 	m_over = false;
 
 	//set the texts for realTime stats
-	m_statTitleText = sf::Text("Hits\nSuccess\nAccuracy", m_textFont, 30);
+	m_statTitleText = sf::Text("Hits\nSuccess\nAccuracy\nEnemy Hitted", m_textFont, 30);
 	m_statTitleText.setFillColor(sf::Color(0, 0, 125));
 	m_statTitleText.setPosition(150, 40);
 
@@ -39,7 +39,7 @@ void HUD::setOver(GameState state, UserPerformance playerPerf, UserPerformance b
 
 
 	//Set The game Over texts 
-	std::string title = "\nHit\nTotal Targets\nSuccess\nFired\nAccuracy";
+	std::string title = "\nHit\nTotal Targets\nSuccess\nFired\nAccuracy\nEnemy Hitted";
 	std::string actualStats = "Player\n" + playerPerf.toStringColumnFull();
 	std::string bestStats = "Best\n" + bestPerf.toStringColumnFull();
 

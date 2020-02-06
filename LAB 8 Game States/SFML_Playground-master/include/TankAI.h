@@ -1,11 +1,12 @@
 #pragma once
 #include "MathUtility.h"
-#include "Tank.h"
 #include "CollisionDetector.h"
 #include <SFML/Graphics.hpp>
 #include <Thor/Vectors.hpp>
 #include <iostream>
 #include <queue>
+
+class Tank; //Forward Reference
 
 class TankAi
 {
@@ -51,6 +52,8 @@ public:
 	/// <param name="position">An x,y position</param>
 	/// </summary>
 	void init(sf::Vector2f position);
+
+	std::pair<sf::Sprite, sf::Sprite> getSprites();
 
 	enum class AiType
 	{
@@ -124,3 +127,4 @@ private:
 
 };
 
+#include "Tank.h"

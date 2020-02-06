@@ -2,14 +2,15 @@
 #include <iostream>
 
 
-Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager)
+Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, TankAi& aiTank)
 	: m_texture(texture),
 	m_wallSprites(wallSprites),
 	m_wallSpatialMap(wallMap),
 	m_targets(targets),
 	m_projectilesPool(projectilePool),
 	m_maximumSpeed(100),
-	m_soundManager(soundManager)
+	m_soundManager(soundManager),
+	m_aiTank(aiTank)
 {
 	initSprites();
 }
@@ -53,13 +54,17 @@ void Tank::update(double dt)
 		}
 		else  //colision with wall or outside the map
 		{
-			int lifeState = m_projectilesPtr.at(i)->lifeState(m_wallSpatialMap);
+			int lifeState = m_projectilesPtr.at(i)->lifeState(m_wallSpatialMap,m_aiTank.getSprites());
 			if (lifeState != -1)
 			{
-				if (lifeState == 1)
+				if (lifeState == 1) //Colision With wall
 				{
 					//playing the impact sound 
 					m_soundManager.playWallImpactSound(m_projectilesPtr.at(i)->getSprite().getPosition());
+				}
+				if (lifeState == 3) //Colision with AITank 
+				{
+					std::cout << "Hit" << std::endl;
 				}
 				//removing the projectile 
 				m_projectilesPtr.at(i)->setInactive();

@@ -69,7 +69,8 @@ public: //functions
 	//			-1 - No Collision 
 	//			1 - Collision with wall 
 	//			2 - Outside the map 
-	int lifeState(std::map<int, std::list< sf::Sprite> >& wallMap) const;
+	//			3 - Hit the AI Tank
+	int lifeState(std::map<int, std::list< sf::Sprite> >& wallMap, std::pair<sf::Sprite, sf::Sprite> aiTankSprites) const;
 
 	//draw the projectile
 	void render(sf::RenderWindow& window ) const;

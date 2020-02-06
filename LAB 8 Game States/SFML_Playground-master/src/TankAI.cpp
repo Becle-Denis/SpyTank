@@ -112,6 +112,12 @@ void TankAi::init(sf::Vector2f position)
 }
 
 ////////////////////////////////////////////////////////////
+std::pair<sf::Sprite, sf::Sprite> TankAi::getSprites()
+{
+	return std::pair<sf::Sprite, sf::Sprite>(m_tankBase,m_turret);
+}
+
+////////////////////////////////////////////////////////////
 sf::Vector2f TankAi::seek(sf::Vector2f playerPosition) const
 {
 	return (playerPosition - m_tankBase.getPosition()); 

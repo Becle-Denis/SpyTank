@@ -63,14 +63,14 @@ void Projectile::update(double dt)
 	}
 }
 
-int Projectile::lifeState(std::map<int, std::list< sf::Sprite> >& wallMap) const
+int Projectile::lifeState(std::map<int, std::list< sf::Sprite> >& wallMap, std::pair<sf::Sprite, sf::Sprite> aiTankSprites) const
 {
 	
 	sf::Vector2f position = m_projectileSprite.getPosition();
 	//check for the limit of the screen 
 	if (position.x < -1000 || position.y < -1000 || position.x > 2440 || position.y > 1900 )
 	{
-		return 2;
+		return 2; //outisde the map 
 	}
 	//check for collision with wall
 	//find the cell number
@@ -83,11 +83,16 @@ int Projectile::lifeState(std::map<int, std::list< sf::Sprite> >& wallMap) const
 		{
 			if (CollisionDetector::collision(m_projectileSprite, wall))
 			{
-				return 1;
+				return 1; //Hit a target 
 			}
 		}
 	}
-	return -1;
+	//Check for collision with the AITank
+	if ((CollisionDetector::collision(m_projectileSprite,aiTankSprites.first)) || (CollisionDetector::collision(m_projectileSprite,aiTankSprites.second)))
+	{
+		return 3; //Hit the AITank
+	}
+	return -1; // Alive
 }
 
 

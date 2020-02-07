@@ -212,14 +212,14 @@ void Game::processGameEvents(sf::Event& event)
 			m_window.close();
 			break;
 
-		case sf::Keyboard::Enter:
+		case sf::Keyboard::Space:
 			if (m_state != GameState::RUNNING_HIT_GAME && m_state != GameState::RUNNING_CATCH_GAME)
 			{
 				start(GameState::RUNNING_CATCH_GAME);
 			}
 			break;
 
-		case sf::Keyboard::Space:
+		case sf::Keyboard::Enter:
 			if (m_state != GameState::RUNNING_HIT_GAME && m_state != GameState::RUNNING_CATCH_GAME)
 			{
 				start(GameState::RUNNING_HIT_GAME);

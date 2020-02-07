@@ -102,8 +102,11 @@ private:
 	// A reference to the container of wall sprites.
 	std::vector<sf::Sprite> & m_wallSprites;
 
-	// The current rotation as applied to tank base and turret.
+	// The current rotation as applied to tank base
 	double m_rotation{ 0.0 };
+	
+	// The current rotation as applied to tank turret
+	double m_turretRotation{ 0.0 };
 
 	// Current velocity.
 	sf::Vector2f m_velocity;
@@ -127,9 +130,13 @@ private:
 	static float constexpr MAX_FORCE{ 10.0f };
 
 	// the mass of the tank, used for acceleration calculation 
-	static float constexpr MASS{ 10.0f };
+	static float constexpr MASS{ 2.0f };
 
 	static float constexpr LIFE_POINTS{ 80.0f };
+
+	static float constexpr PATROL_ROTATION_SPEED{ 0.05f };
+
+	static float constexpr PATROL_ZONE_SIZE{ 330.0f };
 
 	// The maximum speed for this tank.
 	float MAX_SPEED = 50.0f;
@@ -142,12 +149,23 @@ private:
 	// A container of circles that represent the obstacles to avoid.
 	std::vector<sf::CircleShape> m_obstacles;
 
+	float m_patrolConeRange{ 70 };
+
+	sf::VertexArray m_leftConeArray;
+	sf::VertexArray m_rightConeArray;
+
 	enum class AiBehaviour
 	{
 		SEEK_PLAYER,
 		STOP,
 		RETREAT
 	} m_aiBehaviour;
+
+	enum class AIState
+	{
+		PATROL_MAP,
+		ATTACK_PLAYER
+	} m_state;
 
 
 };

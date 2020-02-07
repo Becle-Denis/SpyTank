@@ -6,9 +6,18 @@ TankAi::TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprite
 	, m_texture(texture)
 	, m_wallSprites(wallSprites)
 	, m_steering(0, 0)
+	, m_state(AIState::PATROL_MAP)
+	, m_leftConeArray(sf::Lines,2)
+	, m_rightConeArray(sf::Lines,2)
 {
 	// Initialises the tank base and turret sprites.
 	initSprites();
+
+	//Vertex Array Color 
+	m_leftConeArray[0].color = sf::Color(0, 150, 0,255);
+	m_rightConeArray[0].color = sf::Color(0, 150, 0, 255);
+	m_leftConeArray[1].color = sf::Color(0, 205, 0, 50);
+	m_rightConeArray[1].color = sf::Color(0, 205, 0, 50);
 }
 
 ////////////////////////////////////////////////////////////
@@ -24,67 +33,87 @@ void TankAi::start()
 }
 
 ////////////////////////////////////////////////////////////
-void TankAi::update(Tank const & playerTank, double dt)
+void TankAi::update(Tank const& playerTank, double dt)
 {
-	sf::Vector2f vectorToPlayer = seek(playerTank.getPosition());
-
-	sf::Vector2f acceleration;
-
-	switch (m_aiBehaviour)
+	if (m_state == AIState::PATROL_MAP)
 	{
-	case AiBehaviour::SEEK_PLAYER:
-		m_steering += thor::unitVector(vectorToPlayer);
-		m_steering += collisionAvoidance();
-		m_steering = MathUtility::truncate(m_steering, MAX_FORCE);
-		// calculating acceleration with the mass 
-		acceleration = m_steering / MASS;
-		m_velocity = MathUtility::truncate(m_velocity + acceleration, MAX_SPEED);
-
-		break;
-	case AiBehaviour::STOP:
-		m_velocity = sf::Vector2f(0, 0);
-		//motion->m_speed = 0;
-	default:
-		break;
+		m_turretRotation = m_turretRotation + PATROL_ROTATION_SPEED * dt;
+		if (m_turretRotation > 360)
+		{
+			m_turretRotation -= 360;
+		}
 	}
 
-	// Now we need to convert our velocity vector into a rotation angle between 0 and 359 degrees.
-	// The m_velocity vector works like this: vector(1,0) is 0 degrees, while vector(0, 1) is 90 degrees.
-	// So for example, 223 degrees would be a clockwise offset from 0 degrees (i.e. along x axis).
-	// Note: we add 180 degrees below to convert the final angle into a range 0 to 359 instead of -PI to +PI
-	auto dest = atan2(-1 * m_velocity.y, -1 * m_velocity.x) / thor::Pi * 180 + 180;
-
-	auto currentRotation = m_rotation;
-
-	// Find the shortest way to rotate towards the player (clockwise or anti-clockwise)
-	if (std::round(currentRotation - dest) == 0.0)
+	if (m_state == AIState::ATTACK_PLAYER)
 	{
-		m_steering.x = 0;
-		m_steering.y = 0;
-	}
+		sf::Vector2f vectorToPlayer = seek(playerTank.getPosition());
+		sf::Vector2f acceleration;
+		switch (m_aiBehaviour)
+		{
+		case AiBehaviour::SEEK_PLAYER:
+			m_steering += thor::unitVector(vectorToPlayer);
+			m_steering += collisionAvoidance();
+			m_steering = MathUtility::truncate(m_steering, MAX_FORCE);
+			// calculating acceleration with the mass 
+			acceleration = m_steering / MASS;
+			m_velocity = MathUtility::truncate(m_velocity + acceleration, MAX_SPEED);
 
-	else if ((static_cast<int>(std::round(dest - currentRotation + 360))) % 360 < 180)
-	{
-		// rotate clockwise
-		m_rotation = static_cast<int>((m_rotation) + 1) % 360;
-	}
-	else
-	{
-		// rotate anti-clockwise
-		m_rotation = static_cast<int>((m_rotation) - 1) % 360;
-	}
+			break;
+		case AiBehaviour::STOP:
+			m_velocity = sf::Vector2f(0, 0);
+			//motion->m_speed = 0;
+		default:
+			break;
+		}
+
+		// Now we need to convert our velocity vector into a rotation angle between 0 and 359 degrees.
+		// The m_velocity vector works like this: vector(1,0) is 0 degrees, while vector(0, 1) is 90 degrees.
+		// So for example, 223 degrees would be a clockwise offset from 0 degrees (i.e. along x axis).
+		// Note: we add 180 degrees below to convert the final angle into a range 0 to 359 instead of -PI to +PI
+		auto dest = atan2(-1 * m_velocity.y, -1 * m_velocity.x) / thor::Pi * 180 + 180;
+
+		auto currentRotation = m_rotation;
+
+		// Find the shortest way to rotate towards the player (clockwise or anti-clockwise)
+		if (std::round(currentRotation - dest) == 0.0)
+		{
+			m_steering.x = 0;
+			m_steering.y = 0;
+		}
+
+		else if ((static_cast<int>(std::round(dest - currentRotation + 360))) % 360 < 180)
+		{
+			// rotate clockwise
+			m_rotation = static_cast<int>((m_rotation)+1) % 360;
+		}
+		else
+		{
+			// rotate anti-clockwise
+			m_rotation = static_cast<int>((m_rotation)-1) % 360;
+		}
 
 
-	if (thor::length(vectorToPlayer) < MAX_SEE_AHEAD)
-	{
-		m_aiBehaviour = AiBehaviour::STOP;
-	}
-	else
-	{
-		m_aiBehaviour = AiBehaviour::SEEK_PLAYER;
+		if (thor::length(vectorToPlayer) < MAX_SEE_AHEAD)
+		{
+			m_aiBehaviour = AiBehaviour::STOP;
+		}
+		else
+		{
+			m_aiBehaviour = AiBehaviour::SEEK_PLAYER;
+		}
+		m_turretRotation = m_rotation;
 	}
 
 	updateMovement(dt);
+
+	//update the cone Vision and Ai State
+	//Update cone Vertex Positions  
+	sf::Vector2f tankPos = m_tankBase.getPosition();
+	m_leftConeArray[0].position = tankPos;
+	m_rightConeArray[0].position = tankPos;
+
+	m_leftConeArray[1].position = tankPos + thor::rotatedVector(sf::Vector2f(PATROL_ZONE_SIZE,0),(float) m_turretRotation - (m_patrolConeRange / 2));
+	m_rightConeArray[1].position = tankPos + thor::rotatedVector(sf::Vector2f(PATROL_ZONE_SIZE, 0), (float)m_turretRotation + (m_patrolConeRange / 2));
 }
 
 ////////////////////////////////////////////////////////////
@@ -105,7 +134,12 @@ void TankAi::render(sf::RenderWindow & window)
 {
 	// TODO: Don't draw if off-screen...
 	window.draw(m_tankBase);
+
+	window.draw(m_leftConeArray);
+	window.draw(m_rightConeArray);
+
 	window.draw(m_turret);
+
 }
 
 ////////////////////////////////////////////////////////////
@@ -221,5 +255,5 @@ void TankAi::updateMovement(double dt)
 	m_tankBase.setPosition(newPos.x, newPos.y);
 	m_tankBase.setRotation(m_rotation);
 	m_turret.setPosition(m_tankBase.getPosition());
-	m_turret.setRotation(m_rotation);
+	m_turret.setRotation(m_turretRotation);
 }

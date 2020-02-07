@@ -27,21 +27,32 @@ void HUD::start(GameState state)
 
 void HUD::setOver(GameState state, UserPerformance playerPerf, UserPerformance bestPerf)
 {
+	std::string bigText = "Game Over";
+	std::string title = "";
+	std::string actualStats = "";
+	std::string bestStats = "";
 
-	if (state == GameState::OVER_LOSE)
+	if (m_state == GameState::RUNNING_CATCH_GAME)
 	{
-		m_bigDisplayedText.setString("You Lose !");
+		if (state == GameState::OVER_LOSE)
+		{
+			bigText = "You Lose !" ;
+		}
+		else
+		{
+			bigText = "You Win !";
+		}
 	}
 	else
 	{
-		m_bigDisplayedText.setString("You Win !");
+		//Set The game Over texts 
+		title = "\nHit\nTotal Targets\nSuccess\nFired\nAccuracy";
+		actualStats = "Player\n" + playerPerf.toStringColumnFull();
+		bestStats = "Best\n" + bestPerf.toStringColumnFull();
 	}
 
-
-	//Set The game Over texts 
-	std::string title = "\nHit\nTotal Targets\nSuccess\nFired\nAccuracy";
-	std::string actualStats = "Player\n" + playerPerf.toStringColumnFull();
-	std::string bestStats = "Best\n" + bestPerf.toStringColumnFull();
+	//Setting up the Game Over Results
+	m_bigDisplayedText.setString(bigText);
 
 	m_statTitleText = sf::Text(title, m_textFont, 60);
 	m_statTitleText.setFillColor(sf::Color::Black);
@@ -54,6 +65,8 @@ void HUD::setOver(GameState state, UserPerformance playerPerf, UserPerformance b
 	m_gameOverBestStatsText = sf::Text(bestStats, m_textFont, 60);
 	m_gameOverBestStatsText.setFillColor(sf::Color(168, 152, 0));
 	m_gameOverBestStatsText.setPosition(1000, 200);
+
+
 	
 
 	m_state = state;
@@ -62,21 +75,46 @@ void HUD::setOver(GameState state, UserPerformance playerPerf, UserPerformance b
 ////////////////////////////////////////////////////////////
 void HUD::update(sf::Time remainingTime, UserPerformance userPerf)
 {
-	//updating timer 
-	m_bigDisplayedText.setString("" + std::to_string((int)remainingTime.asSeconds()) + " seconds left");
+	switch (m_state)
+	{
+	case GameState::RUNNING_HIT_GAME:
+		//updating timer 
+		m_bigDisplayedText.setString("" + std::to_string((int)remainingTime.asSeconds()) + " seconds left");
 
-	//updating Stats
-	m_playerStatsText.setString(userPerf.toStringColumn());
+		//updating Stats
+		m_playerStatsText.setString(userPerf.toStringColumn());
+		break;
+
+	case GameState::RUNNING_CATCH_GAME:
+		//updating timer 
+		m_bigDisplayedText.setString("" + std::to_string((int)remainingTime.asSeconds()) + " seconds left");
+
+		break;
+	}
+
 
 }
 
 void HUD::render(sf::RenderWindow& window)
 {
-	window.draw(m_playerStatsText);
-	window.draw(m_statTitleText);
-	if (m_state != GameState::RUNNING_CATCH_GAME && m_state != GameState::RUNNING_HIT_GAME)
+	switch (m_state)
 	{
+	case GameState::RUNNING_HIT_GAME:
+		window.draw(m_playerStatsText);
+		window.draw(m_statTitleText);
+		break;
+
+	case GameState::RUNNING_CATCH_GAME:
+		break;
+
+	case GameState::NOT_STARTED:
+	case GameState::OVER_LOSE:
+	case GameState::OVER_WIN:
+		window.draw(m_playerStatsText);
+		window.draw(m_statTitleText);
 		window.draw(m_gameOverBestStatsText);
+		break;
 	}
+
 	window.draw(m_bigDisplayedText);
 }

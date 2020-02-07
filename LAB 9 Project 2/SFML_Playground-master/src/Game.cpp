@@ -95,7 +95,7 @@ Game::Game()
 	generateWalls();
 
 	//initialise the tank 
-	m_tank.initialise();
+	//m_tank.initialise();
 
 	// Populate the obstacle list and set the AI tank position.
 	m_aiTank.init(m_level.m_aiTank.m_position);
@@ -211,11 +211,21 @@ void Game::processGameEvents(sf::Event& event)
 		case sf::Keyboard::Escape:
 			m_window.close();
 			break;
+
 		case sf::Keyboard::Enter:
-			if (m_state != GameState::RUNNING)
+			if (m_state != GameState::RUNNING_HIT_GAME && m_state != GameState::RUNNING_CATCH_GAME)
 			{
-				start();
+				start(GameState::RUNNING_CATCH_GAME);
 			}
+			break;
+
+		case sf::Keyboard::Space:
+			if (m_state != GameState::RUNNING_HIT_GAME && m_state != GameState::RUNNING_CATCH_GAME)
+			{
+				start(GameState::RUNNING_HIT_GAME);
+			}
+			break;
+
 		default:
 			break;
 		}
@@ -259,15 +269,21 @@ void Game::setGameOver(bool win)
 
 }
 
-void Game::start()
+void Game::start(GameState newState)
 {
-	m_state = GameState::RUNNING;
-	m_soundManager.switchToLevelMusic();
-	m_hud.start();
-	m_timerLeft.restart(sf::seconds(60.f));
-	m_tank.initialise();
-	m_aiTank.start();
-	m_targets.start();
+	if (newState == GameState::RUNNING_CATCH_GAME || newState == GameState::RUNNING_HIT_GAME)
+	{
+		m_state = newState;
+		m_soundManager.switchToLevelMusic();
+		m_hud.start(newState);
+		m_timerLeft.restart(sf::seconds(60.f));
+		m_tank.initialise(newState);
+		m_targets.start();
+		if (newState == GameState::RUNNING_CATCH_GAME)
+		{
+			m_aiTank.start();
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////
@@ -278,7 +294,25 @@ void Game::update(double dt)
 
 	switch (m_state)
 	{
-	case GameState::RUNNING:
+	case GameState::RUNNING_HIT_GAME:
+		if (m_timerLeft.isExpired()) //Winning game over
+		{
+			setGameOver(true);
+		}
+		else
+		{
+			//updating the targets
+			m_targets.update(dt);
+
+			//updating the tank 
+			m_tank.update(dt);
+
+			//updating the HUD
+			m_hud.update(m_timerLeft.getRemainingTime(), m_tank.getPerformance());
+		}
+		break;
+
+	case GameState::RUNNING_CATCH_GAME:
 		float aiLifePoint = m_aiTank.getLifePoint();
 		if (m_timerLeft.isExpired() || aiLifePoint <= 0) //Winning game over
 		{
@@ -300,7 +334,7 @@ void Game::update(double dt)
 			m_aiTank.update(m_tank, dt);
 
 			//updating the HUD
-			m_hud.update(m_timerLeft.getRemainingTime(), m_tank.getPerformance(),aiLifePoint);
+			m_hud.update(m_timerLeft.getRemainingTime(), m_tank.getPerformance());
 		}
 		break;
 	}
@@ -330,13 +364,14 @@ void Game::render()
 	//drawing the tank 
 	m_tank.render(m_window);
 
-	//drawing the AI tank 
-	m_aiTank.render(m_window);
-
-	
+	if (m_state == GameState::RUNNING_CATCH_GAME)
+	{
+		//drawing the AI tank 
+		m_aiTank.render(m_window);
+	}
 
 	//Not Started 
-	if (m_state != GameState::RUNNING)
+	if (m_state != GameState::RUNNING_HIT_GAME && m_state != GameState::RUNNING_CATCH_GAME)
 	{
 		m_window.draw(m_smokedSprite); //smoked sprite
 		m_hud.render(m_window);; // re drawing the HUD

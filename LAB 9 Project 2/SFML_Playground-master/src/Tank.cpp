@@ -16,7 +16,7 @@ Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std
 }
 
 ////////////////////////////////////////////////////////////
-void Tank::initialise()
+void Tank::initialise(GameState gameRunningState)
 {
 	m_motorSound = m_soundManager.tankMotorEffect();
 	//reseting values 
@@ -32,54 +32,66 @@ void Tank::initialise()
 	m_turret.setPosition(m_startingPosition);
 	m_tankBase.setRotation(m_rotation);
 	m_turret.setRotation(m_turretRotation);
+
+	m_gameplay = gameRunningState;
 }
 
 ////////////////////////////////////////////////////////////
 void Tank::update(double dt)
-{	
-	//updating the projectiles
-	for (int i = m_projectilesPtr.size() - 1; i >= 0; i--)
+{
+	//Specific Gameplay 
+	switch (m_gameplay)
 	{
-		//update 
-		m_projectilesPtr.at(i)->update(dt);
+	case GameState::RUNNING_HIT_GAME:
+		//updating the projectiles
+		for (int i = m_projectilesPtr.size() - 1; i >= 0; i--)
+		{
+			//update 
+			m_projectilesPtr.at(i)->update(dt);
 
-		//Collision 
-		int collisionResult = m_targets.checkForCollision(m_projectilesPtr.at(i)->getSprite());
-		if (collisionResult != -1) // Colision with target
-		{
-			m_targets.hit(collisionResult);
-			m_projectilesPtr.at(i)->setInactive();
-			m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
-			m_performances.targetHitted();
-		}
-		else  //colision with wall or outside the map
-		{
-			int lifeState = m_projectilesPtr.at(i)->lifeState(m_wallSpatialMap,m_aiTank.getSprites());
-			if (lifeState != -1)
+			//Collision 
+			int collisionResult = m_targets.checkForCollision(m_projectilesPtr.at(i)->getSprite());
+			if (collisionResult != -1) // Colision with target
 			{
-				if (lifeState == 1) //Colision With wall
-				{
-					//playing the impact sound 
-					m_soundManager.playWallImpactSound(m_projectilesPtr.at(i)->getSprite().getPosition());
-				}
-				if (lifeState == 3) //Colision with AITank 
-				{
-					m_aiTank.takeDamage(20);
-				}
-				//removing the projectile 
+				m_targets.hit(collisionResult);
 				m_projectilesPtr.at(i)->setInactive();
 				m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
+				m_performances.targetHitted();
 			}
-			
+			else  //colision with wall or outside the map
+			{
+				int lifeState = m_projectilesPtr.at(i)->lifeState(m_wallSpatialMap);
+				if (lifeState != -1)
+				{
+					if (lifeState == 1) //Colision With wall
+					{
+						//playing the impact sound 
+						m_soundManager.playWallImpactSound(m_projectilesPtr.at(i)->getSprite().getPosition());
+					}
+					//removing the projectile 
+					m_projectilesPtr.at(i)->setInactive();
+					m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
+				}
+			}
 		}
+
+		//updating the timer
+		if (m_fireTimer.isExpired())
+		{
+			canFire = true;
+		}
+
+		break;
+	case GameState::RUNNING_CATCH_GAME:
+
+		break;
 	}
 
-	//updating the timer
-	if (m_fireTimer.isExpired())
-	{
-		canFire = true;
-	}
+	
 
+
+
+	//TANK MOVEMENT, GENERAL GAMEPLAY 
 	// Handle user input 
 	handleKeyInput();
 
@@ -434,7 +446,7 @@ void Tank::handleKeyInput()
 	{
 		centerTurret();
 	}
-	if (canFire && sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+	if (canFire && sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && m_gameplay == GameState::RUNNING_HIT_GAME)
 	{
 		fire();
 	}

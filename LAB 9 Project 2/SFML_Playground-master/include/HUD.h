@@ -21,7 +21,7 @@ public:
 	/// <summary>
 	/// Start or restart the HUD
 	/// </summary>
-	void start();
+	void start(GameState state);
 
 	/// <summary>
 	/// Set the HUD Game Over text
@@ -36,7 +36,7 @@ public:
 	/// </summary>
 	/// <param name="gameState">The current game state</param>
 	/// <param name="aiLifePoint">The current life points of the ai</param>
-	void update(sf::Time remainingTime, UserPerformance userPerf, float aiLifePoint);
+	void update(sf::Time remainingTime, UserPerformance userPerf);
 
 	/// <summary>
 	/// @brief Draws the HUD outline and text.
@@ -47,7 +47,7 @@ public:
 
 
 private:
-	bool m_over;
+	GameState m_state;
 
 	// The font for this HUD.
 	sf::Font& m_textFont;
@@ -57,8 +57,6 @@ private:
 	sf::Text m_statTitleText; //text for displaying the performances titles
 	sf::Text m_playerStatsText; // text for displaying the actual player performances 
 	sf::Text m_gameOverBestStatsText; //text for displaying the best player performances 
-	sf::Text m_aiTankLifeTitleText; //text for displaying the ai tank life points title
-	sf::Text m_aiTankLifeText; //text for displaying the ai tank life points 
 	
 
 };

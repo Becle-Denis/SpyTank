@@ -2,17 +2,17 @@
 
 ////////////////////////////////////////////////////////////
 HUD::HUD(sf::Font& hudFont)
-	: m_textFont(hudFont), m_over(false)
+	: m_textFont(hudFont), m_state(GameState::NOT_STARTED)
 {
 	m_bigDisplayedText = sf::Text("BLIND TANK", m_textFont, 50);
 	m_bigDisplayedText.setFillColor(sf::Color::Red);
 	m_bigDisplayedText.setPosition(450, 50);
-	start();
+	//start();
 }
 
-void HUD::start()
+void HUD::start(GameState state)
 {
-	m_over = false;
+	m_state = state;
 
 	//set the texts for realTime stats
 	m_statTitleText = sf::Text("Hits\nSuccess\nAccuracy", m_textFont, 30);
@@ -23,20 +23,10 @@ void HUD::start()
 	m_playerStatsText.setFillColor(sf::Color(0, 0, 125));
 	m_playerStatsText.setPosition(50, 40);
 
-	m_aiTankLifeTitleText = sf::Text("Enemy Life ", m_textFont, 30);
-	m_aiTankLifeTitleText.setFillColor(sf::Color(125,0,0));
-	m_aiTankLifeTitleText.setPosition(1100, 40);
-
-	m_aiTankLifeText = sf::Text("", m_textFont, 30);
-	m_aiTankLifeText.setFillColor(sf::Color(125, 0, 0));
-	m_aiTankLifeText.setPosition(1350, 40);
-
-
 }
 
 void HUD::setOver(GameState state, UserPerformance playerPerf, UserPerformance bestPerf)
 {
-	m_over = true;
 
 	if (state == GameState::OVER_LOSE)
 	{
@@ -65,10 +55,12 @@ void HUD::setOver(GameState state, UserPerformance playerPerf, UserPerformance b
 	m_gameOverBestStatsText.setFillColor(sf::Color(168, 152, 0));
 	m_gameOverBestStatsText.setPosition(1000, 200);
 	
+
+	m_state = state;
 }
 
 ////////////////////////////////////////////////////////////
-void HUD::update(sf::Time remainingTime, UserPerformance userPerf, float aiLifePoint)
+void HUD::update(sf::Time remainingTime, UserPerformance userPerf)
 {
 	//updating timer 
 	m_bigDisplayedText.setString("" + std::to_string((int)remainingTime.asSeconds()) + " seconds left");
@@ -76,22 +68,15 @@ void HUD::update(sf::Time remainingTime, UserPerformance userPerf, float aiLifeP
 	//updating Stats
 	m_playerStatsText.setString(userPerf.toStringColumn());
 
-	//updating Ai life Point 
-	m_aiTankLifeText.setString(std::to_string((int) aiLifePoint));
 }
 
 void HUD::render(sf::RenderWindow& window)
 {
 	window.draw(m_playerStatsText);
 	window.draw(m_statTitleText);
-	if (m_over)
+	if (m_state != GameState::RUNNING_CATCH_GAME && m_state != GameState::RUNNING_HIT_GAME)
 	{
 		window.draw(m_gameOverBestStatsText);
-	}
-	else
-	{
-		window.draw(m_aiTankLifeTitleText);
-		window.draw(m_aiTankLifeText);
 	}
 	window.draw(m_bigDisplayedText);
 }

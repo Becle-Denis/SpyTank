@@ -63,7 +63,7 @@ void Projectile::update(double dt)
 	}
 }
 
-int Projectile::lifeState(std::map<int, std::list< sf::Sprite> >& wallMap, std::pair<sf::Sprite, sf::Sprite> aiTankSprites) const
+int Projectile::lifeState(std::map<int, std::list< sf::Sprite> >& wallMap) const
 {
 	
 	sf::Vector2f position = m_projectileSprite.getPosition();
@@ -87,12 +87,16 @@ int Projectile::lifeState(std::map<int, std::list< sf::Sprite> >& wallMap, std::
 			}
 		}
 	}
-	//Check for collision with the AITank
+	return -1; // Alive
+
+	/*
+	//Check for collision with the AITankb DISABLED
 	if ((CollisionDetector::collision(m_projectileSprite,aiTankSprites.first)) || (CollisionDetector::collision(m_projectileSprite,aiTankSprites.second)))
 	{
 		return 3; //Hit the AITank
 	}
-	return -1; // Alive
+	*/
+	
 }
 
 

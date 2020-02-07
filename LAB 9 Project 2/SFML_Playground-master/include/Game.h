@@ -146,5 +146,5 @@ protected: // functions
 	/// <summary>
 	/// Set the Game state to InProgress
 	/// </summary>
-	void start();
+	void start(GameState newState);
 };

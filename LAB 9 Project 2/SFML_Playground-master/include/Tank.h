@@ -9,6 +9,7 @@
 #include "SoundManager.h"
 #include <Thor/Time/CallbackTimer.hpp>
 #include "MovingMotorEffect.h"
+#include "GameState.h"
 
 class TankAi; //forward Reference
 
@@ -73,6 +74,9 @@ private: // Attributes
 
 	//Original Starting position 
 	sf::Vector2f m_startingPosition;
+
+	//Actual gameplay of the tank
+	GameState m_gameplay;
 	
 
 
@@ -86,7 +90,7 @@ public:	//functions
 	///< param name="texture">A reference to the container of wall sprites</param>  
 	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, TankAi& aiTank);
 
-	void initialise();
+	void initialise(GameState gameRunningState);
 
 	/// <summary>
 	/// @brief Update the tank attributes and dependant objects(projectile) and handle the player input

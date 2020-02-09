@@ -149,17 +149,13 @@ private:
 	// A container of circles that represent the obstacles to avoid.
 	std::vector<sf::CircleShape> m_obstacles;
 
-	float m_patrolConeRange{ 70 };
+	unsigned int m_patrolPointIndex{ 0 };
+	std::vector<sf::Vector2f> m_patrolPoint;
 
+	float m_patrolConeRange{ 70 };
+	
 	sf::VertexArray m_leftConeArray;
 	sf::VertexArray m_rightConeArray;
-
-	enum class AiBehaviour
-	{
-		SEEK_PLAYER,
-		STOP,
-		RETREAT
-	} m_aiBehaviour;
 
 	enum class AIState
 	{

@@ -39,7 +39,7 @@ void TankAi::start()
 	m_lifePoint = LIFE_POINTS;
 	m_rotation = 0;
 
-	m_state = AIState::ATTACK_PLAYER;
+	m_state = AIState::PATROL_MAP;
 	m_patrolPointIndex = rand() % m_patrolPoint.size();
 }
 
@@ -115,6 +115,26 @@ void TankAi::update(Tank const& playerTank, double dt)
 
 	m_leftConeArray[1].position = tankPos + thor::rotatedVector(sf::Vector2f(PATROL_ZONE_SIZE,0),(float) m_turretRotation - (m_patrolConeRange / 2));
 	m_rightConeArray[1].position = tankPos + thor::rotatedVector(sf::Vector2f(PATROL_ZONE_SIZE, 0), (float)m_turretRotation + (m_patrolConeRange / 2));
+
+	//update the AI state
+	//check if the player is inside the cone 
+	if ((MathUtility::pointPositionToLine(m_leftConeArray[0].position, m_leftConeArray[1].position, playerTank.getPosition()) > 0)
+		&& (MathUtility::pointPositionToLine(m_rightConeArray[0].position, m_rightConeArray[1].position, playerTank.getPosition()) < 0))
+	{
+		//Vertex Array Red Color 
+		m_leftConeArray[0].color = sf::Color(150, 0, 0, 255);
+		m_rightConeArray[0].color = sf::Color(150, 0, 0, 255);
+		m_leftConeArray[1].color = sf::Color(205, 0, 0, 50);
+		m_rightConeArray[1].color = sf::Color(205, 0, 0, 50);
+	}
+	else
+	{
+		//Vertex Array Green Color 
+		m_leftConeArray[0].color = sf::Color(0, 150, 0, 255);
+		m_rightConeArray[0].color = sf::Color(0, 150, 0, 255);
+		m_leftConeArray[1].color = sf::Color(0, 205, 0, 50);
+		m_rightConeArray[1].color = sf::Color(0, 205, 0, 50);
+	}
 }
 
 ////////////////////////////////////////////////////////////

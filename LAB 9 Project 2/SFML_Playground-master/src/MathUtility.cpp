@@ -27,4 +27,9 @@ namespace MathUtility
 		return v;
 	}
 
+	int pointPositionToLine(sf::Vector2f lineStartPoint, sf::Vector2f lineEndPoint, sf::Vector2f point)
+	{
+		return (((lineEndPoint.x - lineStartPoint.x) * (point.y - lineStartPoint.y)) - ((lineEndPoint.y - lineStartPoint.y) * (point.x - lineStartPoint.x))) ;
+	}
+
 }

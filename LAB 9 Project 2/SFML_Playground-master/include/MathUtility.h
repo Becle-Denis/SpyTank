@@ -34,4 +34,11 @@ namespace MathUtility
 	/// <returns>A vector whose length is not longer than the specified maximum.</returns>
 	sf::Vector2f truncate(sf::Vector2f v, float const max);
 
+	// @brief Tel if a point is on the left or on the right to the line 
+	// Return : int 
+	//          <0 : Point on the left
+	//			 0 : Point on the line 
+	//			 >0 : Point on the right
+	int pointPositionToLine(sf::Vector2f lineStartPoint, sf::Vector2f lineEndPoint, sf::Vector2f point);
+
 }

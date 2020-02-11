@@ -63,9 +63,10 @@ void TankAi::update(Tank const& playerTank, double dt)
 
 	if (m_state == AIState::ATTACK_PLAYER)
 	{
-		destination = seek(playerTank.getPosition());
+
 		
-		m_turretRotation = m_rotation;
+		destination = seek(playerTank.getPosition());
+		//m_turretRotation = m_rotation;
 	}
 
 
@@ -85,7 +86,7 @@ void TankAi::update(Tank const& playerTank, double dt)
 	// Note: we add 180 degrees below to convert the final angle into a range 0 to 359 instead of -PI to +PI
 	auto dest = atan2(-1 * m_velocity.y, -1 * m_velocity.x) / thor::Pi * 180 + 180;
 
-	auto currentRotation = m_rotation;
+	auto currentRotation = m_rotation; 
 
 	// Find the shortest way to rotate towards the player (clockwise or anti-clockwise)
 	if (std::round(currentRotation - dest) == 0.0)
@@ -121,19 +122,27 @@ void TankAi::update(Tank const& playerTank, double dt)
 	if ((MathUtility::pointPositionToLine(m_leftConeArray[0].position, m_leftConeArray[1].position, playerTank.getPosition()) > 0)
 		&& (MathUtility::pointPositionToLine(m_rightConeArray[0].position, m_rightConeArray[1].position, playerTank.getPosition()) < 0))
 	{
-		//Vertex Array Red Color 
-		m_leftConeArray[0].color = sf::Color(150, 0, 0, 255);
-		m_rightConeArray[0].color = sf::Color(150, 0, 0, 255);
-		m_leftConeArray[1].color = sf::Color(205, 0, 0, 50);
-		m_rightConeArray[1].color = sf::Color(205, 0, 0, 50);
+		if (m_state != AIState::ATTACK_PLAYER)
+		{
+			//Vertex Array Red Color 
+			m_leftConeArray[0].color = sf::Color(150, 0, 0, 255);
+			m_rightConeArray[0].color = sf::Color(150, 0, 0, 255);
+			m_leftConeArray[1].color = sf::Color(205, 0, 0, 50);
+			m_rightConeArray[1].color = sf::Color(205, 0, 0, 50);
+			m_state = AIState::ATTACK_PLAYER;
+		}
 	}
 	else
 	{
-		//Vertex Array Green Color 
-		m_leftConeArray[0].color = sf::Color(0, 150, 0, 255);
-		m_rightConeArray[0].color = sf::Color(0, 150, 0, 255);
-		m_leftConeArray[1].color = sf::Color(0, 205, 0, 50);
-		m_rightConeArray[1].color = sf::Color(0, 205, 0, 50);
+		if (m_state != AIState::PATROL_MAP)
+		{
+			//Vertex Array Green Color 
+			m_leftConeArray[0].color = sf::Color(0, 150, 0, 255);
+			m_rightConeArray[0].color = sf::Color(0, 150, 0, 255);
+			m_leftConeArray[1].color = sf::Color(0, 205, 0, 50);
+			m_rightConeArray[1].color = sf::Color(0, 205, 0, 50);
+			m_state = AIState::PATROL_MAP;
+		}
 	}
 }
 

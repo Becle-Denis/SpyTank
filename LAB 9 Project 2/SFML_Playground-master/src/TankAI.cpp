@@ -47,6 +47,8 @@ void TankAi::start()
 ////////////////////////////////////////////////////////////
 void TankAi::update(Tank const& playerTank, double dt)
 {
+	sf::Vector2f playerTankPosition = playerTank.getPosition();
+	double distanceToPlayer = MathUtility::distance(m_tankBase.getPosition(), playerTankPosition);
 	sf::Vector2f destination;
 	if (m_state == AIState::PATROL_MAP)
 	{
@@ -68,9 +70,9 @@ void TankAi::update(Tank const& playerTank, double dt)
 	if (m_state == AIState::ATTACK_PLAYER)
 	{
 		// seek to the player 
-		destination = seek(playerTank.getPosition());
+		destination = seek(playerTankPosition);
 		//rotate the turret in the player direction
-		int playerToTurretPostion = MathUtility::pointPositionToLine(m_tankBase.getPosition(), m_tankBase.getPosition() + thor::rotatedVector(sf::Vector2f(100,0),(float) m_turretRotation), playerTank.getPosition());
+		int playerToTurretPostion = MathUtility::pointPositionToLine(m_tankBase.getPosition(), m_tankBase.getPosition() + thor::rotatedVector(sf::Vector2f(100,0),(float) m_turretRotation), playerTankPosition);
 		if (playerToTurretPostion < 0)
 		{
 			m_turretRotation = m_turretRotation - PATROL_ROTATION_SPEED * dt;
@@ -141,9 +143,11 @@ void TankAi::update(Tank const& playerTank, double dt)
 
 	//update the AI state
 	//check if the player is inside the cone 
-	if ((MathUtility::pointPositionToLine(m_leftConeArray[0].position, m_leftConeArray[1].position, playerTank.getPosition()) > 0)
-		&& (MathUtility::pointPositionToLine(m_rightConeArray[0].position, m_rightConeArray[1].position, playerTank.getPosition()) < 0))
+	if ((MathUtility::pointPositionToLine(m_leftConeArray[0].position, m_leftConeArray[1].position, playerTankPosition) > 0)
+		&& (MathUtility::pointPositionToLine(m_rightConeArray[0].position, m_rightConeArray[1].position, playerTankPosition) < 0)
+		&& (distanceToPlayer < PATROL_ZONE_SIZE))
 	{
+		//Player inside the cone 
 		if (m_state != AIState::ATTACK_PLAYER)
 		{
 			//Vertex Array Red Color 
@@ -158,6 +162,7 @@ void TankAi::update(Tank const& playerTank, double dt)
 	}
 	else
 	{
+		//player outside the cone 
 		if (m_state != AIState::PATROL_MAP)
 		{
 			//Vertex Array Green Color 

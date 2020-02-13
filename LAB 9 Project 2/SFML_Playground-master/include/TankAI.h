@@ -136,7 +136,7 @@ private:
 
 	static float constexpr PATROL_ROTATION_SPEED{ 0.03f };
 
-	static float constexpr PATROL_ZONE_SIZE{ 400.0f };
+	static float constexpr PATROL_ZONE_SIZE{ 450.0f };
 
 	// The maximum speed for this tank.
 	float m_maxSpeed = 40.0f;

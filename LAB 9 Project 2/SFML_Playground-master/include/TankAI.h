@@ -134,7 +134,7 @@ private:
 
 	static float constexpr LIFE_POINTS{ 80.0f };
 
-	static float constexpr PATROL_ROTATION_SPEED{ 0.05f };
+	static float constexpr PATROL_ROTATION_SPEED{ 0.03f };
 
 	static float constexpr PATROL_ZONE_SIZE{ 330.0f };
 

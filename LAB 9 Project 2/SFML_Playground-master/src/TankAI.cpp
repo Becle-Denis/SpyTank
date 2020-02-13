@@ -63,9 +63,25 @@ void TankAi::update(Tank const& playerTank, double dt)
 
 	if (m_state == AIState::ATTACK_PLAYER)
 	{
-
-		
 		destination = seek(playerTank.getPosition());
+		int playerToTurretPostion = MathUtility::pointPositionToLine(m_tankBase.getPosition(), m_tankBase.getPosition() + thor::rotatedVector(sf::Vector2f(100,0),(float) m_turretRotation), playerTank.getPosition());
+		if (playerToTurretPostion < 0)
+		{
+			m_turretRotation = m_turretRotation - PATROL_ROTATION_SPEED * dt;
+			if (m_turretRotation < 0)
+			{
+				m_turretRotation += 360;
+			}
+		}
+		else if (playerToTurretPostion > 0)
+		{
+			m_turretRotation = m_turretRotation + PATROL_ROTATION_SPEED * dt;
+			if (m_turretRotation > 360)
+			{
+				m_turretRotation -= 360;
+			}
+		}
+		
 		//m_turretRotation = m_rotation;
 	}
 

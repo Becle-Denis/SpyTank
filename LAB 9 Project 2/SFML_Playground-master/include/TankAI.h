@@ -136,10 +136,20 @@ private:
 
 	static float constexpr PATROL_ROTATION_SPEED{ 0.03f };
 
-	static float constexpr PATROL_ZONE_SIZE{ 450.0f };
+	static float constexpr MAX_PATROL_ZONE_SIZE{ 475.0f };
+
+	static float constexpr MIN_PATROL_ZONE_SIZE{ 275.0f };
+
+	static float constexpr MIN_PATROL_CONE_RANGE{ 65.f };
+
+	static float constexpr MAX_PATROL_CONE_RANGE{ 120.f };
+
+	static float constexpr PATROL_CONE_RANGE_SPEED{ 0.05f };
+	
+	static float constexpr PATROL_CONE_ZONE_SPEED{ 0.05f };
 
 	// The maximum speed for this tank.
-	float m_maxSpeed = 40.0f;
+	float m_maxSpeed = 42.0f;
 
 	float m_lifePoint{ 80.f };
 
@@ -152,8 +162,9 @@ private:
 	unsigned int m_patrolPointIndex{ 0 };
 	std::vector<sf::Vector2f> m_patrolPoint;
 
-	float m_patrolConeRange{ 70 };
-	
+	float m_patrolConeRange;
+	float m_patrolZoneSize;
+
 	sf::VertexArray m_leftConeArray;
 	sf::VertexArray m_rightConeArray;
 

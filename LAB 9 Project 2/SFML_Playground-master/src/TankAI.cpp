@@ -26,6 +26,7 @@ TankAi::TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprite
 ////////////////////////////////////////////////////////////
 void TankAi::start()
 {
+	//reseting the tank position 
 	m_tankBase.setPosition(m_startingPosition);
 	m_turret.setPosition(m_startingPosition);
 	m_tankBase.setRotation(0);
@@ -34,8 +35,11 @@ void TankAi::start()
 	m_rotation = 0;
 	m_turretRotation = 0;
 
+	//reseting the tank status 
 	m_state = AIState::PATROL_MAP;
 	m_patrolPointIndex = rand() % m_patrolPoint.size();
+	m_patrolConeRange = MIN_PATROL_CONE_RANGE;
+	m_patrolZoneSize = MAX_PATROL_ZONE_SIZE;
 	//Vertex Array Color 
 	m_leftConeArray[0].color = sf::Color(0, 150, 0, 255);
 	m_rightConeArray[0].color = sf::Color(0, 150, 0, 255);
@@ -60,7 +64,17 @@ void TankAi::update(Tank const& playerTank, double dt)
 		{
 			m_turretRotation -= 360;
 		}
-		// Change patrol point
+		//Resizing the Vision Cone 
+		if (m_patrolConeRange > MIN_PATROL_CONE_RANGE)
+		{
+			m_patrolConeRange -= PATROL_CONE_RANGE_SPEED * dt;
+		}
+		if (m_patrolZoneSize < MAX_PATROL_ZONE_SIZE)
+		{
+			m_patrolZoneSize += PATROL_CONE_ZONE_SPEED * dt;
+		}
+
+		//Change patrol point
 		if (thor::length(destination) < MAX_SEE_AHEAD)
 		{
 			m_patrolPointIndex = rand() % m_patrolPoint.size();
@@ -71,6 +85,7 @@ void TankAi::update(Tank const& playerTank, double dt)
 	{
 		// seek to the player 
 		destination = seek(playerTankPosition);
+
 		//rotate the turret in the player direction
 		int playerToTurretPostion = MathUtility::pointPositionToLine(m_tankBase.getPosition(), m_tankBase.getPosition() + thor::rotatedVector(sf::Vector2f(100,0),(float) m_turretRotation), playerTankPosition);
 		if (playerToTurretPostion < 0)
@@ -89,8 +104,30 @@ void TankAi::update(Tank const& playerTank, double dt)
 				m_turretRotation -= 360;
 			}
 		}
-		
-		//m_turretRotation = m_rotation;
+
+		//Resizing Vision Cone 
+		if (distanceToPlayer < MAX_PATROL_ZONE_SIZE / 2)
+		{
+			if (m_patrolConeRange < MAX_PATROL_CONE_RANGE)
+			{
+				m_patrolConeRange += PATROL_CONE_RANGE_SPEED * dt;
+			}
+			if (m_patrolZoneSize > MIN_PATROL_ZONE_SIZE)
+			{
+				m_patrolZoneSize -= PATROL_CONE_ZONE_SPEED * dt;
+			}
+		}
+		else
+		{
+			if (m_patrolConeRange > MIN_PATROL_CONE_RANGE)
+			{
+				m_patrolConeRange -= PATROL_CONE_RANGE_SPEED * dt;
+			}
+			if (m_patrolZoneSize < MAX_PATROL_ZONE_SIZE)
+			{
+				m_patrolZoneSize += PATROL_CONE_ZONE_SPEED * dt;
+			}
+		}
 	}
 
 
@@ -138,14 +175,14 @@ void TankAi::update(Tank const& playerTank, double dt)
 	m_leftConeArray[0].position = tankPos;
 	m_rightConeArray[0].position = tankPos;
 
-	m_leftConeArray[1].position = tankPos + thor::rotatedVector(sf::Vector2f(PATROL_ZONE_SIZE,0),(float) m_turretRotation - (m_patrolConeRange / 2));
-	m_rightConeArray[1].position = tankPos + thor::rotatedVector(sf::Vector2f(PATROL_ZONE_SIZE, 0), (float)m_turretRotation + (m_patrolConeRange / 2));
+	m_leftConeArray[1].position = tankPos + thor::rotatedVector(sf::Vector2f(m_patrolZoneSize,0),(float) m_turretRotation - (m_patrolConeRange / 2));
+	m_rightConeArray[1].position = tankPos + thor::rotatedVector(sf::Vector2f(m_patrolZoneSize, 0), (float)m_turretRotation + (m_patrolConeRange / 2));
 
 	//update the AI state
 	//check if the player is inside the cone 
 	if ((MathUtility::pointPositionToLine(m_leftConeArray[0].position, m_leftConeArray[1].position, playerTankPosition) > 0)
 		&& (MathUtility::pointPositionToLine(m_rightConeArray[0].position, m_rightConeArray[1].position, playerTankPosition) < 0)
-		&& (distanceToPlayer < PATROL_ZONE_SIZE))
+		&& (distanceToPlayer < m_patrolZoneSize))
 	{
 		//Player inside the cone 
 		if (m_state != AIState::ATTACK_PLAYER)
@@ -192,7 +229,6 @@ bool TankAi::collidesWithPlayer(Tank const & playerTank) const
 ////////////////////////////////////////////////////////////
 void TankAi::render(sf::RenderWindow & window)
 {
-	// TODO: Don't draw if off-screen...
 	window.draw(m_tankBase);
 
 	window.draw(m_leftConeArray);

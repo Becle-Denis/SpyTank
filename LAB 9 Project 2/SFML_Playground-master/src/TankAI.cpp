@@ -117,17 +117,6 @@ void TankAi::update(Tank const& playerTank, double dt)
 				m_patrolZoneSize -= PATROL_CONE_ZONE_SPEED * dt;
 			}
 		}
-		else
-		{
-			if (m_patrolConeRange > MIN_PATROL_CONE_RANGE)
-			{
-				m_patrolConeRange -= PATROL_CONE_RANGE_SPEED * dt;
-			}
-			if (m_patrolZoneSize < MAX_PATROL_ZONE_SIZE)
-			{
-				m_patrolZoneSize += PATROL_CONE_ZONE_SPEED * dt;
-			}
-		}
 	}
 
 

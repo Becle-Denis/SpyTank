@@ -21,12 +21,6 @@ TankAi::TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprite
 		sf::Vector2f(300,500),
 		sf::Vector2f(1000,220),
 	};
-
-	//Vertex Array Color 
-	m_leftConeArray[0].color = sf::Color(0, 150, 0,255);
-	m_rightConeArray[0].color = sf::Color(0, 150, 0, 255);
-	m_leftConeArray[1].color = sf::Color(0, 205, 0, 50);
-	m_rightConeArray[1].color = sf::Color(0, 205, 0, 50);
 }
 
 ////////////////////////////////////////////////////////////
@@ -38,9 +32,16 @@ void TankAi::start()
 	m_turret.setRotation(0);
 	m_lifePoint = LIFE_POINTS;
 	m_rotation = 0;
+	m_turretRotation = 0;
 
 	m_state = AIState::PATROL_MAP;
 	m_patrolPointIndex = rand() % m_patrolPoint.size();
+	//Vertex Array Color 
+	m_leftConeArray[0].color = sf::Color(0, 150, 0, 255);
+	m_rightConeArray[0].color = sf::Color(0, 150, 0, 255);
+	m_leftConeArray[1].color = sf::Color(0, 205, 0, 50);
+	m_rightConeArray[1].color = sf::Color(0, 205, 0, 50);
+	
 }
 
 ////////////////////////////////////////////////////////////
@@ -49,12 +50,15 @@ void TankAi::update(Tank const& playerTank, double dt)
 	sf::Vector2f destination;
 	if (m_state == AIState::PATROL_MAP)
 	{
+		//Move to the patrol point 
 		destination = m_patrolPoint.at(m_patrolPointIndex) - m_tankBase.getPosition();
+		// turret rotation
 		m_turretRotation = m_turretRotation + PATROL_ROTATION_SPEED * dt;
 		if (m_turretRotation > 360)
 		{
 			m_turretRotation -= 360;
 		}
+		// Change patrol point
 		if (thor::length(destination) < MAX_SEE_AHEAD)
 		{
 			m_patrolPointIndex = rand() % m_patrolPoint.size();
@@ -63,7 +67,9 @@ void TankAi::update(Tank const& playerTank, double dt)
 
 	if (m_state == AIState::ATTACK_PLAYER)
 	{
+		// seek to the player 
 		destination = seek(playerTank.getPosition());
+		//rotate the turret in the player direction
 		int playerToTurretPostion = MathUtility::pointPositionToLine(m_tankBase.getPosition(), m_tankBase.getPosition() + thor::rotatedVector(sf::Vector2f(100,0),(float) m_turretRotation), playerTank.getPosition());
 		if (playerToTurretPostion < 0)
 		{
@@ -93,7 +99,7 @@ void TankAi::update(Tank const& playerTank, double dt)
 	m_steering = MathUtility::truncate(m_steering, MAX_FORCE);
 	// calculating acceleration with the mass 
 	acceleration = m_steering / MASS;
-	m_velocity = MathUtility::truncate(m_velocity + acceleration, MAX_SPEED);
+	m_velocity = MathUtility::truncate(m_velocity + acceleration, m_maxSpeed);
 	
 
 	// Now we need to convert our velocity vector into a rotation angle between 0 and 359 degrees.
@@ -143,8 +149,10 @@ void TankAi::update(Tank const& playerTank, double dt)
 			//Vertex Array Red Color 
 			m_leftConeArray[0].color = sf::Color(150, 0, 0, 255);
 			m_rightConeArray[0].color = sf::Color(150, 0, 0, 255);
-			m_leftConeArray[1].color = sf::Color(205, 0, 0, 50);
-			m_rightConeArray[1].color = sf::Color(205, 0, 0, 50);
+			m_leftConeArray[1].color = sf::Color(205, 0, 0, 0);
+			m_rightConeArray[1].color = sf::Color(205, 0, 0, 0);
+			
+			m_maxSpeed += 10.f;
 			m_state = AIState::ATTACK_PLAYER;
 		}
 	}
@@ -155,8 +163,9 @@ void TankAi::update(Tank const& playerTank, double dt)
 			//Vertex Array Green Color 
 			m_leftConeArray[0].color = sf::Color(0, 150, 0, 255);
 			m_rightConeArray[0].color = sf::Color(0, 150, 0, 255);
-			m_leftConeArray[1].color = sf::Color(0, 205, 0, 50);
-			m_rightConeArray[1].color = sf::Color(0, 205, 0, 50);
+			m_leftConeArray[1].color = sf::Color(0, 205, 0, 0);
+			m_rightConeArray[1].color = sf::Color(0, 205, 0, 0);
+			m_maxSpeed -= 10.f;
 			m_state = AIState::PATROL_MAP;
 		}
 	}

@@ -419,8 +419,6 @@ void Tank::fire()
 void Tank::takeImpact()
 {
 	m_lifePoint --;
-	m_tankBase.setColor(m_tankBase.getColor() - sf::Color(20,50,50));
-	m_turret.setColor(m_turret.getColor() - sf::Color(10, 25, 25));
 }
 
 bool Tank::isAlive() const

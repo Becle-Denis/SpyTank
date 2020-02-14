@@ -26,6 +26,7 @@ void Tank::initialise(GameState gameRunningState)
 	m_rotation = 0;
 	m_turretRotation = 0;
 	m_speed = 0;
+	m_lifePoint = LIFE_POINTS;
 
 	//resetting sprite 
 	m_tankBase.setPosition(m_startingPosition);
@@ -413,6 +414,21 @@ void Tank::fire()
 		std::cout << "Error no Projectile available" << std::endl;
 	}
 }
+
+////////////////////////////////////////////////////////////
+void Tank::takeImpact()
+{
+	m_lifePoint --;
+	m_tankBase.setColor(m_tankBase.getColor() - sf::Color(20,50,50));
+	m_turret.setColor(m_turret.getColor() - sf::Color(10, 25, 25));
+}
+
+bool Tank::isAlive() const
+{
+	return m_lifePoint > 0;
+}
+
+
 
 
 //////////////////////////////////////////////////////////////

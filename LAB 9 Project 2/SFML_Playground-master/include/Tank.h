@@ -77,6 +77,10 @@ private: // Attributes
 
 	//Actual gameplay of the tank
 	GameState m_gameplay;
+
+	static int constexpr LIFE_POINTS{ 5 };
+
+	int m_lifePoint{ 5 };
 	
 
 
@@ -135,6 +139,19 @@ public:	//functions
 
 	void clearDependantObjects();
 	
+	/// <summary>
+	/// Apply the damage to the tank health
+	/// </summary>
+	/// <param name="damage">damage applied to the tank</param>
+	void takeImpact();
+
+	/// <summary>
+	/// Return the tank lifePoint
+	/// </summary>
+	/// <returns>Tank actual life Points</returns>
+	bool isAlive() const;
+
+
 private: // functions 
 	/// <summary>
 	/// @brief Initialise the tank and turret sprite 

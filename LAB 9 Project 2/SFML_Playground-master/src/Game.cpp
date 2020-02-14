@@ -314,12 +314,11 @@ void Game::update(double dt)
 		break;
 
 	case GameState::RUNNING_CATCH_GAME:
-		float aiLifePoint = m_aiTank.getLifePoint();
-		if (m_timerLeft.isExpired() || aiLifePoint <= 0) //Winning game over
+		if (m_timerLeft.isExpired()) //Winning game over
 		{
 			setGameOver(true);
 		}
-		else if (m_aiTank.collidesWithPlayer(m_tank)) //Losing
+		else if ( m_aiTank.collidesWithPlayer(m_tank) || !m_tank.isAlive() ) //Losing
 		{
 			setGameOver(false);
 		}

@@ -35,7 +35,6 @@ void TankAi::start()
 	m_turret.setPosition(m_startingPosition);
 	m_tankBase.setRotation(0);
 	m_turret.setRotation(0);
-	m_lifePoint = LIFE_POINTS;
 	m_rotation = 0;
 	m_turretRotation = 0;
 
@@ -54,7 +53,7 @@ void TankAi::start()
 }
 
 ////////////////////////////////////////////////////////////
-void TankAi::update(Tank const& playerTank, double dt)
+void TankAi::update(Tank& playerTank, double dt)
 {
 	//updating the projectiles
 	for (int i = m_projectilesPtr.size() - 1; i >= 0; i--)
@@ -66,6 +65,8 @@ void TankAi::update(Tank const& playerTank, double dt)
 		//colision with player 
 		if (m_projectilesPtr.at(i)->collideWithSprites({ playerTank.getBaseTank(),playerTank.getTurret() }))
 		{
+			playerTank.takeImpact();
+
 			//removing the projectile 
 			m_projectilesPtr.at(i)->setInactive();
 			m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
@@ -289,20 +290,6 @@ void TankAi::init(sf::Vector2f position)
 	}
 }
 
-////////////////////////////////////////////////////////////
-std::pair<sf::Sprite, sf::Sprite> TankAi::getSprites()
-{
-	return std::pair<sf::Sprite, sf::Sprite>(m_tankBase,m_turret);
-}
-
-////////////////////////////////////////////////////////////
-void TankAi::takeDamage(float damage)
-{
-	if (damage > 0)
-	{
-		m_lifePoint -= damage;
-	}
-}
 
 ////////////////////////////////////////////////////////////
 sf::Vector2f TankAi::seek(sf::Vector2f playerPosition) const
@@ -366,12 +353,6 @@ void TankAi::fire()
 	{
 		std::cout << "Error no Projectile available" << std::endl;
 	}
-}
-
-////////////////////////////////////////////////////////////
-float TankAi::getLifePoint() const
-{
-	return m_lifePoint;
 }
 
 void TankAi::clearDependantObjects()

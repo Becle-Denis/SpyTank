@@ -35,7 +35,7 @@ public:
 	/// </summary>
 	/// <param name="playerTank">A reference to the player tank</param>
 	/// <param name="dt">update delta time</param>
-	void update(Tank const & playerTank, double dt);
+	void update(Tank & playerTank, double dt);
 
 	/// <summary>
 	/// @brief Checks for collision between the AI and player tanks.
@@ -57,24 +57,6 @@ public:
 	/// <param name="position">An x,y position</param>
 	/// </summary>
 	void init(sf::Vector2f position);
-
-	/// <summary>
-	/// Return the 2 Sprite of the tank, can be used for collision  
-	/// </summary>
-	/// <returns>Pair of the tank sprites</returns>
-	std::pair<sf::Sprite, sf::Sprite> getSprites();
-
-	/// <summary>
-	/// Apply the damage to the tank health
-	/// </summary>
-	/// <param name="damage">damage applied to the tank</param>
-	void takeDamage(float damage);
-
-	/// <summary>
-	/// Return the tank lifePoint
-	/// </summary>
-	/// <returns>Tank actual life Points</returns>
-	float getLifePoint() const;
 
 	enum class AiType
 	{
@@ -138,8 +120,6 @@ private:
 	// the mass of the tank, used for acceleration calculation 
 	static float constexpr MASS{ 2.0f };
 
-	static float constexpr LIFE_POINTS{ 80.0f };
-
 	static float constexpr PATROL_ROTATION_SPEED{ 0.03f };
 
 	static float constexpr MAX_PATROL_ZONE_SIZE{ 475.0f };
@@ -158,8 +138,6 @@ private:
 
 	// The maximum speed for this tank.
 	float m_maxSpeed = 42.0f;
-
-	float m_lifePoint{ 80.f };
 
 	//Original Starting position 
 	sf::Vector2f m_startingPosition;

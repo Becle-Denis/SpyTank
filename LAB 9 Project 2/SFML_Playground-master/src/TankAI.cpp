@@ -1,13 +1,16 @@
 #include "TankAi.h"
 
+const sf::Time TankAi::FIRE_RELOAD_TIME = sf::milliseconds(2050);
+
 ////////////////////////////////////////////////////////////
-TankAi::TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprites)
+TankAi::TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprites, ProjectilePool& projectilesPool)
 	: m_texture(texture)
 	, m_wallSprites(wallSprites)
 	, m_steering(0, 0)
 	, m_state(AIState::PATROL_MAP)
 	, m_leftConeArray(sf::Lines,2)
 	, m_rightConeArray(sf::Lines,2)
+	, m_projectilesPool(projectilesPool)
 {
 	// Initialises the tank base and turret sprites.
 	initSprites();
@@ -36,6 +39,7 @@ void TankAi::start()
 	m_turretRotation = 0;
 
 	//reseting the tank status 
+	m_fireTimer.restart(FIRE_RELOAD_TIME);
 	m_state = AIState::PATROL_MAP;
 	m_patrolPointIndex = rand() % m_patrolPoint.size();
 	m_patrolConeRange = MIN_PATROL_CONE_RANGE;
@@ -51,6 +55,12 @@ void TankAi::start()
 ////////////////////////////////////////////////////////////
 void TankAi::update(Tank const& playerTank, double dt)
 {
+	//update projectiles
+	for (Projectile* projPtr : m_projectilesPtr)
+	{
+		projPtr->update(dt);
+	}
+
 	sf::Vector2f playerTankPosition = playerTank.getPosition();
 	double distanceToPlayer = MathUtility::distance(m_tankBase.getPosition(), playerTankPosition);
 	sf::Vector2f destination;
@@ -85,6 +95,15 @@ void TankAi::update(Tank const& playerTank, double dt)
 	{
 		// seek to the player 
 		destination = seek(playerTankPosition);
+
+		//Firing
+		if (distanceToPlayer < MAX_PATROL_ZONE_SIZE / 1.5
+			&& m_fireTimer.isExpired())
+		{
+			fire();
+			m_fireTimer.restart(FIRE_RELOAD_TIME);
+		}
+
 
 		//rotate the turret in the player direction
 		int playerToTurretPostion = MathUtility::pointPositionToLine(m_tankBase.getPosition(), m_tankBase.getPosition() + thor::rotatedVector(sf::Vector2f(100,0),(float) m_turretRotation), playerTankPosition);
@@ -223,6 +242,11 @@ void TankAi::render(sf::RenderWindow & window)
 	window.draw(m_leftConeArray);
 	window.draw(m_rightConeArray);
 
+	for (Projectile* projPtr : m_projectilesPtr)
+	{
+		projPtr->render(window);
+	}
+
 	window.draw(m_turret);
 
 }
@@ -308,10 +332,35 @@ const sf::CircleShape TankAi::findMostThreateningObstacle()
 	return mostThreatening;
 }
 
+void TankAi::fire()
+{
+	Projectile* newProjectilePtr = m_projectilesPool.getProjectile();
+	if (newProjectilePtr != nullptr)
+	{
+		newProjectilePtr->launch(m_tankBase.getPosition(), m_turretRotation, 300.0);
+		m_projectilesPtr.push_back(newProjectilePtr);
+	}
+	else
+	{
+		std::cout << "Error no Projectile available" << std::endl;
+	}
+}
+
 ////////////////////////////////////////////////////////////
 float TankAi::getLifePoint() const
 {
 	return m_lifePoint;
+}
+
+void TankAi::clearDependantObjects()
+{
+	//deleting the projectiles 
+	for (Projectile* projPtr : m_projectilesPtr)
+	{
+		projPtr->setInactive();
+		projPtr = nullptr;
+	}
+	m_projectilesPtr.clear();
 }
 
 ////////////////////////////////////////////////////////////

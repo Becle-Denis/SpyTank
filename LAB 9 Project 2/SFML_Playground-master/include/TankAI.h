@@ -1,8 +1,11 @@
 #pragma once
 #include "MathUtility.h"
 #include "CollisionDetector.h"
+#include "Projectile.h"
+#include "ProjectilePool.h"
 #include <SFML/Graphics.hpp>
 #include <Thor/Vectors.hpp>
+#include <Thor/Time/Timer.hpp>
 #include <iostream>
 #include <queue>
 
@@ -18,7 +21,7 @@ public:
 	/// </summary>
 	/// <param name="texture">A reference to the sprite sheet texture</param>
 	///< param name="wallSprites">A reference to the container of wall sprites</param>
-	TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprites);
+	TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprites, ProjectilePool & projectilesPool);
 
 	void start();
 
@@ -78,6 +81,8 @@ public:
 		AI_ID_NONE,
 		AI_ID_SEEK_SHOOT_AT_PLAYER
 	};
+
+	void clearDependantObjects();
 
 private:
 	void initSprites();
@@ -148,6 +153,8 @@ private:
 	
 	static float constexpr PATROL_CONE_ZONE_SPEED{ 0.05f };
 
+	static const sf::Time FIRE_RELOAD_TIME;
+
 	// The maximum speed for this tank.
 	float m_maxSpeed = 42.0f;
 
@@ -174,6 +181,13 @@ private:
 		ATTACK_PLAYER
 	} m_state;
 
+	ProjectilePool& m_projectilesPool; //Reference to the pool of projectile 
+	std::vector<Projectile*> m_projectilesPtr; // container of the tank projectile (pointers)
+
+	thor::Timer m_fireTimer; // Timer for the time between two fire
+
+	//fire a projectile int he direction of the turret
+	void fire();
 
 };
 

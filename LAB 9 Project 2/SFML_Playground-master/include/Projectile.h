@@ -21,8 +21,9 @@ private: //Attributes
 	//texture
 	sf::Texture const* m_texturePtr;
 
-	// The tank speed.
-	static double s_projectile_speed;
+	//Speed
+	static double s_projectile_default_speed;
+	double m_projectile_speed;
 
 	// The rotation of the projectile.
 	double m_rotation{ 0.0 };
@@ -43,7 +44,7 @@ public: //functions
 	/// </summary>
 	/// <param name="position">New Position</param>
 	/// <param name="rotation">New rotation</param>
-	void launch(sf::Vector2f position, double rotation);
+	void launch(sf::Vector2f position, double rotation, double speed = s_projectile_default_speed);
 
 	/// <summary>
 	/// Return the actual sprite of the projectile 

@@ -1,13 +1,16 @@
 #include "Projectile.h"
 
 
-double Projectile::s_projectile_speed = 800;
+double Projectile::s_projectile_default_speed = 800;
 
-void Projectile::launch(sf::Vector2f position, double rotation)
+void Projectile::launch(sf::Vector2f position, double rotation, double speed)
 {
 	m_rotation = rotation;
 	m_projectileSprite.setRotation(rotation - 90);
 	m_projectileSprite.setPosition(position);
+
+	m_projectile_speed = speed;
+
 	if (m_soundManagerPtr != nullptr)
 	{
 		m_soundPtr = m_soundManagerPtr->startProjectileSound(position);
@@ -49,8 +52,8 @@ bool Projectile::isInactive() const
 void Projectile::update(double dt)
 {
 	//get new position
-	float newXPosition = m_projectileSprite.getPosition().x + cos(m_rotation * MathUtility::DEG_TO_RAD) * s_projectile_speed * (dt / 1000);
-	float newYPosition = m_projectileSprite.getPosition().y + sin(m_rotation * MathUtility::DEG_TO_RAD) * s_projectile_speed * (dt / 1000);
+	float newXPosition = m_projectileSprite.getPosition().x + cos(m_rotation * MathUtility::DEG_TO_RAD) * m_projectile_speed * (dt / 1000);
+	float newYPosition = m_projectileSprite.getPosition().y + sin(m_rotation * MathUtility::DEG_TO_RAD) * m_projectile_speed * (dt / 1000);
 	sf::Vector2f newPosition(newXPosition, newYPosition);
 
 	//set new position 

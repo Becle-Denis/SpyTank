@@ -3,7 +3,7 @@
 const sf::Time TankAi::FIRE_RELOAD_TIME = sf::milliseconds(2050);
 
 ////////////////////////////////////////////////////////////
-TankAi::TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprites, ProjectilePool& projectilesPool)
+TankAi::TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, ProjectilePool& projectilesPool)
 	: m_texture(texture)
 	, m_wallSprites(wallSprites)
 	, m_steering(0, 0)
@@ -11,6 +11,7 @@ TankAi::TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprite
 	, m_leftConeArray(sf::Lines,2)
 	, m_rightConeArray(sf::Lines,2)
 	, m_projectilesPool(projectilesPool)
+	, m_wallSpatialMap(wallMap)
 {
 	// Initialises the tank base and turret sprites.
 	initSprites();
@@ -55,10 +56,31 @@ void TankAi::start()
 ////////////////////////////////////////////////////////////
 void TankAi::update(Tank const& playerTank, double dt)
 {
-	//update projectiles
-	for (Projectile* projPtr : m_projectilesPtr)
+	//updating the projectiles
+	for (int i = m_projectilesPtr.size() - 1; i >= 0; i--)
 	{
-		projPtr->update(dt);
+		//update 
+		m_projectilesPtr.at(i)->update(dt);
+
+		//Collisions 
+		//colision with player 
+		if (m_projectilesPtr.at(i)->collideWithSprites({ playerTank.getBaseTank(),playerTank.getTurret() }))
+		{
+			//removing the projectile 
+			m_projectilesPtr.at(i)->setInactive();
+			m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
+		}
+		else
+		{
+			//collision with wall or something else
+			int lifeState = m_projectilesPtr.at(i)->lifeState(m_wallSpatialMap);
+			if (lifeState != -1)
+			{
+				//removing the projectile 
+				m_projectilesPtr.at(i)->setInactive();
+				m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
+			}
+		}
 	}
 
 	sf::Vector2f playerTankPosition = playerTank.getPosition();

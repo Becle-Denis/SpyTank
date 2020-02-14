@@ -21,7 +21,7 @@ public:
 	/// </summary>
 	/// <param name="texture">A reference to the sprite sheet texture</param>
 	///< param name="wallSprites">A reference to the container of wall sprites</param>
-	TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprites, ProjectilePool & projectilesPool);
+	TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, ProjectilePool & projectilesPool);
 
 	void start();
 
@@ -106,6 +106,7 @@ private:
 
 	// A reference to the container of wall sprites.
 	std::vector<sf::Sprite> & m_wallSprites;
+	std::map<int, std::list< sf::Sprite> > & m_wallSpatialMap;
 
 	// The current rotation as applied to tank base
 	double m_rotation{ 0.0 };

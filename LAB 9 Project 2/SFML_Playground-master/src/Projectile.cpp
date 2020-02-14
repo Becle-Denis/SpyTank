@@ -102,6 +102,11 @@ int Projectile::lifeState(std::map<int, std::list< sf::Sprite> >& wallMap) const
 	
 }
 
+bool Projectile::collideWithSprites(std::pair<sf::Sprite, sf::Sprite> sprites)
+{
+	return ((CollisionDetector::collision(m_projectileSprite, sprites.first)) || (CollisionDetector::collision(m_projectileSprite, sprites.second)));
+}
+
 
 void Projectile::render(sf::RenderWindow& window) const
 {

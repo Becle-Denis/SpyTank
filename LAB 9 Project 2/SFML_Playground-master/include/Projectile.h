@@ -73,6 +73,8 @@ public: //functions
 	//			3 - Hit the AI Tank DISABLED
 	int lifeState(std::map<int, std::list< sf::Sprite> >& wallMap) const;
 
+	bool collideWithSprites(std::pair <sf::Sprite, sf::Sprite> sprites);
+
 	//draw the projectile
 	void render(sf::RenderWindow& window ) const;
 

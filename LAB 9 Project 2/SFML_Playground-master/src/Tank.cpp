@@ -8,7 +8,7 @@ Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std
 	m_wallSpatialMap(wallMap),
 	m_targets(targets),
 	m_projectilesPool(projectilePool),
-	m_maximumSpeed(100),
+	m_maximumSpeed(100.0),
 	m_soundManager(soundManager),
 	m_aiTank(aiTank)
 {
@@ -23,10 +23,11 @@ void Tank::initialise(GameState gameRunningState)
 	m_fireTimer.restart(sf::seconds(1.f));
 	m_performances = UserPerformance(&m_targets);
 	m_enableRotation = true;
-	m_rotation = 0;
-	m_turretRotation = 0;
+	m_rotation = 0.0;
+	m_turretRotation = 0.0;
 	m_speed = 0;
 	m_lifePoint = LIFE_POINTS;
+	m_maximumSpeed = 100.0;
 
 	//resetting sprite 
 	m_tankBase.setPosition(m_startingPosition);
@@ -424,6 +425,7 @@ void Tank::fire()
 void Tank::takeImpact()
 {
 	m_lifePoint --;
+	m_maximumSpeed *= 0.80;
 }
 
 bool Tank::isAlive() const

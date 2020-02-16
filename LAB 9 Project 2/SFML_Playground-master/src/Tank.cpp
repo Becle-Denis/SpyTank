@@ -84,7 +84,12 @@ void Tank::update(double dt)
 
 		break;
 	case GameState::RUNNING_CATCH_GAME:
-
+		// check for target Collection 
+		int collisionResult = m_targets.checkForCollision(m_tankBase);
+		if (collisionResult != -1)
+		{
+			m_targets.hit(collisionResult);
+		}
 		break;
 	}
 

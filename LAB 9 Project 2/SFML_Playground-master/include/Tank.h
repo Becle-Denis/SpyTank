@@ -81,8 +81,13 @@ private: // Attributes
 	static int constexpr LIFE_POINTS{ 5 };
 
 	int m_lifePoint{ 5 };
-	
 
+	float m_rotationStep{ 1.0f };
+
+	float m_decreasingFactor{ 0.99f };
+
+	int m_rotationBug{ -1 };
+	int m_rotationBugUpdateCount{ 0 };
 
 public:	//functions
 	/// <summary>

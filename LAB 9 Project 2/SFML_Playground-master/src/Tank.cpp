@@ -28,6 +28,10 @@ void Tank::initialise(GameState gameRunningState)
 	m_speed = 0;
 	m_lifePoint = LIFE_POINTS;
 	m_maximumSpeed = 100.0;
+	m_rotationStep = 1.0f;
+	m_decreasingFactor = 0.99f;
+	m_rotationBugUpdateCount = 0;
+	m_rotationBug = -1;
 
 	//resetting sprite 
 	m_tankBase.setPosition(m_startingPosition);
@@ -91,7 +95,23 @@ void Tank::update(double dt)
 		{
 			m_targets.hit(collisionResult);
 		}
-		break;
+
+
+		//Rotation Bug (damaged Gameplay)
+
+		if (m_rotationBugUpdateCount == m_rotationBug)
+		{
+			m_rotationBugUpdateCount = 0;
+
+			if (abs(m_speed) > 1)
+			{
+				increaseRotation();
+			}
+		}
+		else
+		{
+			m_rotationBugUpdateCount++;
+		}
 	}
 
 	
@@ -118,7 +138,7 @@ void Tank::update(double dt)
 	m_turret.setRotation(m_turretRotation);
 
 	//decrease speed 
-	m_speed = 0.99 * m_speed;
+	m_speed = m_decreasingFactor * m_speed;
 
 	//limiting speed 
 	double high = m_maximumSpeed;
@@ -260,7 +280,7 @@ void Tank::increaseRotation()
 		//saving the actual rotation
 		m_previousRotation = m_rotation;
 
-		m_rotation += 1;
+		m_rotation += m_rotationStep;
 		if (m_rotation == 360.0)
 		{
 			m_rotation = 0;
@@ -278,7 +298,7 @@ void Tank::decreaseRotation()
 		//saving the actual rotation
 		m_previousRotation = m_rotation;
 
-		m_rotation -= 1;
+		m_rotation -= m_rotationStep;
 		if (m_rotation == 0.0)
 		{
 			m_rotation = 359.0;
@@ -296,7 +316,7 @@ void Tank::increaseTurretRotation()
 		//saving the actual turret rotation
 		m_previousTurretRotation = m_turretRotation;
 
-		m_turretRotation += 1;
+		m_turretRotation += m_rotationStep;
 		if (m_turretRotation == 360.0)
 		{
 			m_turretRotation = 0;
@@ -312,7 +332,7 @@ void Tank::decreaseTurretRotation()
 		//saving the actual turret rotation
 		m_previousTurretRotation = m_turretRotation;
 
-		m_turretRotation -= 1;
+		m_turretRotation -= m_rotationStep;
 		if (m_turretRotation == 0.0)
 		{
 			m_turretRotation = 359.0;
@@ -425,7 +445,10 @@ void Tank::fire()
 void Tank::takeImpact()
 {
 	m_lifePoint --;
-	m_maximumSpeed *= 0.80;
+	//m_maximumSpeed *= 0.80;
+	//m_rotationStep *= 0.75;
+	m_rotationBugUpdateCount = 0;
+	m_rotationBug = 4;
 }
 
 bool Tank::isAlive() const

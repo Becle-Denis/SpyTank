@@ -32,6 +32,7 @@ void Tank::initialise(GameState gameRunningState)
 	m_decreasingFactor = 0.99f;
 	m_rotationBugUpdateCount = 0;
 	m_rotationBug = -1;
+	m_capturedTarget = 0;
 
 	//resetting sprite 
 	m_tankBase.setPosition(m_startingPosition);
@@ -94,6 +95,7 @@ void Tank::update(double dt)
 		if (collisionResult != -1)
 		{
 			m_targets.hit(collisionResult);
+			m_capturedTarget++;
 		}
 
 
@@ -439,6 +441,11 @@ void Tank::fire()
 	{
 		std::cout << "Error no Projectile available" << std::endl;
 	}
+}
+
+int Tank::getNumberOfCapturedTarget() const
+{
+	return m_capturedTarget;
 }
 
 ////////////////////////////////////////////////////////////

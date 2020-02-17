@@ -75,24 +75,19 @@ void HUD::setOver(GameState state, UserPerformance playerPerf, UserPerformance b
 ////////////////////////////////////////////////////////////
 void HUD::update(sf::Time remainingTime, UserPerformance userPerf)
 {
-	switch (m_state)
-	{
-	case GameState::RUNNING_HIT_GAME:
-		//updating timer 
-		m_bigDisplayedText.setString("" + std::to_string((int)remainingTime.asSeconds()) + " seconds left");
-
-		//updating Stats
-		m_playerStatsText.setString(userPerf.toStringColumn());
-		break;
-
-	case GameState::RUNNING_CATCH_GAME:
-		//updating timer 
-		m_bigDisplayedText.setString("" + std::to_string((int)remainingTime.asSeconds()) + " seconds left");
-
-		break;
-	}
+	//updating timer 
+	m_bigDisplayedText.setString("" + std::to_string((int)remainingTime.asSeconds()) + " seconds left");
+	//updating Stats
+	m_playerStatsText.setString(userPerf.toStringColumn());
 
 
+	
+
+}
+
+void HUD::update(int remainingTarget)
+{
+	m_bigDisplayedText.setString("" + std::to_string(remainingTarget) + " targets missing");
 }
 
 void HUD::render(sf::RenderWindow& window)

@@ -279,10 +279,14 @@ void Game::start(GameState newState)
 		m_hud.start(newState);
 		m_timerLeft.restart(sf::seconds(60.f));
 		m_tank.initialise(newState);
-		m_targets.start();
 		if (newState == GameState::RUNNING_CATCH_GAME)
 		{
+			m_targets.start(false);
 			m_aiTank.start();
+		}
+		else 
+		{
+			m_targets.start(true);
 		}
 	}
 }
@@ -314,7 +318,8 @@ void Game::update(double dt)
 		break;
 
 	case GameState::RUNNING_CATCH_GAME:
-		if (m_timerLeft.isExpired()) //Winning game over
+		int targetLeft = m_targets.getNumberOfDisplayedTarget() - m_tank.getNumberOfCapturedTarget();
+		if (targetLeft <= 0) //Winning game over
 		{
 			setGameOver(true);
 		}
@@ -334,7 +339,7 @@ void Game::update(double dt)
 			m_aiTank.update(m_tank, dt);
 
 			//updating the HUD
-			m_hud.update(m_timerLeft.getRemainingTime(), m_tank.getPerformance());
+			m_hud.update(targetLeft);
 		}
 		break;
 	}

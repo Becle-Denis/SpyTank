@@ -25,9 +25,13 @@ void Target::init(sf::Texture const* texture, sf::Vector2f position, sf::Time ti
 	m_soundManagerPtr = soundManager;
 }
 
-void Target::start()
+void Target::start(bool timed)
 {
-	m_timer.restart(m_timeToStart);
+	m_timed = timed;
+	if (m_timed)
+	{
+		m_timer.restart(m_timeToStart);
+	}
 	m_state = TargetState::NotDisplayed;
 	m_isDisplayed = false;
 	m_sprite.setColor(sf::Color(255, 255, 255));
@@ -35,35 +39,38 @@ void Target::start()
 
 void Target::update()
 {
-	switch (m_state)
+	if (m_timed)
 	{
-	case TargetState::NotDisplayed: // reveal the target when timer expired 
-		if (m_timer.isExpired())
+		switch (m_state)
 		{
-			reveal();
-		}
-		break;
+		case TargetState::NotDisplayed: // reveal the target when timer expired 
+			if (m_timer.isExpired())
+			{
+				reveal();
+			}
+			break;
 
-	case TargetState::OnScreen: // check for the timer and set the state to blinking 
-		if (m_timer.getRemainingTime() <= S_BLINKING_TIME)
-		{
-			m_state = TargetState::BlinkingOnScreen;
-			m_blinkingTimer.restart(sf::milliseconds(75));
-		}
-		break;
+		case TargetState::OnScreen: // check for the timer and set the state to blinking 
+			if (m_timer.getRemainingTime() <= S_BLINKING_TIME)
+			{
+				m_state = TargetState::BlinkingOnScreen;
+				m_blinkingTimer.restart(sf::milliseconds(75));
+			}
+			break;
 
-	case TargetState::BlinkingOnScreen: // check for the timer and set the state to deadByTime
-		if (m_blinkingTimer.isExpired())
-		{
-			m_isDisplayed = !m_isDisplayed;
-			m_blinkingTimer.restart(sf::milliseconds(75));
+		case TargetState::BlinkingOnScreen: // check for the timer and set the state to deadByTime
+			if (m_blinkingTimer.isExpired())
+			{
+				m_isDisplayed = !m_isDisplayed;
+				m_blinkingTimer.restart(sf::milliseconds(75));
+			}
+			if (m_timer.isExpired())
+			{
+				m_isDisplayed = false;
+				m_state = TargetState::DeadByTime;
+			}
+			break;
 		}
-		if (m_timer.isExpired())
-		{
-			m_isDisplayed = false;
-			m_state = TargetState::DeadByTime;
-		}
-		break;
 	}
 }
 
@@ -109,7 +116,10 @@ void Target::reveal(sf::Time bonusTime)
 	{
 		m_timeOnScreen += bonusTime;
 		m_isDisplayed = true;
-		m_timer.restart(m_timeOnScreen);
+		if (m_timed)
+		{
+			m_timer.restart(m_timeOnScreen);
+		}
 		m_state = TargetState::OnScreen;
 		//sound stuff
 		if (m_soundManagerPtr != nullptr)

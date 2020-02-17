@@ -28,7 +28,7 @@ public: // functions
 	/// <summary>
 	/// Start each Target
 	/// </summary>
-	void start();
+	void start(bool timed);
 
 	/// <summary>
 	/// Update all the targets

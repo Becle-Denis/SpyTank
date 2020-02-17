@@ -89,6 +89,8 @@ private: // Attributes
 	int m_rotationBug{ -1 };
 	int m_rotationBugUpdateCount{ 0 };
 
+	int m_capturedTarget{ 0 };
+
 public:	//functions
 	/// <summary>
 	/// @brief Constructor that stores drawable state (texture, sprite) for the tank.
@@ -155,6 +157,8 @@ public:	//functions
 	/// </summary>
 	/// <returns>Tank actual life Points</returns>
 	bool isAlive() const;
+
+	int getNumberOfCapturedTarget() const;
 
 
 private: // functions 
@@ -225,7 +229,6 @@ private: // functions
 
 	//fire a projectile 
 	void fire();
-
 };
 
 #include "TankAI.h"

@@ -32,11 +32,18 @@ public:
 	void setOver(GameState state, UserPerformance playerPerf, UserPerformance bestPerf);
 
 	/// <summary>
-	/// @brief Checks the current game state and sets the appropriate status text on the HUD.
+	/// @brief Sets the appropriate status text on the HUD for the HITTING GAME.
 	/// </summary>
 	/// <param name="gameState">The current game state</param>
 	/// <param name="aiLifePoint">The current life points of the ai</param>
 	void update(sf::Time remainingTime, UserPerformance userPerf);
+
+	/// <summary>
+	/// @brief Sets the appropriate status text on the HUD for the CATCHING GAME.
+	/// </summary>
+	/// <param name="gameState">The current game state</param>
+	/// <param name="aiLifePoint">The current life points of the ai</param>
+	void update(int remainingTarget);
 
 	/// <summary>
 	/// @brief Draws the HUD outline and text.

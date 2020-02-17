@@ -29,7 +29,7 @@ public:
 	/// <summary>
 	/// Launch the timer
 	/// </summary>
-	void start();
+	void start(bool timed = true);
 
 	/// <summary>
 	/// Update the state of the Target 
@@ -107,6 +107,9 @@ private:
 
 	// boolean for displaying the Target 
 	bool m_isDisplayed;
+
+	// boolean to store if the target is timed or not
+	bool m_timed;
 
 	//soundManager
 	SoundManager* m_soundManagerPtr;

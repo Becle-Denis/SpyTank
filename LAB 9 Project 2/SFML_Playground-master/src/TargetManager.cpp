@@ -31,11 +31,16 @@ void TargetManager::construct(std::vector<TargetData>& targetData, SoundManager*
 	}
 }
 
-void TargetManager::start()
+void TargetManager::start(bool timed)
 {
 	for (int i = 0; i < m_number_of_targets; i++)
 	{
-		(m_targets + i)->start();
+		(m_targets + i)->start(timed);
+	}
+	if (!timed)
+	{
+		int nextIndex = getNextIndex();
+		(m_targets + nextIndex)->reveal();
 	}
 }
 

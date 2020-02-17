@@ -40,6 +40,10 @@ void Tank::initialise(GameState gameRunningState)
 	m_turret.setPosition(m_startingPosition);
 	m_tankBase.setRotation(m_rotation);
 	m_turret.setRotation(m_turretRotation);
+	m_tankBase.setColor(sf::Color::White);
+	m_turret.setColor(sf::Color::White);
+	m_tankBase.setScale(1, 1);
+	m_turret.setScale(1, 1);
 
 	m_gameplay = gameRunningState;
 }
@@ -452,8 +456,10 @@ int Tank::getNumberOfCapturedTarget() const
 ////////////////////////////////////////////////////////////
 void Tank::takeImpact()
 {
+	//affecting life point 
 	m_lifePoint --;
-	
+
+	//affecting gameplay
 	int impactSequence = rand() % 5;
 	switch (impactSequence)
 	{
@@ -480,6 +486,11 @@ void Tank::takeImpact()
 		m_hud.addEvent("Structure damaged");
 	}
 	
+	//affecting sprite color 
+	sf::Uint8 otherColors = static_cast<sf::Uint8>(m_lifePoint * (255.0 / LIFE_POINTS));
+	sf::Color newColor = sf::Color(255,otherColors, otherColors);
+	m_tankBase.setColor(newColor);
+	m_turret.setColor(newColor);
 	
 }
 

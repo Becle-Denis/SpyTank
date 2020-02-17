@@ -445,10 +445,29 @@ void Tank::fire()
 void Tank::takeImpact()
 {
 	m_lifePoint --;
-	//m_maximumSpeed *= 0.80;
-	//m_rotationStep *= 0.75;
-	m_rotationBugUpdateCount = 0;
-	m_rotationBug = 4;
+	
+	switch (rand() % 6)
+	{
+	case 0:
+		//Steering damaged
+		m_maximumSpeed *= 0.80;
+		break;
+	case 1:
+		//navigation damaged
+		m_rotationStep *= 0.75;
+		break;
+	case 2:
+		//Direction damaged
+		m_rotationBugUpdateCount = 0;
+		m_rotationBug = 4;
+		break;
+	case 3:
+		// Structure damaged
+		m_tankBase.setScale(1.2, 1.2);
+		m_turret.setScale(1.2, 1.2);
+	}
+	
+	
 }
 
 bool Tank::isAlive() const

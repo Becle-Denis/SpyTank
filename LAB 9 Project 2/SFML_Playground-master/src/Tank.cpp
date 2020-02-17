@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, TankAi& aiTank)
+Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, TankAi& aiTank, HUD& hud)
 	: m_texture(texture),
 	m_wallSprites(wallSprites),
 	m_wallSpatialMap(wallMap),
@@ -10,7 +10,8 @@ Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std
 	m_projectilesPool(projectilePool),
 	m_maximumSpeed(100.0),
 	m_soundManager(soundManager),
-	m_aiTank(aiTank)
+	m_aiTank(aiTank),
+	m_hud(hud)
 {
 	initSprites();
 }
@@ -453,25 +454,30 @@ void Tank::takeImpact()
 {
 	m_lifePoint --;
 	
-	switch (rand() % 6)
+	int impactSequence = rand() % 5;
+	switch (impactSequence)
 	{
 	case 0:
 		//Steering damaged
 		m_maximumSpeed *= 0.80;
+		m_hud.addEvent("Steering damaged");
 		break;
 	case 1:
 		//navigation damaged
 		m_rotationStep *= 0.75;
+		m_hud.addEvent("Navigation damaged");
 		break;
 	case 2:
 		//Direction damaged
 		m_rotationBugUpdateCount = 0;
 		m_rotationBug = 4;
+		m_hud.addEvent("Direction damaged");
 		break;
 	case 3:
 		// Structure damaged
 		m_tankBase.setScale(1.2, 1.2);
 		m_turret.setScale(1.2, 1.2);
+		m_hud.addEvent("Structure damaged");
 	}
 	
 	

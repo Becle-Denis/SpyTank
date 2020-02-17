@@ -10,6 +10,7 @@
 #include <Thor/Time/CallbackTimer.hpp>
 #include "MovingMotorEffect.h"
 #include "GameState.h"
+#include "HUD.h"
 
 class TankAi; //forward Reference
 
@@ -31,6 +32,7 @@ private: // Attributes
 	SoundManager& m_soundManager; // Reference to the soundManager
 	MovingMotorEffect* m_motorSound; // Pointer to the motor sound effect
 	TankAi& m_aiTank;  // Reference to the AiTank
+	HUD& m_hud; // Reference to the HUD
 
 	//Sprites 
 	sf::Sprite m_tankBase;
@@ -99,7 +101,7 @@ public:	//functions
 	/// </summary>
 	/// <param name="texture">A reference to the sprite sheet texture</param>
 	///< param name="texture">A reference to the container of wall sprites</param>  
-	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, TankAi& aiTank);
+	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, TankAi& aiTank, HUD& hud);
 
 	void initialise(GameState gameRunningState);
 

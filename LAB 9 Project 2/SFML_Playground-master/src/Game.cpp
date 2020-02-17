@@ -9,7 +9,7 @@ static double const MS_PER_UPDATE = 10.0;
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
 	m_targets(m_targetTexture),
-	m_tank(m_spriteSheetTexture, m_wallSprites, m_wallSpatialMap, m_targets, m_projectilesPool, m_soundManager, m_aiTank),
+	m_tank(m_spriteSheetTexture, m_wallSprites, m_wallSpatialMap, m_targets, m_projectilesPool, m_soundManager, m_aiTank, m_hud),
 	m_aiTank(m_spriteSheetTexture, m_wallSprites, m_wallSpatialMap, m_projectilesPool),
 	m_state(GameState::NOT_STARTED), m_projectilesPool(m_spriteSheetTexture, 10, &m_soundManager),
 	m_hud(m_fontA),

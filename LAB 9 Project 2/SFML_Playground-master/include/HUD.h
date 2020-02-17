@@ -32,6 +32,13 @@ public:
 	void setOver(GameState state, UserPerformance playerPerf, UserPerformance bestPerf);
 
 	/// <summary>
+	/// @brief Write the event on the HUD.
+	///
+	/// </summary>
+	/// <param name="event">The new event</param>
+	void addEvent(std::string stringEvent);
+
+	/// <summary>
 	/// @brief Sets the appropriate status text on the HUD for the HITTING GAME.
 	/// </summary>
 	/// <param name="gameState">The current game state</param>
@@ -52,7 +59,6 @@ public:
 	/// <param name="window">The SFML Render window</param>
 	void render(sf::RenderWindow& window);
 
-
 private:
 	GameState m_state;
 
@@ -64,6 +70,7 @@ private:
 	sf::Text m_statTitleText; //text for displaying the performances titles
 	sf::Text m_playerStatsText; // text for displaying the actual player performances 
 	sf::Text m_gameOverBestStatsText; //text for displaying the best player performances 
+	sf::Text m_eventText; //Text for displaying the event; 
 	
 
 };

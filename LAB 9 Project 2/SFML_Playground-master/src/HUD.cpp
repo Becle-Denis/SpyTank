@@ -19,6 +19,10 @@ void HUD::start(GameState state)
 	m_statTitleText.setFillColor(sf::Color(0, 0, 125));
 	m_statTitleText.setPosition(150, 40);
 
+	m_eventText = sf::Text("", m_textFont, 25);
+	m_eventText.setFillColor(sf::Color(5, 5, 55));
+	m_eventText.setPosition(40, 40);
+
 	m_playerStatsText = sf::Text("", m_textFont, 30);
 	m_playerStatsText.setFillColor(sf::Color(0, 0, 125));
 	m_playerStatsText.setPosition(50, 40);
@@ -72,6 +76,13 @@ void HUD::setOver(GameState state, UserPerformance playerPerf, UserPerformance b
 	m_state = state;
 }
 
+void HUD::addEvent(std::string stringEvent)
+{
+	std::string text = m_eventText.getString();
+	text += stringEvent + "\n";
+	m_eventText.setString(text);
+}
+
 ////////////////////////////////////////////////////////////
 void HUD::update(sf::Time remainingTime, UserPerformance userPerf)
 {
@@ -79,9 +90,6 @@ void HUD::update(sf::Time remainingTime, UserPerformance userPerf)
 	m_bigDisplayedText.setString("" + std::to_string((int)remainingTime.asSeconds()) + " seconds left");
 	//updating Stats
 	m_playerStatsText.setString(userPerf.toStringColumn());
-
-
-	
 
 }
 
@@ -100,6 +108,7 @@ void HUD::render(sf::RenderWindow& window)
 		break;
 
 	case GameState::RUNNING_CATCH_GAME:
+		window.draw(m_eventText);
 		break;
 
 	case GameState::NOT_STARTED:

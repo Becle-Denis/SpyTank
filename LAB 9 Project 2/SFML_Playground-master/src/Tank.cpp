@@ -140,6 +140,9 @@ void Tank::update(double dt)
 	m_tankBase.setPosition(sf::Vector2f(newXPosition,newYPosition));
 	m_turret.setPosition(sf::Vector2f(newXPosition, newYPosition));
 
+	//replacing the tank inside the map 
+	limitInsideMap();
+
 	//set rotation 
 	m_tankBase.setRotation(m_rotation);
 	m_turret.setRotation(m_turretRotation);
@@ -366,6 +369,41 @@ bool Tank::checkWallCollision()
 		}
 	}
 	return false;
+}
+
+////////////////////////////////////////////////////////////
+void Tank::limitInsideMap()
+{
+	sf::Vector2f tankPosition = m_tankBase.getPosition();
+	bool changedPosition = false;
+	//limiting the position;
+	if (tankPosition.x < 0.0f)
+	{
+		changedPosition = true;
+		tankPosition.x = 0.0f;
+	}
+	if (tankPosition.x > ScreenSize::s_height)
+	{
+		changedPosition = true;
+		tankPosition.x = ScreenSize::s_height;
+	}
+	if (tankPosition.y < 0)
+	{
+		changedPosition = true;
+		tankPosition.y = 0.0f;
+	}
+	if (tankPosition.y > ScreenSize::s_width)
+	{
+		changedPosition = true;
+		tankPosition.y = ScreenSize::s_width;
+	}
+
+	//appliying changes
+	if (changedPosition)
+	{
+		m_tankBase.setPosition(tankPosition);
+		m_turret.setPosition(tankPosition);
+	}
 }
 
 ////////////////////////////////////////////////////////////

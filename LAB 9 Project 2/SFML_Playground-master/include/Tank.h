@@ -11,6 +11,7 @@
 #include "MovingMotorEffect.h"
 #include "GameState.h"
 #include "HUD.h"
+#include "ScreenSize.h"
 
 class TankAi; //forward Reference
 
@@ -162,7 +163,6 @@ public:	//functions
 
 	int getNumberOfCapturedTarget() const;
 
-
 private: // functions 
 	/// <summary>
 	/// @brief Initialise the tank and turret sprite 
@@ -214,6 +214,8 @@ private: // functions
 	/// </summary>
 	/// <returns>True if collision detected between tank and wall.</returns>
 	bool checkWallCollision();
+
+	void limitInsideMap();
 
 	/// <summary>
 	/// @brief Stops the tank if moving and applies a small increase in speed in the opposite direction of travel.

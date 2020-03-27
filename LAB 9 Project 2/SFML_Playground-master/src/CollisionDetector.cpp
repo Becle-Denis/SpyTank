@@ -3,7 +3,25 @@
 bool CollisionDetector::collision(const sf::Sprite& object1, const sf::Sprite& object2) {
 	OrientedBoundingBox OBB1(object1);
 	OrientedBoundingBox OBB2(object2);
+	return collision(OBB1, OBB2);
+}
 
+bool CollisionDetector::collision(const sf::Shape& object1, const sf::Sprite& object2)
+{
+	OrientedBoundingBox OBB1(object1);
+	OrientedBoundingBox OBB2(object2);
+	return collision(OBB1, OBB2);
+}
+
+bool CollisionDetector::collision(const sf::Shape& object1, const sf::Shape& object2)
+{
+	OrientedBoundingBox OBB1(object1);
+	OrientedBoundingBox OBB2(object2);
+	return collision(OBB1, OBB2);
+}
+
+bool CollisionDetector::collision(OrientedBoundingBox& OBB1, OrientedBoundingBox& OBB2)
+{
 	// Create the four distinct axes that are perpendicular to the edges of the two rectangles
 	sf::Vector2f Axes[4] = {
 		sf::Vector2f(OBB1.Points[1].x - OBB1.Points[0].x,
@@ -16,7 +34,7 @@ bool CollisionDetector::collision(const sf::Sprite& object1, const sf::Sprite& o
 		OBB2.Points[0].y - OBB2.Points[1].y)
 	};
 
-	for (int i = 0; i<4; i++) // For each axis...
+	for (int i = 0; i < 4; i++) // For each axis...
 	{
 		float MinOBB1, MaxOBB1, MinOBB2, MaxOBB2;
 

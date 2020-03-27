@@ -15,6 +15,21 @@ OrientedBoundingBox::OrientedBoundingBox(const sf::Sprite& Object) // Calculate 
 	Points[3] = trans.transformPoint(0.f, height);
 }
 
+OrientedBoundingBox::OrientedBoundingBox(const sf::Shape& Object)
+{
+	sf::Transform trans = Object.getTransform();
+	sf::IntRect local = Object.getTextureRect();
+
+	float width = Object.getLocalBounds().width;
+	float height = Object.getLocalBounds().height;
+
+
+	Points[0] = trans.transformPoint(0.f, 0.f);
+	Points[1] = trans.transformPoint(width, 0.f);
+	Points[2] = trans.transformPoint(width, height);
+	Points[3] = trans.transformPoint(0.f, height);
+}
+
 void OrientedBoundingBox::ProjectOntoAxis(const sf::Vector2f& Axis, float& Min, float& Max) // Project all four points of the OBB onto the given axis and return the dotproducts of the two outermost points
 {
 	Min = (Points[0].x*Axis.x + Points[0].y*Axis.y);

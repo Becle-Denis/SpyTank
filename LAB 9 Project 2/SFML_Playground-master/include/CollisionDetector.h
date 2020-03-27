@@ -20,4 +20,9 @@ class CollisionDetector
 {
 public:
 	bool static collision(const sf::Sprite& object1, const sf::Sprite& object2);
+	bool static collision(const sf::Shape& object1, const sf::Sprite& object2);
+	bool static collision(const sf::Shape& object1, const sf::Shape& object2);
+
+private:
+	bool static collision(OrientedBoundingBox& OBB1, OrientedBoundingBox& OBB2);
 };

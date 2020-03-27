@@ -18,6 +18,7 @@ class OrientedBoundingBox // Used in the BoundingBoxTest
 {
 public:
 	OrientedBoundingBox(const sf::Sprite& Object); // Calculate the four points of the OBB from a transformed (scaled, rotated...) RectangleShape
+	OrientedBoundingBox(const sf::Shape& Object); // Calculate the four points of the OBB from a transformed(scaled, rotated...) RectangleShape
 
 	sf::Vector2f Points[4];
 

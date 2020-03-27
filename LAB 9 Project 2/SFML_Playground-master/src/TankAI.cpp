@@ -365,13 +365,35 @@ bool TankAi::canSeePlayer(sf::Vector2f playerPosition)
 	//and the AI and check for collision between this and the obstacles.
 	//creating the shape
 	m_testShape = sf::RectangleShape();
-	m_testShape.setFillColor(sf::Color::Green);
 	//set the between the tank and the player
 	m_testShape.setRotation(thor::polarAngle(playerPosition - m_tankBase.getPosition())); 	
 	//set the length according to the distance betwwen the two tanks
 	m_testShape.setSize(sf::Vector2f(MathUtility::distance(m_tankBase.getPosition(), playerPosition), 2.0f));
 	//set the position of the shape
 	m_testShape.setPosition(m_tankBase.getPosition());
+
+	//check for collision between the shape and the obstacles 
+	bool canSee = true;
+	for (sf::Sprite const& obstacle : m_wallSprites)
+	{
+		//checking for collision 
+		if (CollisionDetector::collision(m_testShape,obstacle))
+		{
+			canSee = false;
+			break;
+		}
+	}
+
+	//testing only 
+	if (canSee)
+	{
+		m_testShape.setFillColor(sf::Color::Green); //testing
+	}
+	else
+	{
+		m_testShape.setFillColor(sf::Color::Red); //testing
+	}
+
 	return true;
 }
 

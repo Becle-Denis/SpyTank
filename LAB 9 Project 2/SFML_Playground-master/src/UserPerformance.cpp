@@ -4,11 +4,13 @@ UserPerformance::UserPerformance(int totalNumberOfTarget, int t_targethitted, in
 	m_totalNumberOfTarget(totalNumberOfTarget),m_targetHitted(t_targethitted),m_projectileFired(t_projectileFired),
 	m_targetManagerPtr(nullptr)
 {
+
 }
 
 UserPerformance::UserPerformance(TargetManager* targetManagerPtr)
 	: m_targetManagerPtr(targetManagerPtr)
 {
+
 }
 
 void UserPerformance::projectileFired()
@@ -43,6 +45,7 @@ std::string UserPerformance::toStringColumnFull()
 
 bool UserPerformance::saveOnFile(std::string fileName)
 {
+	calculate();
 	YAML::Node bestNode;
 	bestNode["best"]["totalTarget"] = m_totalNumberOfTarget;
 	bestNode["best"]["targetHitted"] = m_targetHitted;

@@ -15,7 +15,6 @@ private: // Attribute
 	TargetManager* m_targetManagerPtr; //for accessing real time statistique 
 
 public: // functions 
-	UserPerformance() = default;
 	UserPerformance(int totalNumberOfTarget, int t_targethitted = 0, int t_projectileFired = 0); 
 	UserPerformance(TargetManager* targetManagerPtr);
 
@@ -31,7 +30,9 @@ public: // functions
 	friend bool operator<(UserPerformance a, UserPerformance b);
 
 private: // function 
+	UserPerformance() = default;
 	void calculate();
+
 
 
 };

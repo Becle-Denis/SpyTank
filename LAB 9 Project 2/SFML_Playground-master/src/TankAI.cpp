@@ -355,7 +355,7 @@ void TankAi::fire()
 	}
 }
 
-bool TankAi::canSeePlayer(sf::Vector2f playerPosition)
+bool TankAi::canSeePlayer(sf::Vector2f playerPosition) const
 {
 	//for this we will create a rectangle shape between the player 
 	//and the AI and check for collision between this and the obstacles.

@@ -170,7 +170,7 @@ private:
 
 	//check if there is an obstacle between the player and the AI 
 	//Is the AI able to see the tabk
-	bool canSeePlayer(sf::Vector2f playerPosition);
+	bool canSeePlayer(sf::Vector2f playerPosition) const;
 };
 
 #include "Tank.h"

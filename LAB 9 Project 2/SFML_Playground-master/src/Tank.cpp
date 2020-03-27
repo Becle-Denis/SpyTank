@@ -11,7 +11,8 @@ Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std
 	m_maximumSpeed(100.0),
 	m_soundManager(soundManager),
 	m_aiTank(aiTank),
-	m_hud(hud)
+	m_hud(hud),
+	m_performances(&m_targets)
 {
 	initSprites();
 }

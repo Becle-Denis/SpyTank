@@ -210,10 +210,11 @@ void TankAi::update(Tank& playerTank, double dt)
 	m_rightConeArray[1].position = tankPos + thor::rotatedVector(sf::Vector2f(m_patrolZoneSize, 0), (float)m_turretRotation + (m_patrolConeRange / 2));
 
 	//update the AI state
-	//check if the player is inside the cone 
+	//check if the player is inside the cone and the AI can see it
 	if ((MathUtility::pointPositionToLine(m_leftConeArray[0].position, m_leftConeArray[1].position, playerTankPosition) > 0)
 		&& (MathUtility::pointPositionToLine(m_rightConeArray[0].position, m_rightConeArray[1].position, playerTankPosition) < 0)
-		&& (distanceToPlayer < m_patrolZoneSize))
+		&& (distanceToPlayer < m_patrolZoneSize) //distance to player 
+		&& canSeePlayer(playerTankPosition)) //no obstacle between player and AI
 	{
 		//Player inside the cone 
 		if (m_state != AIState::ATTACK_PLAYER)
@@ -271,6 +272,9 @@ void TankAi::render(sf::RenderWindow & window)
 	}
 
 	window.draw(m_turret);
+
+	//testing only 
+	window.draw(m_testShape);
 
 }
 
@@ -353,6 +357,22 @@ void TankAi::fire()
 	{
 		std::cout << "Error no Projectile available" << std::endl;
 	}
+}
+
+bool TankAi::canSeePlayer(sf::Vector2f playerPosition)
+{
+	//for this we will create a rectangle shape between the player 
+	//and the AI and check for collision between this and the obstacles.
+	//creating the shape
+	m_testShape = sf::RectangleShape();
+	m_testShape.setFillColor(sf::Color::Green);
+	//set the between the tank and the player
+	m_testShape.setRotation(thor::polarAngle(playerPosition - m_tankBase.getPosition())); 	
+	//set the length according to the distance betwwen the two tanks
+	m_testShape.setSize(sf::Vector2f(MathUtility::distance(m_tankBase.getPosition(), playerPosition), 2.0f));
+	//set the position of the shape
+	m_testShape.setPosition(m_tankBase.getPosition());
+	return true;
 }
 
 void TankAi::clearDependantObjects()

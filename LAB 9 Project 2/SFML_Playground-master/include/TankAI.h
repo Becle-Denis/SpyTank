@@ -168,6 +168,13 @@ private:
 	//fire a projectile int he direction of the turret
 	void fire();
 
+	//check if there is an obstacle between the player and the AI 
+	//Is the AI able to see the tabk
+	bool canSeePlayer(sf::Vector2f playerPosition);
+
+
+	//testing only 
+	sf::RectangleShape m_testShape;
 };
 
 #include "Tank.h"

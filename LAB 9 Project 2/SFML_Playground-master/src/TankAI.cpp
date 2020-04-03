@@ -201,20 +201,15 @@ void TankAi::update(Tank& playerTank, double dt)
 	updateMovement(dt);
 
 	//update the cone Vision and Ai State
-	//Update cone Vertex Positions  
-	sf::Vector2f tankPos = m_tankBase.getPosition();
-	m_leftConeArray[0].position = tankPos;
-	m_rightConeArray[0].position = tankPos;
-
-	m_leftConeArray[1].position = tankPos + thor::rotatedVector(sf::Vector2f(m_patrolZoneSize,0),(float) m_turretRotation - (m_patrolConeRange / 2));
-	m_rightConeArray[1].position = tankPos + thor::rotatedVector(sf::Vector2f(m_patrolZoneSize, 0), (float)m_turretRotation + (m_patrolConeRange / 2));
+	adaptConeDisplay();
+	
 
 	//update the AI state
 	//check if the player is inside the cone and the AI can see it
 	if ((MathUtility::pointPositionToLine(m_leftConeArray[0].position, m_leftConeArray[1].position, playerTankPosition) > 0)
 		&& (MathUtility::pointPositionToLine(m_rightConeArray[0].position, m_rightConeArray[1].position, playerTankPosition) < 0)
 		&& (distanceToPlayer < m_patrolZoneSize) //distance to player 
-		&& canSeePlayer(playerTankPosition)) //no obstacle between player and AI
+		&& !CollisionDetector::collisionLineWithObjects(m_tankBase.getPosition(), playerTankPosition, m_wallSprites)) //no obstacle between player and AI
 	{
 		//Player inside the cone 
 		if (m_state != AIState::ATTACK_PLAYER)
@@ -341,6 +336,32 @@ const sf::CircleShape TankAi::findMostThreateningObstacle()
 	return mostThreatening;
 }
 
+void TankAi::adaptConeDisplay()
+{
+	//Update cone Vertex Positions  
+	sf::Vector2f tankPos = m_tankBase.getPosition();
+	m_leftConeArray[0].position = tankPos;
+	m_rightConeArray[0].position = tankPos;
+
+	//Full vision
+	m_leftConeArray[1].position = tankPos + thor::rotatedVector(sf::Vector2f(m_patrolZoneSize, 0), (float)m_turretRotation - (m_patrolConeRange / 2));
+	m_rightConeArray[1].position = tankPos + thor::rotatedVector(sf::Vector2f(m_patrolZoneSize, 0), (float)m_turretRotation + (m_patrolConeRange / 2));
+
+	//Check For obstacles in the lines  
+	//left line
+	if (CollisionDetector::collisionLineWithObjects(tankPos, m_leftConeArray[1].position, m_wallSprites))
+	{
+		//collision in the line 
+		m_leftConeArray[1].position = CollisionDetector::findCollisionPointLineWithObjects(tankPos, m_leftConeArray[1].position, m_wallSprites);
+	}
+	//right line 
+	if (CollisionDetector::collisionLineWithObjects(tankPos, m_rightConeArray[1].position, m_wallSprites))
+	{
+		m_rightConeArray[1].position = CollisionDetector::findCollisionPointLineWithObjects(tankPos, m_rightConeArray[1].position, m_wallSprites);
+	}
+
+}
+
 void TankAi::fire()
 {
 	Projectile* newProjectilePtr = m_projectilesPool.getProjectile();
@@ -355,33 +376,6 @@ void TankAi::fire()
 	}
 }
 
-bool TankAi::canSeePlayer(sf::Vector2f playerPosition) const
-{
-	//for this we will create a rectangle shape between the player 
-	//and the AI and check for collision between this and the obstacles.
-	//creating the shape
-	sf::RectangleShape targetLine;
-	//set the between the tank and the player
-	targetLine.setRotation(thor::polarAngle(playerPosition - m_tankBase.getPosition()));
-	//set the length according to the distance betwwen the two tanks
-	targetLine.setSize(sf::Vector2f(MathUtility::distance(m_tankBase.getPosition(), playerPosition), 2.0f));
-	//set the position of the shape
-	targetLine.setPosition(m_tankBase.getPosition());
-
-	//check for collision between the shape and the obstacles 
-	bool canSee = true;
-	for (sf::Sprite const& obstacle : m_wallSprites)
-	{
-		//checking for collision 
-		if (CollisionDetector::collision(targetLine,obstacle))
-		{
-			canSee = false;
-			break;
-		}
-	}
-
-	return canSee;
-}
 
 void TankAi::clearDependantObjects()
 {

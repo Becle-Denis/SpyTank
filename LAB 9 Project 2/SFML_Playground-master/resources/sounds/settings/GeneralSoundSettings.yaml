@@ -5,7 +5,7 @@ general:
 
 listener:
   updatePosition: true
-  updateRotation: true
+  updateRotation: false
   basePositionX: 720
   basePositionY: 450
   baseRotation: -90

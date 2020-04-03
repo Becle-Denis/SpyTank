@@ -1,4 +1,5 @@
 #include "CollisionDetector.h"
+#include <iostream>
 
 bool CollisionDetector::collision(const sf::Sprite& object1, const sf::Sprite& object2) {
 	OrientedBoundingBox OBB1(object1);
@@ -18,6 +19,65 @@ bool CollisionDetector::collision(const sf::Shape& object1, const sf::Shape& obj
 	OrientedBoundingBox OBB1(object1);
 	OrientedBoundingBox OBB2(object2);
 	return collision(OBB1, OBB2);
+}
+
+bool CollisionDetector::collisionLineWithObjects(sf::Vector2f const& pointA, sf::Vector2f const& pointB, std::vector<sf::Sprite> const& obstacles)
+{
+	//for this we will create a rectangle shape between the point A and B  
+	//and check for collision between this and the obstacles.
+	//creating the shape
+	sf::RectangleShape targetLine;
+	//set the rotation between the point A and B
+	targetLine.setRotation(thor::polarAngle(pointB - pointA));
+	//set the length according to the distance betwwen the points 
+	targetLine.setSize(sf::Vector2f(MathUtility::distance(pointA, pointB), 2.0f));
+	//set the position of the shape
+	targetLine.setPosition(pointA);
+
+	//check for collision between the shape and the obstacles 
+	bool obstacleFound = false;
+	for (sf::Sprite const& obstacle : obstacles)
+	{
+		//checking for collision 
+		if (CollisionDetector::collision(targetLine, obstacle))
+		{
+			obstacleFound = true;
+			break;
+		}
+	}
+
+	return obstacleFound;
+}
+
+sf::Vector2f CollisionDetector::findCollisionPointLineWithObjects(sf::Vector2f pointA, sf::Vector2f pointB, std::vector<sf::Sprite> const& obsctacles, int precision)
+{	
+	//For this we will frame the collision point by checking in wich half the collision happen 
+	//We will repeat the process with the new lower and higher value. 
+	for (int i = 0; i < precision; i++)
+	{
+		findHalfCollidingWithLine(pointA, pointB, obsctacles);
+	}
+	return pointB;
+}
+
+
+
+void CollisionDetector::findHalfCollidingWithLine(sf::Vector2f& pointA, sf::Vector2f& pointB, std::vector<sf::Sprite> const& obsctacles)
+{
+	//calculating the mid point 
+	sf::Vector2f midPoint;
+	midPoint.x = (pointA.x + pointB.x) / 2;
+	midPoint.y = (pointA.y + pointB.y) / 2;
+	if (collisionLineWithObjects(pointA, midPoint, obsctacles))
+	{
+		//collision in the first half
+		pointB = midPoint;
+	}
+	else
+	{
+		//collision in the second half
+		pointA = midPoint;
+	}
 }
 
 bool CollisionDetector::collision(OrientedBoundingBox& OBB1, OrientedBoundingBox& OBB2)

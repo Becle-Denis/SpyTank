@@ -30,15 +30,6 @@ struct TargetData
 };
 
 /// <summary>
-/// @brief A struct to store Background texture information.
-/// 
-/// </summary>
-struct BackgroundData
-{
-	std::string m_fileName;
-};
-
-/// <summary>
 /// @brief A struct to represent tank data in the level.
 /// 
 /// </summary>
@@ -54,7 +45,6 @@ struct TankData
 /// </summary>
 struct LevelData
 {
-	BackgroundData m_background;
 	TankData m_tank;
 	TankData m_aiTank; 
 	std::vector<ObstacleData> m_obstacles;

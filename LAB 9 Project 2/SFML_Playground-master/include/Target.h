@@ -3,6 +3,7 @@
 #include <Thor/Time/CallbackTimer.hpp>
 #include "CollisionDetector.h"
 #include "SoundManager.h"
+#include "ResourcesManager.h"
 
 enum TargetState { DeadByTime, DeadByHit, NotInitialised, NotStarted, NotDisplayed, OnScreen, BlinkingOnScreen };
 
@@ -23,7 +24,7 @@ public:
 	/// <param name="position">Position of the target</param>
 	/// <param name="timeToStart">Time of first apperance of the target</param>
 	/// <param name="timeOnScreen">Time of the target to be on screen</param>
-	void init(sf::Texture const* texture, sf::Vector2f position, sf::Time timeToStart, sf::Time timeOnScreen, SoundManager* soundManager = nullptr);
+	void init(sf::Vector2f position, sf::Time timeToStart, sf::Time timeOnScreen, SoundManager* soundManager = nullptr);
 
 
 	/// <summary>
@@ -87,9 +88,6 @@ public:
 private:
 	// the sprite of the Target, this will store the position and rotation of the Target
 	sf::Sprite m_sprite;
-
-	//The reference of the texture 
-	sf::Texture const* m_texture;
 
 	//Timer to deal with time on screen and time to display 
 	thor::Timer m_timer;

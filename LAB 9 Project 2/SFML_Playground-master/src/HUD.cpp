@@ -1,10 +1,10 @@
 #include "HUD.h"
 
 ////////////////////////////////////////////////////////////
-HUD::HUD(sf::Font& hudFont)
-	: m_textFont(hudFont), m_state(GameState::NOT_STARTED)
+HUD::HUD()
+	: m_state(GameState::NOT_STARTED)
 {
-	m_bigDisplayedText = sf::Text("BLIND TANK", m_textFont, 50);
+	m_bigDisplayedText = sf::Text("BLIND TANK", ResourcesManager::getFont(FontName::MAIN_FONT), 50);
 	m_bigDisplayedText.setFillColor(sf::Color::Red);
 	m_bigDisplayedText.setPosition(450, 50);
 	//start();
@@ -13,17 +13,19 @@ HUD::HUD(sf::Font& hudFont)
 void HUD::start(GameState state)
 {
 	m_state = state;
+	
+	sf::Font const& textFont = ResourcesManager::getFont(FontName::MAIN_FONT);
 
 	//set the texts for realTime stats
-	m_statTitleText = sf::Text("Hits\nSuccess\nAccuracy", m_textFont, 30);
+	m_statTitleText = sf::Text("Hits\nSuccess\nAccuracy", textFont, 30);
 	m_statTitleText.setFillColor(sf::Color(0, 0, 125));
 	m_statTitleText.setPosition(150, 40);
 
-	m_eventText = sf::Text("", m_textFont, 25);
+	m_eventText = sf::Text("", textFont, 25);
 	m_eventText.setFillColor(sf::Color(5, 5, 55));
 	m_eventText.setPosition(40, 40);
 
-	m_playerStatsText = sf::Text("", m_textFont, 30);
+	m_playerStatsText = sf::Text("", textFont, 30);
 	m_playerStatsText.setFillColor(sf::Color(0, 0, 125));
 	m_playerStatsText.setPosition(50, 40);
 
@@ -56,17 +58,19 @@ void HUD::setOver(GameState state, UserPerformance playerPerf, UserPerformance b
 	}
 
 	//Setting up the Game Over Results
+	sf::Font const& textFont = ResourcesManager::getFont(FontName::MAIN_FONT);
+
 	m_bigDisplayedText.setString(bigText);
 
-	m_statTitleText = sf::Text(title, m_textFont, 60);
+	m_statTitleText = sf::Text(title, textFont, 60);
 	m_statTitleText.setFillColor(sf::Color::Black);
 	m_statTitleText.setPosition(100, 200);
 
-	m_playerStatsText = sf::Text(actualStats, m_textFont, 60);
+	m_playerStatsText = sf::Text(actualStats, textFont, 60);
 	m_playerStatsText.setFillColor(sf::Color(0, 0, 150));
 	m_playerStatsText.setPosition(700, 200);
 
-	m_gameOverBestStatsText = sf::Text(bestStats, m_textFont, 60);
+	m_gameOverBestStatsText = sf::Text(bestStats, textFont, 60);
 	m_gameOverBestStatsText.setFillColor(sf::Color(168, 152, 0));
 	m_gameOverBestStatsText.setPosition(1000, 200);
 

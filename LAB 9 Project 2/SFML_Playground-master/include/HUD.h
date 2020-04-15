@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "GameState.h"
 #include "UserPerformance.h"
+#include "ResourcesManager.h"
 
 /// <summary>
 /// @brief A basic HUD implementation.
@@ -16,7 +17,7 @@ public:
 	/// <summary>
 	/// @brief Default constructor that stores a font for the HUD and initialises the general HUD appearance.
 	/// </summary>
-	HUD(sf::Font& hudFont);
+	HUD();
 
 	/// <summary>
 	/// Start or restart the HUD
@@ -61,9 +62,6 @@ public:
 
 private:
 	GameState m_state;
-
-	// The font for this HUD.
-	sf::Font& m_textFont;
 
 	//Text 
 	sf::Text m_bigDisplayedText; //text for the timer

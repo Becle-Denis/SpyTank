@@ -6,6 +6,7 @@
 #include "SoundManager.h"
 #include "MovingSound.h"
 #include "ScreenSize.h"
+#include "ResourcesManager.h"
 
 /// <summary>
 /// @brief Projectile class 
@@ -17,9 +18,6 @@ class Projectile
 private: //Attributes 
 	//sprite of the projectile 
 	sf::Sprite m_projectileSprite;
-
-	//texture
-	sf::Texture const* m_texturePtr;
 
 	//Speed
 	static double s_projectile_default_speed;
@@ -33,11 +31,14 @@ private: //Attributes
 	MovingSound* m_soundPtr{ nullptr };
 
 public: //functions 
+
+	Projectile();
+
 	/// <summary>
 	/// Set the Sprite of the Projectile
 	/// </summary>
 	/// <param name="texturePtr">Texture of the sprite</param>
-	void setProjectile(sf::Texture const* texturePtr, SoundManager* soundManager = nullptr);
+	void setProjectile(SoundManager* soundManager = nullptr);
 
 	/// <summary>
 	/// Launch the projectile, set the position and the orientation

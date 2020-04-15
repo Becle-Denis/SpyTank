@@ -3,6 +3,14 @@
 
 double Projectile::s_projectile_default_speed = 800;
 
+Projectile::Projectile()
+{
+	m_projectileSprite.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET));
+	sf::IntRect baseRect(8, 175, 8, 10);
+	m_projectileSprite.setTextureRect(baseRect);
+	m_projectileSprite.setOrigin(baseRect.width / 2.0, baseRect.height / 2.0);
+}
+
 void Projectile::launch(sf::Vector2f position, double rotation, double speed)
 {
 	m_rotation = rotation;
@@ -17,13 +25,8 @@ void Projectile::launch(sf::Vector2f position, double rotation, double speed)
 	}
 }
 
-void Projectile::setProjectile(sf::Texture const* texturePtr, SoundManager* soundManager)
+void Projectile::setProjectile(SoundManager* soundManager)
 {
-	m_texturePtr = texturePtr;
-	m_projectileSprite.setTexture(*texturePtr);
-	sf::IntRect baseRect(8, 175, 8, 10);
-	m_projectileSprite.setTextureRect(baseRect);
-	m_projectileSprite.setOrigin(baseRect.width / 2.0, baseRect.height / 2.0);
 	m_soundManagerPtr = soundManager;
 	setInactive();
 }

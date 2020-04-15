@@ -12,6 +12,7 @@
 #include "GameState.h"
 #include "HUD.h"
 #include "ScreenSize.h"
+#include "ResourcesManager.h"
 
 class TankAi; //forward Reference
 
@@ -25,7 +26,6 @@ class Tank
 private: // Attributes
 
 	//Outsides References
-	sf::Texture const& m_texture; //sprite sheed texture reference
 	std::vector<sf::Sprite>& m_wallSprites; // A reference to the container of wall sprites.	 
 	TargetManager& m_targets; // A Reference to the container of Targets 
 	ProjectilePool& m_projectilesPool; // Reference to the Pool of projectiles
@@ -102,7 +102,7 @@ public:	//functions
 	/// </summary>
 	/// <param name="texture">A reference to the sprite sheet texture</param>
 	///< param name="texture">A reference to the container of wall sprites</param>  
-	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, TankAi& aiTank, HUD& hud);
+	Tank(std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, TankAi& aiTank, HUD& hud);
 
 	void initialise(GameState gameRunningState);
 

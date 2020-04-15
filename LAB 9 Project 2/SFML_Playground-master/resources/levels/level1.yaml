@@ -1,5 +1,3 @@
-background:
-   file: ./resources/images/Background.jpg # Sample comment
 tank:
    position: {x: 800, y: 100}
    max_projectiles: 10

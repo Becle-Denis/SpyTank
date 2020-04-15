@@ -13,6 +13,7 @@
 #include <list>
 #include "GameState.h"
 #include "HUD.h"
+#include "ResourcesManager.h"
 
 /// <summary>
 /// @author RP
@@ -64,16 +65,9 @@ protected: //attributes
 
 	thor::Timer m_timerLeft; // Timer for the time left in Game
 
-	sf::Font m_fontA; //Font for the text
-
 	// The game HUD instance.
 	HUD m_hud;
 
-	//Textures storages
-	sf::Texture m_spriteSheetTexture; // A texture for the sprite sheet
-	sf::Texture m_targetTexture; // A texture for the Targets
-	sf::Texture m_bgTexture; //background texture
-	sf::Texture m_smokedScreenTexture; // A texture for the smoked screen
 
 public: // function 
 	/// <summary>

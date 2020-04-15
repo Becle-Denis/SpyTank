@@ -8,11 +8,10 @@ static double const MS_PER_UPDATE = 10.0;
 ////////////////////////////////////////////////////////////
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
-	m_targets(m_targetTexture),
-	m_tank(m_spriteSheetTexture, m_wallSprites, m_wallSpatialMap, m_targets, m_projectilesPool, m_soundManager, m_aiTank, m_hud),
-	m_aiTank(m_spriteSheetTexture, m_wallSprites, m_wallSpatialMap, m_projectilesPool),
-	m_state(GameState::NOT_STARTED), m_projectilesPool(m_spriteSheetTexture, 10, &m_soundManager),
-	m_hud(m_fontA),
+	m_tank(m_wallSprites, m_wallSpatialMap, m_targets, m_projectilesPool, m_soundManager, m_aiTank, m_hud),
+	m_aiTank(m_wallSprites, m_wallSpatialMap, m_projectilesPool),
+	m_state(GameState::NOT_STARTED), 
+	m_projectilesPool(10, &m_soundManager),
 	m_soundManager("./resources/sounds/music/Level1v1.wav")
 {
 	//seed the random 
@@ -34,44 +33,12 @@ Game::Game()
 	m_window.setVerticalSyncEnabled(true); // limit the framerate of the window 
 	
 	//loading the backgroud texture to the backgroud sprite 
-	if (!m_bgTexture.loadFromFile(m_level.m_background.m_fileName))
-	{
-		std::string s("Error loading background texture");
-		throw std::exception(s.c_str());
-	}
-	m_bgSprite.setTexture(m_bgTexture);
+	m_bgSprite.setTexture(ResourcesManager::getTexture(TexturesName::LEVEL_BACKGROUND));
 
-	//loading the sprite sheet texture 
-	if (!m_spriteSheetTexture.loadFromFile("./resources/images/SpriteSheet.png"))
-	{
-		std::string s("Error loading Sprite sheet texture");
-		throw std::exception(s.c_str());
-	}
-
-	//loading the Target Texture
-	if (!m_targetTexture.loadFromFile("./resources/images/RazorTarget1.png"))
-	{
-		std::string s("Error loading Target texture");
-		throw std::exception(s.c_str());
-	}
-
-	//loading the Smoked Texture
-	if (!m_smokedScreenTexture.loadFromFile("./resources/images/fumee.jpg"))
-	{
-		std::string s("Error loading Smoked texture");
-		throw std::exception(s.c_str());
-	}
-	m_smokedSprite.setTexture(m_smokedScreenTexture);
+	m_smokedSprite.setTexture(ResourcesManager::getTexture(TexturesName::SMOKED));
 	m_smokedSprite.setTextureRect(sf::IntRect(0, 0, 960, 540));
 	m_smokedSprite.setScale(1.7, 1.7);
 	m_smokedSprite.setColor(sf::Color(255, 255, 255, 150));
-
-	//loading the font 
-	if (!m_fontA.loadFromFile("./resources/fonts/8_bit_fortress.ttf"))
-	{
-		std::cout << "problem loading font file" << std::endl;
-		throw std::exception("problem loading font file");
-	}
 
 
 	// Set the tank position in one corner randmoly.
@@ -143,12 +110,13 @@ int Game::calculateSpatialMapCell(sf::Vector2f gamePosition)
 void Game::generateWalls()
 {
 	sf::IntRect wallRect(2, 129, 33, 23);
+	sf::Texture const& spriteSheetTexture = ResourcesManager::getTexture(TexturesName::SPRITE_SHEET);
 	// Create the Walls 
 	for (ObstacleData const& obstacle : m_level.m_obstacles)
 	{
 		//creating the sprite 
 		sf::Sprite sprite;
-		sprite.setTexture(m_spriteSheetTexture);
+		sprite.setTexture(spriteSheetTexture);
 		sprite.setTextureRect(wallRect);
 		sprite.setOrigin(wallRect.width / 2.0, wallRect.height / 2.0);
 		sprite.setPosition(obstacle.m_position);

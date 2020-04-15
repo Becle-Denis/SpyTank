@@ -13,7 +13,7 @@ void ResourcesManager::load()
 	// TExtures filepaths
 	texturesFilesPath.push_back({ TexturesName::SPRITE_SHEET, "./resources/images/SpriteSheet.png" });
 	texturesFilesPath.push_back({ TexturesName::TARGET, "./resources/images/RazorTarget1.png" });
-	texturesFilesPath.push_back({ TexturesName::LEVEL_BACKGROUND, "./resources/images/Background.png" });
+	texturesFilesPath.push_back({ TexturesName::LEVEL_BACKGROUND, "./resources/images/Background.jpg" });
 	texturesFilesPath.push_back({ TexturesName::SMOKED, "./resources/images/fumee.jpg" });
 
 
@@ -22,7 +22,7 @@ void ResourcesManager::load()
 	std::vector<std::pair<FontName, std::string>> fontsFilesPath;
 
 	// ADD NEW FONT HERE
-	fontsFilesPath.push_back({ FontName::MAIN_FONT, "ASSETS//FONTS//venusrisingrg.ttf" });
+	fontsFilesPath.push_back({ FontName::MAIN_FONT, "./resources/fonts/8_bit_fortress.ttf" });
 
 
 	//loading each ressoruces 

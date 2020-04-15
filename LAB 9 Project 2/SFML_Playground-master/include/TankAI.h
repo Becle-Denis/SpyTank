@@ -3,6 +3,7 @@
 #include "CollisionDetector.h"
 #include "Projectile.h"
 #include "ProjectilePool.h"
+#include "ResourcesManager.h"
 #include <SFML/Graphics.hpp>
 #include <Thor/Vectors.hpp>
 #include <Thor/Time/Timer.hpp>
@@ -21,7 +22,7 @@ public:
 	/// </summary>
 	/// <param name="texture">A reference to the sprite sheet texture</param>
 	///< param name="wallSprites">A reference to the container of wall sprites</param>
-	TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, ProjectilePool & projectilesPool);
+	TankAi(std::vector<sf::Sprite> & wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, ProjectilePool & projectilesPool);
 
 	void start();
 
@@ -78,9 +79,6 @@ private:
 	const sf::CircleShape findMostThreateningObstacle();
 
 	void adaptConeDisplay();
-
-	// A reference to the sprite sheet texture.
-	sf::Texture const & m_texture;
 
 	// A sprite for the tank base.
 	sf::Sprite m_tankBase;

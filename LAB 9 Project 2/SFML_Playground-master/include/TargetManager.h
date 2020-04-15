@@ -11,10 +11,9 @@ class TargetManager
 private: // Attributes 
 	Target* m_targets; // Target storage array 
 	int m_number_of_targets; // size of the array
-	sf::Texture const& m_texture; //Texture for the targets 
 
 public: // functions 
-	TargetManager(sf::Texture const& targetTexture); //Construct the manager
+	TargetManager(); //Construct the manager
 	~TargetManager(); // Delete all the target 
 
 	/// <summary>

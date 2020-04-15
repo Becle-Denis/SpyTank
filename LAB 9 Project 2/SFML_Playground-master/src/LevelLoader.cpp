@@ -40,18 +40,6 @@ void operator >> (const YAML::Node& targetNode, TargetData& target)
 }
 
 /// <summary>
-/// @brief Extracts the filename for the game background texture.
-/// 
-/// </summary>
-/// <param name="backgroundNode">A YAML node</param>
-/// <param name="background">A simple struct to store background related data</param>
-////////////////////////////////////////////////////////////
-void operator >> (const YAML::Node& backgroundNode, BackgroundData& background)
-{
-	background.m_fileName = backgroundNode["file"].as<std::string>();
-}
-
-/// <summary>
 /// @brief Extracts the initial screen position for the player tank.
 /// 
 /// </summary>
@@ -76,8 +64,6 @@ void operator >> (const YAML::Node& tankNode, TankData& tank)
 ////////////////////////////////////////////////////////////
 void operator >> (const YAML::Node& levelNode, LevelData& level)
 {
-	levelNode["background"] >> level.m_background;
-
 	levelNode["tank"] >> level.m_tank;
 
 	levelNode["ai_tank"] >> level.m_aiTank;

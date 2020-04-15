@@ -1,8 +1,7 @@
 #include "TargetManager.h"
 
-TargetManager::TargetManager(sf::Texture const& targetTexture) :
+TargetManager::TargetManager() :
 	m_number_of_targets(0),
-	m_texture(targetTexture),
 	m_targets(nullptr)
 {
 
@@ -27,7 +26,7 @@ void TargetManager::construct(std::vector<TargetData>& targetData, SoundManager*
 	m_targets = new Target[m_number_of_targets];
 	for (int i = 0; i < m_number_of_targets; i++)
 	{
-		(m_targets + i)->init(&m_texture, targetData.at(i).m_position, sf::seconds(targetData.at(i).secondsToStart), sf::seconds(targetData.at(i).secondsOnScreen), soundManager);
+		(m_targets + i)->init(targetData.at(i).m_position, sf::seconds(targetData.at(i).secondsToStart), sf::seconds(targetData.at(i).secondsOnScreen), soundManager);
 	}
 }
 

@@ -84,7 +84,7 @@
     <ClInclude Include="include\HUD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ResourcesManager.h">
+    <ClInclude Include="include\ResourcesManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -152,7 +152,7 @@
     <ClCompile Include="src\HUD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ResourcesManager.cpp">
+    <ClCompile Include="src\ResourcesManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

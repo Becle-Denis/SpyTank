@@ -2,8 +2,7 @@
 #include <iostream>
 
 
-Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, TankAi& aiTank, HUD& hud)
-	: m_texture(texture),
+Tank::Tank(std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, TankAi& aiTank, HUD& hud) :
 	m_wallSprites(wallSprites),
 	m_wallSpatialMap(wallMap),
 	m_targets(targets),
@@ -192,15 +191,16 @@ void Tank::render(sf::RenderWindow & window)  const
 ////////////////////////////////////////////////////////////
 void Tank::initSprites()
 {
+	sf::Texture const& texture = ResourcesManager::getTexture(TexturesName::SPRITE_SHEET);
 	// Initialise the tank base
-	m_tankBase.setTexture(m_texture);
+	m_tankBase.setTexture(texture);
 	sf::IntRect baseRect(2, 43, 79, 43);
 	m_tankBase.setTextureRect(baseRect);
 	m_tankBase.setOrigin(baseRect.width / 2.0, baseRect.height / 2.0);
 
 
 	// Initialise the turret
-	m_turret.setTexture(m_texture);
+	m_turret.setTexture(texture);
 	sf::IntRect turretRect(19, 1, 83, 31);
 	m_turret.setTextureRect(turretRect);
 	m_turret.setOrigin(turretRect.width / 3.0, turretRect.height / 2.0);

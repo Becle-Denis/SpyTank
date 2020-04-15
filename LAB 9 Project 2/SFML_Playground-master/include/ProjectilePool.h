@@ -10,8 +10,6 @@
 class ProjectilePool
 {
 private: //Attributes 
-	//A Reference to the texture of the target 
-	sf::Texture const& m_texture;
 	// Array of the projectiles 
 	Projectile* m_projectiles;
 	// Size of the array 
@@ -26,7 +24,7 @@ public: //functions
 	/// </summary>
 	/// <param name="texture">Texture of the projectiles</param>
 	/// <param name="poolSize">Maximum number of projetiles that can be used at the same time</param>
-	ProjectilePool(sf::Texture const& texture,unsigned int poolSize = 15, SoundManager* soundManager = nullptr);
+	ProjectilePool(unsigned int poolSize = 15, SoundManager* soundManager = nullptr);
 
 	/// <summary>
 	/// delete all the projectiles 

@@ -7,20 +7,19 @@ Target::Target() :
 	m_isDisplayed(false),
 	m_soundManagerPtr(nullptr)
 {
-	
-}
 
-void Target::init(sf::Texture const* texture, sf::Vector2f position, sf::Time timeToStart, sf::Time timeOnScreen, SoundManager* soundManager)
-{
-	m_timeToStart = timeToStart;
-	m_timeOnScreen = timeOnScreen;
-	m_texture = texture;
-	m_sprite.setTexture(*m_texture);
+	m_sprite.setTexture(ResourcesManager::getTexture(TexturesName::TARGET));
 	sf::IntRect baseRect(0, 0, 230, 230);
 	m_sprite.setTextureRect(baseRect);
 	m_sprite.setOrigin(baseRect.width / 2.0, baseRect.height / 2.0);
-	m_sprite.setPosition(position);
 	m_sprite.setScale(0.3, 0.3);
+}
+
+void Target::init(sf::Vector2f position, sf::Time timeToStart, sf::Time timeOnScreen, SoundManager* soundManager)
+{
+	m_timeToStart = timeToStart;
+	m_timeOnScreen = timeOnScreen;
+	m_sprite.setPosition(position);
 	m_state = TargetState::NotStarted;
 	m_soundManagerPtr = soundManager;
 }

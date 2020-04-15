@@ -3,9 +3,8 @@
 const sf::Time TankAi::FIRE_RELOAD_TIME = sf::milliseconds(2050);
 
 ////////////////////////////////////////////////////////////
-TankAi::TankAi(sf::Texture const & texture, std::vector<sf::Sprite> & wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, ProjectilePool& projectilesPool)
-	: m_texture(texture)
-	, m_wallSprites(wallSprites)
+TankAi::TankAi(std::vector<sf::Sprite> & wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, ProjectilePool& projectilesPool) : 
+	m_wallSprites(wallSprites)
 	, m_steering(0, 0)
 	, m_state(AIState::PATROL_MAP)
 	, m_leftConeArray(sf::Lines,2)
@@ -391,14 +390,16 @@ void TankAi::clearDependantObjects()
 ////////////////////////////////////////////////////////////
 void TankAi::initSprites()
 {
+	sf::Texture const& texture = ResourcesManager::getTexture(TexturesName::SPRITE_SHEET);
+
 	// Initialise the tank base
-	m_tankBase.setTexture(m_texture);
+	m_tankBase.setTexture(texture);
 	sf::IntRect baseRect(103, 43, 79, 43);
 	m_tankBase.setTextureRect(baseRect);
 	m_tankBase.setOrigin(baseRect.width / 2.0, baseRect.height / 2.0);
 
 	// Initialise the turret
-	m_turret.setTexture(m_texture);
+	m_turret.setTexture(texture);
 	sf::IntRect turretRect(122, 1, 83, 31);
 	m_turret.setTextureRect(turretRect);
 	m_turret.setOrigin(turretRect.width / 3.0, turretRect.height / 2.0);

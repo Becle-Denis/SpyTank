@@ -9,6 +9,7 @@
 #include "CrossFade.h"
 #include "MovingSound.h"
 #include "MovingMotorEffect.h"
+#include "ResourcesManager.h"
 
 /// <summary>
 /// Represent a sound in a local position for the game world 
@@ -32,13 +33,6 @@ struct SpatializedSound
 class SoundManager
 {
 private: // Attributes 
-	//Sound buffers 
-	sf::SoundBuffer m_fireBuffer;
-	sf::SoundBuffer m_targetImpactBuffer;
-	sf::SoundBuffer m_wallImpactBuffer;
-	sf::SoundBuffer m_targetStartBuffer;
-	sf::SoundBuffer m_projectileBuffer;
-	sf::SoundBuffer m_tankMotorBuffer;
 
 	//musics
 	sf::Music m_levelMusic;
@@ -65,7 +59,7 @@ public: // functions
 	/// Create a SoundManager for a Level
 	/// </summary>
 	/// <param name="filePath">filePath to the level Music</param>
-	SoundManager(std::string filePath);
+	SoundManager();
 	~SoundManager();
 
 	//Music stuff

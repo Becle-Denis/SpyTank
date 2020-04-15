@@ -11,8 +11,7 @@ Game::Game()
 	m_tank(m_wallSprites, m_wallSpatialMap, m_targets, m_projectilesPool, m_soundManager, m_aiTank, m_hud),
 	m_aiTank(m_wallSprites, m_wallSpatialMap, m_projectilesPool),
 	m_state(GameState::NOT_STARTED), 
-	m_projectilesPool(10, &m_soundManager),
-	m_soundManager("./resources/sounds/music/Level1v1.wav")
+	m_projectilesPool(10, &m_soundManager)
 {
 	//seed the random 
 	srand(time(nullptr));

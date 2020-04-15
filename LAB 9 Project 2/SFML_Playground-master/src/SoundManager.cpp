@@ -1,51 +1,17 @@
 #include "SoundManager.h"
 
-SoundManager::SoundManager(std::string filePath)
+SoundManager::SoundManager()
 {
-	//loading buffers and Musics 
-	if (!m_levelMusic.openFromFile(filePath))
+
+	//loading Musics 
+	if (!m_levelMusic.openFromFile("./resources/sounds/music/Level1v1.wav"))
 	{
-		std::string s("Error loading music "+ filePath);
+		std::string s("Error loading music ./resources/sounds/music/Level1v1.wav");
 		throw std::exception(s.c_str());
 	}
 	if (!m_menuMusic.openFromFile("./resources/sounds/music/MenuMusic.ogg"))
 	{
 		std::string s("Error loading music ./resources/sounds/music/MenuMusic.ogg");
-		throw std::exception(s.c_str());
-	}
-	if (!m_fireBuffer.loadFromFile("./resources/sounds/fx/fire1.wav"))
-	{
-		std::string s("Error loading music ./resources/sounds/fx/fire1.wav");
-		throw std::exception(s.c_str());
-	}
-	
-	if (!m_targetImpactBuffer.loadFromFile("./resources/sounds/fx/targetImpact2.wav"))
-	{
-		std::string s("Error loading music ./resources/sounds/fx/targetImpact2.wav");
-		throw std::exception(s.c_str());
-	}
-	
-	if (!m_targetStartBuffer.loadFromFile("./resources/sounds/fx/TargetSonarStart.wav"))
-	{
-		std::string s("Error loading music ./resources/sounds/fx/TargetSonarStart.wav");
-		throw std::exception(s.c_str());
-	}
-	
-	if (!m_wallImpactBuffer.loadFromFile("./resources/sounds/fx/WallImpact1.wav"))
-	{
-		std::string s("Error loading music ./resources/sounds/fx/WallImpact1.wav");
-		throw std::exception(s.c_str());
-	}
-
-	if (!m_projectileBuffer.loadFromFile("./resources/sounds/fx/TestPinkNoise.wav"))
-	{
-		std::string s("Error loading music ./resources/sounds/fx/TestPinkNoise.wav");
-		throw std::exception(s.c_str());
-	}
-
-	if (!m_tankMotorBuffer.loadFromFile("./resources/sounds/fx/Motor2.wav"))
-	{
-		std::string s("Error loading music ./resources/sounds/fx/Motor2.wav");
 		throw std::exception(s.c_str());
 	}
 	
@@ -90,7 +56,7 @@ void SoundManager::switchToMenuMusic()
 
 MovingMotorEffect* SoundManager::tankMotorEffect()
 {
-	SpatializedSound* motorSoundPtr = playSound(m_tankMotorBuffer,sf::Vector2f());
+	SpatializedSound* motorSoundPtr = playSound(ResourcesManager::getSoundBuffer(SoundBufferName::MOTOR),sf::Vector2f());
 	motorSoundPtr->sound.setLoop(true);
 	MovingMotorEffect* motorEffectPtr = new MovingMotorEffect(motorSoundPtr, m_settings.motorMaxVolume());
 
@@ -100,7 +66,7 @@ MovingMotorEffect* SoundManager::tankMotorEffect()
 
 MovingSound* SoundManager::startProjectileSound(sf::Vector2f position)
 {
-	SpatializedSound* soundPtr = playSound(m_projectileBuffer, position, m_settings.projectileVol());
+	SpatializedSound* soundPtr = playSound(ResourcesManager::getSoundBuffer(SoundBufferName::PROJECTILE_FLY), position, m_settings.projectileVol());
 	soundPtr->sound.setLoop(true);
 	MovingSound* effectPtr = new MovingSound(soundPtr);
 	m_effectsInProgressPtr.push_back(effectPtr);
@@ -109,22 +75,22 @@ MovingSound* SoundManager::startProjectileSound(sf::Vector2f position)
 
 void SoundManager::playFireSound(sf::Vector2f position)
 {
-	playSound(m_fireBuffer, position, m_settings.fireVol(),false);
+	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::FIRE), position, m_settings.fireVol(),false);
 }
 
 void SoundManager::playTargetImpactSound(sf::Vector2f position)
 {
-	playSound(m_targetImpactBuffer,position,m_settings.targetImpactVol());
+	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TARGET_IMPACT),position,m_settings.targetImpactVol());
 }
 
 void SoundManager::playTargetStartSound(sf::Vector2f position)
 {
-	playSound(m_targetStartBuffer, position, m_settings.targetStartVol());
+	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TARGET_START), position, m_settings.targetStartVol());
 }
 
 void SoundManager::playWallImpactSound(sf::Vector2f position)
 {
-	playSound(m_wallImpactBuffer, position, m_settings.wallImpactVol());
+	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::WALL_IMPACT), position, m_settings.wallImpactVol());
 }
 
 void SoundManager::updateListenerPostion(sf::Vector2f position, double rotation)

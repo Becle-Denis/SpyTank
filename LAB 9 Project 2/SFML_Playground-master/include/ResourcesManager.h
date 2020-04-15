@@ -1,6 +1,7 @@
 #pragma once
 #include <Thor/Resources.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 
 enum class TexturesName {
@@ -13,6 +14,15 @@ enum class TexturesName {
 
 enum class FontName {
 	MAIN_FONT
+};
+
+enum class SoundBufferName {
+	FIRE,
+	TARGET_IMPACT,
+	TARGET_START,
+	WALL_IMPACT,
+	PROJECTILE_FLY,
+	MOTOR
 };
 
 // This SINGLETON class will hold the principal ressources of the Game 
@@ -35,6 +45,14 @@ public: //API static functions
 	/// <returns></returns>
 	static sf::Font const& getFont(FontName t_name);
 
+	/// <summary>
+	/// This function will return the Sound buffer corresponding 
+	/// </summary>
+	/// <param name="name"></param>
+	/// <returns></returns>
+	static sf::SoundBuffer const& getSoundBuffer(SoundBufferName t_name);
+
+
 
 private:
 
@@ -47,6 +65,7 @@ private:
 private:
 	static thor::ResourceHolder<sf::Texture, TexturesName> s_texturesHolder; // this will hold all the textures 
 	static thor::ResourceHolder<sf::Font, FontName> s_fontHolder; // this will hold all the font
+	static thor::ResourceHolder<sf::SoundBuffer, SoundBufferName> s_soundBufferHolder; // this will hold all the sound buffers
 
 	static bool s_loaded;
 

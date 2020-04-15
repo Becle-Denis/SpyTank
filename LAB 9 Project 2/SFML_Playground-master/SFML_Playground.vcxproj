@@ -42,8 +42,10 @@
     <ClInclude Include="include\Target.h" />
     <ClInclude Include="include\TargetManager.h" />
     <ClInclude Include="include\UserPerformance.h" />
+    <ClInclude Include="ResourcesManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ResourcesManager.cpp" />
     <ClCompile Include="src\CollisionDetector.cpp" />
     <ClCompile Include="src\CrossFade.cpp" />
     <ClCompile Include="src\FadeIn.cpp" />

@@ -69,7 +69,9 @@ private:
 	sf::Text m_playerStatsText; // text for displaying the actual player performances 
 	sf::Text m_gameOverBestStatsText; //text for displaying the best player performances 
 	sf::Text m_eventText; //Text for displaying the event; 
-	
+	//Command texts 
+	sf::Text m_startHitGameText;
+	sf::Text m_startCatchGameText;
 
 };
 

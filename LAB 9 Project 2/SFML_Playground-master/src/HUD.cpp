@@ -4,28 +4,50 @@
 HUD::HUD()
 	: m_state(GameState::NOT_STARTED)
 {
-	m_bigDisplayedText = sf::Text("BLIND TANK", ResourcesManager::getFont(FontName::MAIN_FONT), 50);
+	sf::Font const& font = ResourcesManager::getFont(FontName::MAIN_FONT);
+
+	m_bigDisplayedText = sf::Text("BLIND TANK", font, 50);
 	m_bigDisplayedText.setFillColor(sf::Color::Red);
 	m_bigDisplayedText.setPosition(450, 50);
-	//start();
+
+	m_eventText.setFont(font);
+	m_eventText.setString("");
+	m_eventText.setCharacterSize(25);
+	m_eventText.setFillColor(sf::Color(5, 5, 55));
+	m_eventText.setPosition(40, 40);
+	
+	m_startHitGameText.setFont(font);
+	m_startHitGameText.setFillColor(sf::Color(0, 85, 180, 255));
+	m_startHitGameText.setPosition(275.0f, 695.0f);
+	m_startHitGameText.setCharacterSize(40);
+	m_startHitGameText.setString("Press Enter to play DAY TRAINING");
+
+
+	m_startCatchGameText.setFont(font);
+	m_startCatchGameText.setFillColor(sf::Color(0, 25, 760, 255));
+	m_startCatchGameText.setPosition(270.0f, 625.0f);
+	m_startCatchGameText.setCharacterSize(40);
+	m_startCatchGameText.setString("Press Space to play NIGHT MISSION");
+
+
+	m_gameOverBestStatsText.setFont(font);
+	m_playerStatsText.setFont(font);
+	m_statTitleText.setFont(font);
+
+
 }
 
 void HUD::start(GameState state)
 {
 	m_state = state;
 	
-	sf::Font const& textFont = ResourcesManager::getFont(FontName::MAIN_FONT);
-
-	//set the texts for realTime stats
-	m_statTitleText = sf::Text("Hits\nSuccess\nAccuracy", textFont, 30);
+	m_statTitleText.setString("Hits\nSuccess\nAccuracy");
+	m_statTitleText.setCharacterSize(30);
 	m_statTitleText.setFillColor(sf::Color(0, 0, 125));
 	m_statTitleText.setPosition(150, 40);
 
-	m_eventText = sf::Text("", textFont, 25);
-	m_eventText.setFillColor(sf::Color(5, 5, 55));
-	m_eventText.setPosition(40, 40);
-
-	m_playerStatsText = sf::Text("", textFont, 30);
+	m_playerStatsText.setString("");
+	m_playerStatsText.setCharacterSize(30);
 	m_playerStatsText.setFillColor(sf::Color(0, 0, 125));
 	m_playerStatsText.setPosition(50, 40);
 
@@ -121,6 +143,8 @@ void HUD::render(sf::RenderWindow& window)
 		window.draw(m_playerStatsText);
 		window.draw(m_statTitleText);
 		window.draw(m_gameOverBestStatsText);
+		window.draw(m_startCatchGameText);
+		window.draw(m_startHitGameText);
 		break;
 	}
 

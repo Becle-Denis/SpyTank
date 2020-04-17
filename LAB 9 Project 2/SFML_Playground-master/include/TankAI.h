@@ -4,6 +4,7 @@
 #include "Projectile.h"
 #include "ProjectilePool.h"
 #include "ResourcesManager.h"
+#include "GameState.h"
 #include <SFML/Graphics.hpp>
 #include <Thor/Vectors.hpp>
 #include <Thor/Time/Timer.hpp>
@@ -66,6 +67,11 @@ public:
 	};
 
 	void clearDependantObjects();
+
+	/// <summary>
+	/// Set the Tank Light Mode
+	/// </summary>
+	void setLightMode(LightMode mode);
 
 private:
 	void initSprites();

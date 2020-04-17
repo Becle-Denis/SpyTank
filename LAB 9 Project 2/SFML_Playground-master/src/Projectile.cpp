@@ -115,3 +115,15 @@ void Projectile::render(sf::RenderWindow& window) const
 {
 	window.draw(m_projectileSprite);
 }
+
+void Projectile::setLightMode(LightMode mode)
+{
+	if (mode == LightMode::DAY)
+	{
+		m_projectileSprite.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET));
+	}
+	else
+	{
+		m_projectileSprite.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET_NIGHT));
+	}
+}

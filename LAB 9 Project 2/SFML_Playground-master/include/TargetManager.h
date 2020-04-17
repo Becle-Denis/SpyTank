@@ -27,7 +27,7 @@ public: // functions
 	/// <summary>
 	/// Start each Target
 	/// </summary>
-	void start(bool timed);
+	void start(bool timed, sf::Texture const& targetTexture);
 
 	/// <summary>
 	/// Update all the targets

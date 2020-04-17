@@ -387,6 +387,20 @@ void TankAi::clearDependantObjects()
 	m_projectilesPtr.clear();
 }
 
+void TankAi::setLightMode(LightMode mode)
+{
+	if (mode == LightMode::DAY)
+	{
+		m_tankBase.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET));
+		m_turret.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET));
+	}
+	else
+	{
+		m_tankBase.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET_NIGHT));
+		m_turret.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET_NIGHT));
+	}
+}
+
 ////////////////////////////////////////////////////////////
 void TankAi::initSprites()
 {

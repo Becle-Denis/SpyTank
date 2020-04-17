@@ -8,7 +8,7 @@ Target::Target() :
 	m_soundManagerPtr(nullptr)
 {
 
-	m_sprite.setTexture(ResourcesManager::getTexture(TexturesName::TARGET));
+	m_sprite.setTexture(ResourcesManager::getTexture(TexturesName::TARGET_HIT));
 	sf::IntRect baseRect(0, 0, 230, 230);
 	m_sprite.setTextureRect(baseRect);
 	m_sprite.setOrigin(baseRect.width / 2.0, baseRect.height / 2.0);
@@ -24,7 +24,7 @@ void Target::init(sf::Vector2f position, sf::Time timeToStart, sf::Time timeOnSc
 	m_soundManagerPtr = soundManager;
 }
 
-void Target::start(bool timed)
+void Target::start(sf::Texture const& targetTexture, bool timed)
 {
 	m_timed = timed;
 	if (m_timed)
@@ -34,6 +34,7 @@ void Target::start(bool timed)
 	m_state = TargetState::NotDisplayed;
 	m_isDisplayed = false;
 	m_sprite.setColor(sf::Color(255, 255, 255));
+	m_sprite.setTexture(targetTexture);
 }
 
 void Target::update()

@@ -30,11 +30,11 @@ void TargetManager::construct(std::vector<TargetData>& targetData, SoundManager*
 	}
 }
 
-void TargetManager::start(bool timed)
+void TargetManager::start(bool timed, sf::Texture const& targetTexture)
 {
 	for (int i = 0; i < m_number_of_targets; i++)
 	{
-		(m_targets + i)->start(timed);
+		(m_targets + i)->start(targetTexture, timed);
 	}
 	if (!timed)
 	{

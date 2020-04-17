@@ -41,6 +41,7 @@ protected: //attributes
 	sf::RenderWindow m_window; // main window
 
 	GameState m_state; //state of the game
+	LightMode m_light; //lights of the game
 
 	LevelData m_level; // Load the game level data.
 
@@ -67,6 +68,7 @@ protected: //attributes
 
 	// The game HUD instance.
 	HUD m_hud;
+
 
 
 public: // function 
@@ -141,4 +143,10 @@ protected: // functions
 	/// Set the Game state to InProgress
 	/// </summary>
 	void start(GameState newState);
+
+	/// <summary>
+	/// Set the Game Light Mode
+	/// </summary>
+	void setLightMode(LightMode mode);
+
 };

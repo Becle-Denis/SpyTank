@@ -30,7 +30,7 @@ public:
 	/// <summary>
 	/// Launch the timer
 	/// </summary>
-	void start(bool timed = true);
+	void start(sf::Texture const& targetTexture, bool timed = true);
 
 	/// <summary>
 	/// Update the state of the Target 

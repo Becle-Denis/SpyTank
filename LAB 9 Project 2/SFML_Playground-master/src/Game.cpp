@@ -11,7 +11,8 @@ Game::Game()
 	m_tank(m_wallSprites, m_wallSpatialMap, m_targets, m_projectilesPool, m_soundManager, m_aiTank, m_hud),
 	m_aiTank(m_wallSprites, m_wallSpatialMap, m_projectilesPool),
 	m_state(GameState::NOT_STARTED), 
-	m_projectilesPool(10, &m_soundManager)
+	m_projectilesPool(10, &m_soundManager),
+	m_light(LightMode::DAY)
 {
 	//seed the random 
 	srand(time(nullptr));
@@ -108,7 +109,7 @@ int Game::calculateSpatialMapCell(sf::Vector2f gamePosition)
 ////////////////////////////////////////////////////////////
 void Game::generateWalls()
 {
-	sf::IntRect wallRect(2, 129, 33, 23);
+	sf::IntRect wallRect(2, 129, 34, 24);
 	sf::Texture const& spriteSheetTexture = ResourcesManager::getTexture(TexturesName::SPRITE_SHEET);
 	// Create the Walls 
 	for (ObstacleData const& obstacle : m_level.m_obstacles)
@@ -184,6 +185,18 @@ void Game::processGameEvents(sf::Event& event)
 			{
 				start(GameState::RUNNING_CATCH_GAME);
 			}
+			else if (m_state == GameState::RUNNING_CATCH_GAME)
+			{
+				//change the Light Mode 
+				if (m_light == LightMode::DAY)
+				{
+					setLightMode(LightMode::NIGHT);
+				}
+				else
+				{
+					setLightMode(LightMode::DAY);
+				}
+			}
 			break;
 
 		case sf::Keyboard::Enter:
@@ -233,6 +246,7 @@ void Game::setGameOver(bool win)
 	
 	//setting the hud
 	m_hud.setOver(m_state, actualPerf, bestPerf);
+	setLightMode(LightMode::DAY);
 	
 
 }
@@ -248,14 +262,45 @@ void Game::start(GameState newState)
 		m_tank.initialise(newState);
 		if (newState == GameState::RUNNING_CATCH_GAME)
 		{
-			m_targets.start(false);
+			m_targets.start(false, ResourcesManager::getTexture(TexturesName::TARGET_CATCH));
 			m_aiTank.start();
+			setLightMode(LightMode::NIGHT);
 		}
 		else 
 		{
-			m_targets.start(true);
+			m_targets.start(true, ResourcesManager::getTexture(TexturesName::TARGET_HIT));
+			setLightMode(LightMode::DAY);
 		}
 	}
+}
+
+void Game::setLightMode(LightMode mode)
+{
+	m_light = mode;
+
+	//Game management 
+	if (m_light == LightMode::DAY)
+	{
+		m_bgSprite.setTexture(ResourcesManager::getTexture(TexturesName::LEVEL_BACKGROUND));
+		sf::Texture const& newSpriteSheetTexture = ResourcesManager::getTexture(TexturesName::SPRITE_SHEET);
+		for (sf::Sprite& sprite : m_wallSprites)
+		{
+			sprite.setTexture(newSpriteSheetTexture);
+		}
+	}
+	else
+	{
+		m_bgSprite.setTexture(ResourcesManager::getTexture(TexturesName::LEVEL_BACKGROUND_NIGHT));
+		sf::Texture const& newSpriteSheetTexture = ResourcesManager::getTexture(TexturesName::SPRITE_SHEET_NIGHT);
+		for (sf::Sprite& sprite : m_wallSprites)
+		{
+			sprite.setTexture(newSpriteSheetTexture);
+		}
+	}
+
+	m_tank.setLightMode(m_light);
+	m_aiTank.setLightMode(m_light);
+	m_projectilesPool.setLightMode(m_light);
 }
 
 ////////////////////////////////////////////////////////////

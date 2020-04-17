@@ -53,3 +53,11 @@ Projectile* ProjectilePool::getProjectile()
 	// if all projectiles are active, return nullptr;
 	return nullptr;
 }
+
+void ProjectilePool::setLightMode(LightMode mode)
+{
+	for (int i = 0; i < m_numberOfProjectile; i++)
+	{
+		(m_projectiles + i)->setLightMode(mode);
+	}
+}

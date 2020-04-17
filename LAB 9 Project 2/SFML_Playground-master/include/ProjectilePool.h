@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Projectile.h"
 #include "SoundManager.h"
+#include "GameState.h"
 
 /// <summary>
 /// A class to store all the Projectiles 
@@ -36,5 +37,10 @@ public: //functions
 	/// </summary>
 	/// <returns>A pointer to the next available projectile, nullptr if there is no more available</returns>
 	Projectile* getProjectile();
+
+	/// <summary>
+	/// Set the Light Mode to all Projectiles 
+	/// </summary>
+	void setLightMode(LightMode mode);
 };
 

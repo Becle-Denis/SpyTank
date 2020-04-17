@@ -163,6 +163,11 @@ public:	//functions
 
 	int getNumberOfCapturedTarget() const;
 
+	/// <summary>
+	/// Set the Tank Light Mode
+	/// </summary>
+	void setLightMode(LightMode mode);
+
 private: // functions 
 	/// <summary>
 	/// @brief Initialise the tank and turret sprite 

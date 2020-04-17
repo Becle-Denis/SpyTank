@@ -13,8 +13,11 @@ void ResourcesManager::load()
 
 	// TExtures filepaths
 	textureFilesPath.push_back({ TexturesName::SPRITE_SHEET, "./resources/images/SpriteSheet.png" });
-	textureFilesPath.push_back({ TexturesName::TARGET, "./resources/images/RazorTarget1.png" });
+	textureFilesPath.push_back({ TexturesName::SPRITE_SHEET_NIGHT, "./resources/images/SpriteSheet_night.png" });
+	textureFilesPath.push_back({ TexturesName::TARGET_HIT, "./resources/images/RazorTarget1.png" });
+	textureFilesPath.push_back({ TexturesName::TARGET_CATCH, "./resources/images/LumsTarget1.png" });
 	textureFilesPath.push_back({ TexturesName::LEVEL_BACKGROUND, "./resources/images/Background.jpg" });
+	textureFilesPath.push_back({ TexturesName::LEVEL_BACKGROUND_NIGHT, "./resources/images/Background_night.jpg" });
 	textureFilesPath.push_back({ TexturesName::SMOKED, "./resources/images/fumee.jpg" });
 
 

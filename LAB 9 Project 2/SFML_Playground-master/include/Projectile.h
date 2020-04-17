@@ -7,6 +7,7 @@
 #include "MovingSound.h"
 #include "ScreenSize.h"
 #include "ResourcesManager.h"
+#include "GameState.h"
 
 /// <summary>
 /// @brief Projectile class 
@@ -79,6 +80,11 @@ public: //functions
 	//draw the projectile
 	void render(sf::RenderWindow& window ) const;
 
+
+	/// <summary>
+	/// Set the Projectile Light Mode
+	/// </summary>
+	void setLightMode(LightMode mode);
 };
 
 

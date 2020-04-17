@@ -492,6 +492,20 @@ int Tank::getNumberOfCapturedTarget() const
 	return m_capturedTarget;
 }
 
+void Tank::setLightMode(LightMode mode)
+{
+	if (mode == LightMode::DAY)
+	{
+		m_tankBase.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET));
+		m_turret.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET));
+	}
+	else
+	{
+		m_tankBase.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET_NIGHT));
+		m_turret.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET_NIGHT));
+	}
+}
+
 ////////////////////////////////////////////////////////////
 void Tank::takeImpact()
 {

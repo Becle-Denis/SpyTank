@@ -51,6 +51,9 @@ void HUD::start(GameState state)
 	m_playerStatsText.setFillColor(sf::Color(0, 0, 125));
 	m_playerStatsText.setPosition(50, 40);
 
+	m_eventText.setString("");
+
+
 }
 
 void HUD::setOver(GameState state, UserPerformance playerPerf, UserPerformance bestPerf)

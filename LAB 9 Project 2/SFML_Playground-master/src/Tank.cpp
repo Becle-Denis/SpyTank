@@ -2,14 +2,13 @@
 #include <iostream>
 
 
-Tank::Tank(std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, TankAi& aiTank, HUD& hud) :
+Tank::Tank(std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, HUD& hud) :
 	m_wallSprites(wallSprites),
 	m_wallSpatialMap(wallMap),
 	m_targets(targets),
 	m_projectilesPool(projectilePool),
 	m_maximumSpeed(100.0),
 	m_soundManager(soundManager),
-	m_aiTank(aiTank),
 	m_hud(hud),
 	m_performances(&m_targets)
 {

@@ -48,6 +48,7 @@ protected: //attributes
 
 	Tank m_tank; // An instance representing the player controlled tank.
 	TankAi m_aiTank; // An instance representing the AI controlled tank.
+	TankAi m_aiTank2; // An instance representting another AI controlled tank 
 
 	TargetManager m_targets; // Targets 
 

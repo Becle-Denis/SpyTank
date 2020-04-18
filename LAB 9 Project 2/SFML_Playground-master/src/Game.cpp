@@ -10,8 +10,9 @@ const sf::Time Game::s_DAY_TIME = sf::milliseconds(5550);
 ////////////////////////////////////////////////////////////
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
-	m_tank(m_wallSprites, m_wallSpatialMap, m_targets, m_projectilesPool, m_soundManager, m_aiTank, m_hud),
+	m_tank(m_wallSprites, m_wallSpatialMap, m_targets, m_projectilesPool, m_soundManager, m_hud),
 	m_aiTank(m_wallSprites, m_wallSpatialMap, m_projectilesPool),
+	m_aiTank2(m_wallSprites, m_wallSpatialMap, m_projectilesPool),
 	m_state(GameState::NOT_STARTED), 
 	m_projectilesPool(10, &m_soundManager),
 	m_light(LightMode::DAY)
@@ -66,8 +67,9 @@ Game::Game()
 	//initialise the tank 
 	//m_tank.initialise();
 
-	// Populate the obstacle list and set the AI tank position.
+	// Populate the obstacle list and set the AI tanks position.
 	m_aiTank.init(m_level.m_aiTank.m_position);
+	m_aiTank2.init(m_level.m_aiTank.m_position);
 
 	//Constrcut the targets
 	m_targets.construct(m_level.m_targets,&m_soundManager);
@@ -216,6 +218,7 @@ void Game::setGameOver(bool win)
 	m_targets.revealResult();
 	m_tank.clearDependantObjects();
 	m_aiTank.clearDependantObjects();
+	m_aiTank2.clearDependantObjects();
 
 	//Sounds stuff
 	m_soundManager.switchToMenuMusic();
@@ -256,6 +259,7 @@ void Game::start(GameState newState)
 			m_lastTankCapturedItem = 0;
 			m_targets.start(false, ResourcesManager::getTexture(TexturesName::TARGET_CATCH));
 			m_aiTank.start();
+			m_aiTank2.start();
 			setLightMode(LightMode::NIGHT);
 		}
 		else 
@@ -292,6 +296,7 @@ void Game::setLightMode(LightMode mode)
 
 	m_tank.setLightMode(m_light);
 	m_aiTank.setLightMode(m_light);
+	m_aiTank2.setLightMode(m_light);
 	m_projectilesPool.setLightMode(m_light);
 }
 
@@ -328,7 +333,7 @@ void Game::update(double dt)
 		{
 			setGameOver(true);
 		}
-		else if ( m_aiTank.collidesWithPlayer(m_tank) || !m_tank.isAlive() ) //Losing
+		else if ( m_aiTank.collidesWithPlayer(m_tank) || m_aiTank2.collidesWithPlayer(m_tank) || !m_tank.isAlive() ) //Losing
 		{
 			setGameOver(false);
 		}
@@ -342,6 +347,7 @@ void Game::update(double dt)
 
 			//updating the Ai tank 
 			m_aiTank.update(m_tank, dt);
+			m_aiTank2.update(m_tank, dt);
 
 			//updating the HUD
 			m_hud.update(targetLeft,m_dayTimer);
@@ -391,6 +397,7 @@ void Game::render()
 	{
 		//drawing the AI tank 
 		m_aiTank.render(m_window);
+		m_aiTank2.render(m_window);
 	}
 
 	//Not Started 

@@ -5,6 +5,8 @@
 // Updates per milliseconds
 static double const MS_PER_UPDATE = 10.0;
 
+const sf::Time Game::s_DAY_TIME = sf::milliseconds(5550);
+
 ////////////////////////////////////////////////////////////
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
@@ -185,18 +187,6 @@ void Game::processGameEvents(sf::Event& event)
 			{
 				start(GameState::RUNNING_CATCH_GAME);
 			}
-			else if (m_state == GameState::RUNNING_CATCH_GAME)
-			{
-				//change the Light Mode 
-				if (m_light == LightMode::DAY)
-				{
-					setLightMode(LightMode::NIGHT);
-				}
-				else
-				{
-					setLightMode(LightMode::DAY);
-				}
-			}
 			break;
 
 		case sf::Keyboard::Enter:
@@ -262,6 +252,8 @@ void Game::start(GameState newState)
 		m_tank.initialise(newState);
 		if (newState == GameState::RUNNING_CATCH_GAME)
 		{
+			m_dayTimer = thor::Timer();
+			m_lastTankCapturedItem = 0;
 			m_targets.start(false, ResourcesManager::getTexture(TexturesName::TARGET_CATCH));
 			m_aiTank.start();
 			setLightMode(LightMode::NIGHT);
@@ -330,7 +322,8 @@ void Game::update(double dt)
 		break;
 
 	case GameState::RUNNING_CATCH_GAME:
-		int targetLeft = m_targets.getNumberOfDisplayedTarget() - m_tank.getNumberOfCapturedTarget();
+		int capturedTarget = m_tank.getNumberOfCapturedTarget();
+		int targetLeft = m_targets.getNumberOfDisplayedTarget() - capturedTarget;
 		if (targetLeft <= 0) //Winning game over
 		{
 			setGameOver(true);
@@ -351,7 +344,20 @@ void Game::update(double dt)
 			m_aiTank.update(m_tank, dt);
 
 			//updating the HUD
-			m_hud.update(targetLeft);
+			m_hud.update(targetLeft,m_dayTimer);
+
+			//checking for light change 
+			if (m_lastTankCapturedItem != capturedTarget)
+			{
+				//new Captured Target 
+				setLightMode(LightMode::DAY);
+				m_dayTimer.restart(s_DAY_TIME);
+			}
+			else if (m_light == LightMode::DAY && m_dayTimer.isExpired())
+			{
+				setLightMode(LightMode::NIGHT);
+			}
+			m_lastTankCapturedItem = capturedTarget;
 		}
 		break;
 	}

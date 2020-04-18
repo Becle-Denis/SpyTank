@@ -51,7 +51,7 @@ public:
 	/// </summary>
 	/// <param name="gameState">The current game state</param>
 	/// <param name="aiLifePoint">The current life points of the ai</param>
-	void update(int remainingTarget);
+	void update(int remainingTarget, thor::Timer const& timer);
 
 	/// <summary>
 	/// @brief Draws the HUD outline and text.
@@ -69,6 +69,7 @@ private:
 	sf::Text m_playerStatsText; // text for displaying the actual player performances 
 	sf::Text m_gameOverBestStatsText; //text for displaying the best player performances 
 	sf::Text m_eventText; //Text for displaying the event; 
+	sf::Text m_dayText; //Text for displaying the time left of the day
 	//Command texts 
 	sf::Text m_startHitGameText;
 	sf::Text m_startCatchGameText;

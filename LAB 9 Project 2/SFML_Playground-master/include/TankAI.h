@@ -60,12 +60,6 @@ public:
 	/// </summary>
 	void init(sf::Vector2f position);
 
-	enum class AiType
-	{
-		AI_ID_NONE,
-		AI_ID_SEEK_SHOOT_AT_PLAYER
-	};
-
 	void clearDependantObjects();
 
 	/// <summary>
@@ -128,9 +122,9 @@ private:
 
 	static float constexpr PATROL_ROTATION_SPEED{ 0.03f };
 
-	static float constexpr MAX_PATROL_ZONE_SIZE{ 475.0f };
+	static float constexpr MAX_PATROL_ZONE_SIZE{ 550.0f };
 
-	static float constexpr MIN_PATROL_ZONE_SIZE{ 275.0f };
+	static float constexpr MIN_PATROL_ZONE_SIZE{ 300.0f };
 
 	static float constexpr MIN_PATROL_CONE_RANGE{ 65.f };
 
@@ -143,7 +137,8 @@ private:
 	static const sf::Time FIRE_RELOAD_TIME;
 
 	// The maximum speed for this tank.
-	float m_maxSpeed = 42.0f;
+	static float constexpr SPEED_ATTACK{ 75.0f };
+	static float constexpr SPEED_NORMAL{ 40.0f };
 
 	//Original Starting position 
 	sf::Vector2f m_startingPosition;
@@ -165,6 +160,8 @@ private:
 		PATROL_MAP,
 		ATTACK_PLAYER
 	} m_state;
+
+	LightMode m_lightMode;
 
 	ProjectilePool& m_projectilesPool; //Reference to the pool of projectile 
 	std::vector<Projectile*> m_projectilesPtr; // container of the tank projectile (pointers)

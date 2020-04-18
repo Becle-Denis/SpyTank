@@ -13,7 +13,7 @@ HUD::HUD()
 	m_eventText.setFont(font);
 	m_eventText.setString("");
 	m_eventText.setCharacterSize(25);
-	m_eventText.setFillColor(sf::Color(5, 5, 55));
+	m_eventText.setFillColor(sf::Color(55, 55, 105));
 	m_eventText.setPosition(40, 40);
 	
 	m_startHitGameText.setFont(font);
@@ -28,6 +28,12 @@ HUD::HUD()
 	m_startCatchGameText.setPosition(270.0f, 625.0f);
 	m_startCatchGameText.setCharacterSize(40);
 	m_startCatchGameText.setString("Press Space to play NIGHT MISSION");
+
+	m_dayText.setFont(font);
+	m_dayText.setFillColor(sf::Color(5, 5, 55));
+	m_dayText.setPosition(1100, 50);
+	m_dayText.setString("");
+
 
 
 	m_gameOverBestStatsText.setFont(font);
@@ -122,9 +128,20 @@ void HUD::update(sf::Time remainingTime, UserPerformance userPerf)
 
 }
 
-void HUD::update(int remainingTarget)
+void HUD::update(int remainingTarget, thor::Timer const& timer)
 {
 	m_bigDisplayedText.setString("" + std::to_string(remainingTarget) + " targets missing");
+	if (timer.isExpired())
+	{
+		m_dayText.setString("");
+	}
+	else
+	{
+		float secondsLeft = timer.getRemainingTime().asSeconds();
+		int seconds = static_cast<int>(secondsLeft);
+		int milli = static_cast<int>(secondsLeft * 100) % 100;
+		m_dayText.setString("Visible " + std::to_string(seconds) + "." + std::to_string(milli));
+	}
 }
 
 void HUD::render(sf::RenderWindow& window)
@@ -138,6 +155,7 @@ void HUD::render(sf::RenderWindow& window)
 
 	case GameState::RUNNING_CATCH_GAME:
 		window.draw(m_eventText);
+		window.draw(m_dayText);
 		break;
 
 	case GameState::NOT_STARTED:

@@ -65,6 +65,10 @@ protected: //attributes
 
 
 	thor::Timer m_timerLeft; // Timer for the time left in Game
+	thor::Timer m_dayTimer; // Timer for back to night
+	int m_lastTankCapturedItem;
+
+	static const sf::Time s_DAY_TIME;
 
 	// The game HUD instance.
 	HUD m_hud;

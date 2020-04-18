@@ -11,6 +11,7 @@ TankAi::TankAi(std::vector<sf::Sprite> & wallSprites, std::map<int, std::list< s
 	, m_rightConeArray(sf::Lines,2)
 	, m_projectilesPool(projectilesPool)
 	, m_wallSpatialMap(wallMap)
+	, m_lightMode(LightMode::DAY)
 {
 	// Initialises the tank base and turret sprites.
 	initSprites();
@@ -86,7 +87,7 @@ void TankAi::update(Tank& playerTank, double dt)
 	sf::Vector2f playerTankPosition = playerTank.getPosition();
 	double distanceToPlayer = MathUtility::distance(m_tankBase.getPosition(), playerTankPosition);
 	sf::Vector2f destination;
-	if (m_state == AIState::PATROL_MAP)
+	if (m_state == AIState::PATROL_MAP && m_lightMode != LightMode::DAY)
 	{
 		//Move to the patrol point 
 		destination = m_patrolPoint.at(m_patrolPointIndex) - m_tankBase.getPosition();
@@ -112,8 +113,7 @@ void TankAi::update(Tank& playerTank, double dt)
 			m_patrolPointIndex = rand() % m_patrolPoint.size();
 		}
 	}
-
-	if (m_state == AIState::ATTACK_PLAYER)
+	else 
 	{
 		// seek to the player 
 		destination = seek(playerTankPosition);
@@ -147,7 +147,7 @@ void TankAi::update(Tank& playerTank, double dt)
 		}
 
 		//Resizing Vision Cone 
-		if (distanceToPlayer < MAX_PATROL_ZONE_SIZE / 2)
+		if (distanceToPlayer < MAX_PATROL_ZONE_SIZE / 2 && m_state == AIState::ATTACK_PLAYER)
 		{
 			if (m_patrolConeRange < MAX_PATROL_CONE_RANGE)
 			{
@@ -168,7 +168,16 @@ void TankAi::update(Tank& playerTank, double dt)
 	m_steering = MathUtility::truncate(m_steering, MAX_FORCE);
 	// calculating acceleration with the mass 
 	acceleration = m_steering / MASS;
-	m_velocity = MathUtility::truncate(m_velocity + acceleration, m_maxSpeed);
+
+	//limiting the speed 
+	if (m_state == AIState::ATTACK_PLAYER || m_lightMode == LightMode::DAY)
+	{
+		m_velocity = MathUtility::truncate(m_velocity + acceleration, SPEED_ATTACK);
+	}
+	else
+	{
+		m_velocity = MathUtility::truncate(m_velocity + acceleration, SPEED_NORMAL);
+	}
 	
 
 	// Now we need to convert our velocity vector into a rotation angle between 0 and 359 degrees.
@@ -218,8 +227,7 @@ void TankAi::update(Tank& playerTank, double dt)
 			m_rightConeArray[0].color = sf::Color(150, 0, 0, 255);
 			m_leftConeArray[1].color = sf::Color(205, 0, 0, 0);
 			m_rightConeArray[1].color = sf::Color(205, 0, 0, 0);
-			
-			m_maxSpeed += 10.f;
+		
 			m_state = AIState::ATTACK_PLAYER;
 		}
 	}
@@ -233,7 +241,7 @@ void TankAi::update(Tank& playerTank, double dt)
 			m_rightConeArray[0].color = sf::Color(0, 150, 0, 255);
 			m_leftConeArray[1].color = sf::Color(0, 205, 0, 0);
 			m_rightConeArray[1].color = sf::Color(0, 205, 0, 0);
-			m_maxSpeed -= 10.f;
+
 			m_state = AIState::PATROL_MAP;
 		}
 	}
@@ -257,8 +265,11 @@ void TankAi::render(sf::RenderWindow & window)
 {
 	window.draw(m_tankBase);
 
-	window.draw(m_leftConeArray);
-	window.draw(m_rightConeArray);
+	if (m_lightMode == LightMode::NIGHT)
+	{
+		window.draw(m_leftConeArray);
+		window.draw(m_rightConeArray);
+	}
 
 	for (Projectile* projPtr : m_projectilesPtr)
 	{
@@ -389,7 +400,8 @@ void TankAi::clearDependantObjects()
 
 void TankAi::setLightMode(LightMode mode)
 {
-	if (mode == LightMode::DAY)
+	m_lightMode = mode;
+	if (m_lightMode == LightMode::DAY)
 	{
 		m_tankBase.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET));
 		m_turret.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET));

@@ -256,6 +256,7 @@ void Game::start(GameState newState)
 		if (newState == GameState::RUNNING_CATCH_GAME)
 		{
 			m_dayTimer = thor::Timer();
+			m_nightMissionTime.restart();
 			m_lastTankCapturedItem = 0;
 			m_targets.start(false, ResourcesManager::getTexture(TexturesName::TARGET_CATCH));
 			m_aiTank.start();
@@ -350,7 +351,7 @@ void Game::update(double dt)
 			m_aiTank2.update(m_tank, dt);
 
 			//updating the HUD
-			m_hud.update(targetLeft,m_dayTimer);
+			m_hud.update(targetLeft,m_dayTimer,m_nightMissionTime);
 
 			//checking for light change 
 			if (m_lastTankCapturedItem != capturedTarget)

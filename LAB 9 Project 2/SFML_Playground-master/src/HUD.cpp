@@ -6,7 +6,7 @@ HUD::HUD()
 {
 	sf::Font const& font = ResourcesManager::getFont(FontName::MAIN_FONT);
 
-	m_bigDisplayedText = sf::Text("BLIND TANK", font, 50);
+	m_bigDisplayedText = sf::Text("SPY TANK", font, 50);
 	m_bigDisplayedText.setFillColor(sf::Color::Red);
 	m_bigDisplayedText.setPosition(450, 50);
 
@@ -30,9 +30,14 @@ HUD::HUD()
 	m_startCatchGameText.setString("Press Space to play NIGHT MISSION");
 
 	m_dayText.setFont(font);
-	m_dayText.setFillColor(sf::Color(5, 5, 55));
-	m_dayText.setPosition(1100, 50);
+	m_dayText.setFillColor(sf::Color(55, 55, 105));
+	m_dayText.setPosition(1100, 70);
 	m_dayText.setString("");
+
+	m_missionTimeText.setFont(font);
+	m_missionTimeText.setFillColor(sf::Color(135, 135, 185));
+	m_missionTimeText.setPosition(1100, 40);
+	m_missionTimeText.setString("");
 
 
 
@@ -128,16 +133,21 @@ void HUD::update(sf::Time remainingTime, UserPerformance userPerf)
 
 }
 
-void HUD::update(int remainingTarget, thor::Timer const& timer)
+void HUD::update(int remainingTarget, thor::Timer const& dayTimer, sf::Clock const& missionTimer)
 {
 	m_bigDisplayedText.setString("" + std::to_string(remainingTarget) + " targets missing");
-	if (timer.isExpired())
+	float secondsElpased = missionTimer.getElapsedTime().asSeconds();
+	int secondsElpasedTronc = static_cast<int>(secondsElpased);
+	int milliElpasedTonc = static_cast<int>(secondsElpased * 100) % 100;
+	m_missionTimeText.setString("Mission " + std::to_string(secondsElpasedTronc) + "." + std::to_string(milliElpasedTonc));
+
+	if (dayTimer.isExpired())
 	{
 		m_dayText.setString("");
 	}
 	else
 	{
-		float secondsLeft = timer.getRemainingTime().asSeconds();
+		float secondsLeft = dayTimer.getRemainingTime().asSeconds();
 		int seconds = static_cast<int>(secondsLeft);
 		int milli = static_cast<int>(secondsLeft * 100) % 100;
 		m_dayText.setString("Visible " + std::to_string(seconds) + "." + std::to_string(milli));
@@ -155,6 +165,7 @@ void HUD::render(sf::RenderWindow& window)
 
 	case GameState::RUNNING_CATCH_GAME:
 		window.draw(m_eventText);
+		window.draw(m_missionTimeText);
 		window.draw(m_dayText);
 		break;
 

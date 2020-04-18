@@ -67,6 +67,7 @@ protected: //attributes
 
 	thor::Timer m_timerLeft; // Timer for the time left in Game
 	thor::Timer m_dayTimer; // Timer for back to night
+	sf::Clock m_nightMissionTime; // Timer for the time of the night mission
 	int m_lastTankCapturedItem;
 
 	static const sf::Time s_DAY_TIME;

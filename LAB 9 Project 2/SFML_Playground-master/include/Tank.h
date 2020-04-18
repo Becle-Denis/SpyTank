@@ -14,8 +14,6 @@
 #include "ScreenSize.h"
 #include "ResourcesManager.h"
 
-class TankAi; //forward Reference
-
 /// <summary>
 /// @brief A simple tank controller.
 /// 
@@ -238,5 +236,3 @@ private: // functions
 	//fire a projectile 
 	void fire();
 };
-
-#include "TankAI.h"

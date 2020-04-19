@@ -62,7 +62,6 @@ void SoundManager::startMusic()
 	m_attackMusic.play();
 	m_discoveredMusic.play();
 
-	//Temporary 
 	m_menuMusic.setVolume(m_settings.menuMusicVol());
 }
 
@@ -140,7 +139,6 @@ void SoundManager::tanksafe()
 
 void SoundManager::switchToMenuMusic()
 {
-	//Temporary 
 	m_menuMusic.setVolume(m_settings.menuMusicVol());
 	m_missionMusic.setVolume(0);
 	m_attackMusic.setVolume(0);
@@ -148,8 +146,7 @@ void SoundManager::switchToMenuMusic()
 }
 
 void SoundManager::switchToAttackMusic()
-{
-	//Temporary 
+{ 
 	m_menuMusic.setVolume(0);
 	m_missionMusic.setVolume(0);
 	m_attackMusic.setVolume(m_settings.levelMusicVol());
@@ -167,7 +164,6 @@ void SoundManager::switchToDiscoveredMusic()
 
 void SoundManager::switchToMissionMusic()
 {
-	//Temporary 
 	m_menuMusic.setVolume(0);
 	m_missionMusic.setVolume(m_settings.levelMusicVol());
 	m_attackMusic.setVolume(0);

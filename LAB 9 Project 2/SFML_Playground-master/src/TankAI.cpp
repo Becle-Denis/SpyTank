@@ -407,6 +407,7 @@ void TankAi::setLightMode(LightMode mode)
 	m_lightMode = mode;
 	if (m_lightMode == LightMode::DAY)
 	{
+		m_patrolPointIndex = rand() % m_patrolPoint.size();
 		m_tankBase.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET));
 		m_turret.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET));
 	}

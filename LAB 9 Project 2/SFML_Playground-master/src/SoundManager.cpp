@@ -1,20 +1,34 @@
 #include "SoundManager.h"
 
+const sf::Time SoundManager::s_MUSIC_TRANSITION_TIME = sf::milliseconds(50);
+
 SoundManager::SoundManager()
 {
 
 	//loading Musics 
-	if (!m_levelMusic.openFromFile("./resources/sounds/music/Level1v1.wav"))
+	if (!m_menuMusic.openFromFile("./resources/sounds/music/SpyTank_Music_Menu.wav"))
 	{
-		std::string s("Error loading music ./resources/sounds/music/Level1v1.wav");
+		std::string s("Error loading music ./resources/sounds/music/SpyTank_Music_Menu.wav");
 		throw std::exception(s.c_str());
 	}
-	if (!m_menuMusic.openFromFile("./resources/sounds/music/MenuMusic.ogg"))
+	if (!m_missionMusic.openFromFile("./resources/sounds/music/SpyTank_Music_Night.wav"))
 	{
-		std::string s("Error loading music ./resources/sounds/music/MenuMusic.ogg");
+		std::string s("Error loading music ./resources/sounds/music/SpyTank_Music_Night.wav");
+		throw std::exception(s.c_str());
+	}
+	if (!m_attackMusic.openFromFile("./resources/sounds/music/SpyTank_Music_Night_Attack.wav"))
+	{
+		std::string s("Error loading music ./resources/sounds/music/SpyTank_Music_Night_Attack.wav");
+		throw std::exception(s.c_str());
+	}
+	if (!m_discoveredMusic.openFromFile("./resources/sounds/music/SpyTank_Music_Day.wav"))
+	{
+		std::string s("Error loading music ./resources/sounds/music/SpyTank_Music_Day.wav");
 		throw std::exception(s.c_str());
 	}
 	
+	m_attackedTank = 0;
+	m_lightOn = true;
 	
 	//load settings 
 	m_settings = SoundSettings::loadGeneralSettings();
@@ -35,23 +49,132 @@ SoundManager::~SoundManager()
 	}
 }
 
-
-void SoundManager::startMenuMusic()
+void SoundManager::startMusic()
 {
-	m_menuMusic.setLoop(true);
-	m_effectsInProgressPtr.push_back(new FadeIn(m_menuMusic, sf::seconds(5), m_settings.menuMusicVol()));
+	//launching all music in silence 
+	m_menuMusic.setVolume(0);
+	m_missionMusic.setVolume(0);
+	m_attackMusic.setVolume(0);
+	m_discoveredMusic.setVolume(0);
+
+	m_menuMusic.play();
+	m_missionMusic.play();
+	m_attackMusic.play();
+	m_discoveredMusic.play();
+
+	//Temporary 
+	m_menuMusic.setVolume(m_settings.menuMusicVol());
 }
 
-void SoundManager::switchToLevelMusic()
+void SoundManager::menu()
 {
-	m_levelMusic.setLoop(true);
-	m_effectsInProgressPtr.push_back(new CrossFade(m_menuMusic, m_levelMusic, m_settings.levelMusicVol(), sf::seconds(0.25)));
+	m_missionInProgress = false;
+	m_attackedTank = 0;
+	switchToMenuMusic();
+}
+
+void SoundManager::mission()
+{
+	m_missionInProgress = true;
+	m_attackedTank = 0;
+	switchToMissionMusic();
+}
+
+void SoundManager::lightOn()
+{
+	m_lightOn = true;
+	if (m_missionInProgress)
+	{
+		switchToDiscoveredMusic();
+	}
+}
+
+void SoundManager::lightOff()
+{
+	m_lightOn = false;
+	if (m_missionInProgress)
+	{
+		if (m_attackedTank > 0)
+		{
+			switchToAttackMusic();
+		}
+		else
+		{
+			switchToMissionMusic();
+		}
+	}
+
+}
+
+void SoundManager::tankAttacked()
+{
+	m_attackedTank++;
+	if (!m_lightOn)
+	{
+		if (m_attackedTank > 0)
+		{
+			switchToAttackMusic();
+		}
+		else
+		{
+			switchToMissionMusic();
+		}
+	}
+}
+
+void SoundManager::tanksafe()
+{
+	m_attackedTank--;
+	if (!m_lightOn)
+	{
+		if (m_attackedTank > 0)
+		{
+			switchToAttackMusic();
+		}
+		else
+		{
+			switchToMissionMusic();
+		}
+	}
 }
 
 void SoundManager::switchToMenuMusic()
 {
-	m_effectsInProgressPtr.push_back(new CrossFade(m_levelMusic, m_menuMusic, m_settings.menuMusicVol(), sf::seconds(0.25)));
+	//Temporary 
+	m_menuMusic.setVolume(m_settings.menuMusicVol());
+	m_missionMusic.setVolume(0);
+	m_attackMusic.setVolume(0);
+	m_discoveredMusic.setVolume(0);
 }
+
+void SoundManager::switchToAttackMusic()
+{
+	//Temporary 
+	m_menuMusic.setVolume(0);
+	m_missionMusic.setVolume(0);
+	m_attackMusic.setVolume(m_settings.levelMusicVol());
+	m_discoveredMusic.setVolume(0);
+}
+
+void SoundManager::switchToDiscoveredMusic()
+{
+	//Temporary 
+	m_menuMusic.setVolume(0);
+	m_missionMusic.setVolume(0);
+	m_attackMusic.setVolume(0);
+	m_discoveredMusic.setVolume(m_settings.levelMusicVol());
+}
+
+void SoundManager::switchToMissionMusic()
+{
+	//Temporary 
+	m_menuMusic.setVolume(0);
+	m_missionMusic.setVolume(m_settings.levelMusicVol());
+	m_attackMusic.setVolume(0);
+	m_discoveredMusic.setVolume(0);
+}
+
+
 
 
 MovingMotorEffect* SoundManager::tankMotorEffect()
@@ -171,12 +294,21 @@ void SoundManager::setSettings()
 
 
 	//setting relative 
-	m_levelMusic.setRelativeToListener(false);
 	m_menuMusic.setRelativeToListener(false);
+	m_menuMusic.setLoop(true);
+	m_missionMusic.setRelativeToListener(false);
+	m_missionMusic.setLoop(true);
+	m_attackMusic.setRelativeToListener(false);
+	m_attackMusic.setLoop(true);
+	m_discoveredMusic.setRelativeToListener(false);
+	m_discoveredMusic.setLoop(true);
 
 	//mixing 
-	m_levelMusic.setVolume(m_settings.levelMusicVol());
 	m_menuMusic.setVolume(m_settings.menuMusicVol());
+	m_missionMusic.setVolume(m_settings.levelMusicVol());
+	m_attackMusic.setVolume(m_settings.levelMusicVol());
+	m_discoveredMusic.setVolume(m_settings.levelMusicVol());
+
 
 }
 

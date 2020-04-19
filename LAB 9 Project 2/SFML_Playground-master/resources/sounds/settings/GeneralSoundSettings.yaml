@@ -1,7 +1,7 @@
 general:
   masterVolume: 100
-  musicMasterVolume: 90
-  fxMasterVolume: 70
+  musicMasterVolume: 100
+  fxMasterVolume: 60
 
 listener:
   updatePosition: true
@@ -11,8 +11,8 @@ listener:
   baseRotation: -90
 
 music:
-  menuVolume: 30
-  levelVolume: 40
+  menuVolume: 80
+  levelVolume: 70
 
 fx:
   fireVolume: 100

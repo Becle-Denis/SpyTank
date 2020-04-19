@@ -5,6 +5,7 @@
 #include "ProjectilePool.h"
 #include "ResourcesManager.h"
 #include "GameState.h"
+#include "SoundManager.h"
 #include <SFML/Graphics.hpp>
 #include <Thor/Vectors.hpp>
 #include <Thor/Time/Timer.hpp>
@@ -23,7 +24,7 @@ public:
 	/// </summary>
 	/// <param name="texture">A reference to the sprite sheet texture</param>
 	///< param name="wallSprites">A reference to the container of wall sprites</param>
-	TankAi(std::vector<sf::Sprite> & wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, ProjectilePool & projectilesPool);
+	TankAi(std::vector<sf::Sprite> & wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, ProjectilePool & projectilesPool, SoundManager & soundManager);
 
 	void start();
 
@@ -89,6 +90,9 @@ private:
 	// A reference to the container of wall sprites.
 	std::vector<sf::Sprite> & m_wallSprites;
 	std::map<int, std::list< sf::Sprite> > & m_wallSpatialMap;
+
+	// A reference to the sound manager
+	SoundManager& m_soundManager;
 
 	// The current rotation as applied to tank base
 	double m_rotation{ 0.0 };

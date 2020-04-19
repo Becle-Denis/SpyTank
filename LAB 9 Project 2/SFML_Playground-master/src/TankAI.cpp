@@ -3,7 +3,7 @@
 const sf::Time TankAi::FIRE_RELOAD_TIME = sf::milliseconds(2050);
 
 ////////////////////////////////////////////////////////////
-TankAi::TankAi(std::vector<sf::Sprite> & wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, ProjectilePool& projectilesPool) : 
+TankAi::TankAi(std::vector<sf::Sprite> & wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, ProjectilePool& projectilesPool, SoundManager& soundManager) :
 	m_wallSprites(wallSprites)
 	, m_steering(0, 0)
 	, m_state(AIState::PATROL_MAP)
@@ -11,6 +11,7 @@ TankAi::TankAi(std::vector<sf::Sprite> & wallSprites, std::map<int, std::list< s
 	, m_rightConeArray(sf::Lines,2)
 	, m_projectilesPool(projectilesPool)
 	, m_wallSpatialMap(wallMap)
+	, m_soundManager(soundManager)
 	, m_lightMode(LightMode::DAY)
 {
 	// Initialises the tank base and turret sprites.
@@ -222,6 +223,7 @@ void TankAi::update(Tank& playerTank, double dt)
 		//Player inside the cone 
 		if (m_state != AIState::ATTACK_PLAYER)
 		{
+			//setting attack player state 
 			//Vertex Array Red Color 
 			m_leftConeArray[0].color = sf::Color(150, 0, 0, 255);
 			m_rightConeArray[0].color = sf::Color(150, 0, 0, 255);
@@ -229,6 +231,7 @@ void TankAi::update(Tank& playerTank, double dt)
 			m_rightConeArray[1].color = sf::Color(205, 0, 0, 0);
 		
 			m_state = AIState::ATTACK_PLAYER;
+			m_soundManager.tankAttacked();
 		}
 	}
 	else
@@ -243,6 +246,7 @@ void TankAi::update(Tank& playerTank, double dt)
 			m_rightConeArray[1].color = sf::Color(0, 205, 0, 0);
 
 			m_state = AIState::PATROL_MAP;
+			m_soundManager.tanksafe();
 		}
 	}
 }

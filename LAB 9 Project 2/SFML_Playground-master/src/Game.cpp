@@ -11,8 +11,8 @@ const sf::Time Game::s_DAY_TIME = sf::milliseconds(5550);
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
 	m_tank(m_wallSprites, m_wallSpatialMap, m_targets, m_projectilesPool, m_soundManager, m_hud),
-	m_aiTank(m_wallSprites, m_wallSpatialMap, m_projectilesPool),
-	m_aiTank2(m_wallSprites, m_wallSpatialMap, m_projectilesPool),
+	m_aiTank(m_wallSprites, m_wallSpatialMap, m_projectilesPool, m_soundManager),
+	m_aiTank2(m_wallSprites, m_wallSpatialMap, m_projectilesPool, m_soundManager),
 	m_state(GameState::NOT_STARTED), 
 	m_projectilesPool(10, &m_soundManager),
 	m_light(LightMode::DAY)
@@ -82,7 +82,7 @@ void Game::run()
 	sf::Int32 lag = 0;
 
 	//sound stuff
-	m_soundManager.startMenuMusic();
+	m_soundManager.startMusic();
 
 	while (m_window.isOpen())
 	{
@@ -221,7 +221,7 @@ void Game::setGameOver(bool win)
 	m_aiTank2.clearDependantObjects();
 
 	//Sounds stuff
-	m_soundManager.switchToMenuMusic();
+	m_soundManager.menu();
 
 	//Seting the performance display 
 	UserPerformance actualPerf = m_tank.getPerformance();
@@ -249,7 +249,6 @@ void Game::start(GameState newState)
 	if (newState == GameState::RUNNING_CATCH_GAME || newState == GameState::RUNNING_HIT_GAME)
 	{
 		m_state = newState;
-		m_soundManager.switchToLevelMusic();
 		m_hud.start(newState);
 		m_timerLeft.restart(sf::seconds(60.f));
 		m_tank.initialise(newState);
@@ -268,6 +267,9 @@ void Game::start(GameState newState)
 			m_targets.start(true, ResourcesManager::getTexture(TexturesName::TARGET_HIT));
 			setLightMode(LightMode::DAY);
 		}
+
+		m_soundManager.mission();
+
 	}
 }
 
@@ -284,6 +286,7 @@ void Game::setLightMode(LightMode mode)
 		{
 			sprite.setTexture(newSpriteSheetTexture);
 		}
+		m_soundManager.lightOn();
 	}
 	else
 	{
@@ -293,6 +296,7 @@ void Game::setLightMode(LightMode mode)
 		{
 			sprite.setTexture(newSpriteSheetTexture);
 		}
+		m_soundManager.lightOff();
 	}
 
 	m_tank.setLightMode(m_light);

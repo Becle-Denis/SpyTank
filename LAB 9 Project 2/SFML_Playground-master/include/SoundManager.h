@@ -35,9 +35,15 @@ class SoundManager
 private: // Attributes 
 
 	//musics
-	sf::Music m_levelMusic;
 	sf::Music m_menuMusic;
+	sf::Music m_missionMusic;
+	sf::Music m_attackMusic;
+	sf::Music m_discoveredMusic;
 	
+	int m_attackedTank;
+	bool m_missionInProgress;
+	bool m_lightOn;
+
 	//sounds 
 	std::vector<SpatializedSound*> m_soundsInProgressPtr; //Storage for spatializerd sound
 	std::vector<SpatializedSound*> m_nonUpdatedSoundInProgressPtr; //Storage for spatialized sound moving with the listener
@@ -54,6 +60,8 @@ private: // Attributes
 	//settings 
 	SoundSettings m_settings; //Storage for the sound settings 
 
+	static const sf::Time s_MUSIC_TRANSITION_TIME;
+
 public: // functions 
 	/// <summary>
 	/// Create a SoundManager for a Level
@@ -63,17 +71,18 @@ public: // functions
 	~SoundManager();
 
 	//Music stuff
-	void startMenuMusic();
+	void startMusic();
+	void menu();
+	void mission();
+	void lightOn();
+	void lightOff();
+	void tankAttacked();
+	void tanksafe();
 
-	/// <summary>
-	/// Stop the Menu music and start the level Music with a crossFade effect 
-	/// </summary>
-	void switchToLevelMusic(); 
-	
-	/// <summary>
-	/// Stop the Level music and start the menu Music with a crossFade effect 
-	/// </summary>
-	void switchToMenuMusic();
+
+
+
+
 
 	// Updated fx, returns pointer to sound effect 
 	MovingMotorEffect* tankMotorEffect();
@@ -99,6 +108,14 @@ public: // functions
 	void update();
 
 private: //functions 
+
+	//music stuff
+	void switchToMenuMusic();
+	void switchToAttackMusic();
+	void switchToDiscoveredMusic();
+	void switchToMissionMusic();
+
+
 	void setSettings(); //Set the sounds settings according to m_settings 
 
 	/// <summary>

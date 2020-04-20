@@ -91,7 +91,7 @@ void UserPerformance::calculate()
 {
 	if (m_targetManagerPtr != nullptr)
 	{
-		m_totalNumberOfTarget = m_targetManagerPtr->getNumberOfDisplayedTarget();
+		m_totalNumberOfTarget = m_targetManagerPtr->getNumberOfActiveTarget();
 	}
 	if (m_totalNumberOfTarget != 0)
 	{

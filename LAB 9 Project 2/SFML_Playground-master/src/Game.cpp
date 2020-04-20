@@ -72,7 +72,7 @@ Game::Game()
 	m_aiTank2.init(m_level.m_aiTank.m_position);
 
 	//Constrcut the targets
-	m_targets.construct(m_level.m_targets,&m_soundManager);
+	m_targets.construct(m_level.m_targets, 9, &m_soundManager);
 }
 
 ////////////////////////////////////////////////////////////
@@ -251,13 +251,12 @@ void Game::start(GameState newState)
 		m_state = newState;
 		m_hud.start(newState);
 		m_timerLeft.restart(sf::seconds(60.f));
-		m_tank.initialise(newState);
 		if (newState == GameState::RUNNING_CATCH_GAME)
 		{
+			m_targets.start(false, ResourcesManager::getTexture(TexturesName::TARGET_CATCH), true);
 			m_dayTimer = thor::Timer();
 			m_nightMissionTime.restart();
 			m_lastTankCapturedItem = 0;
-			m_targets.start(false, ResourcesManager::getTexture(TexturesName::TARGET_CATCH));
 			m_aiTank.start();
 			m_aiTank2.start();
 			setLightMode(LightMode::NIGHT);
@@ -268,6 +267,7 @@ void Game::start(GameState newState)
 			setLightMode(LightMode::DAY);
 		}
 
+		m_tank.initialise(newState);
 		m_soundManager.mission();
 
 	}
@@ -333,7 +333,7 @@ void Game::update(double dt)
 
 	case GameState::RUNNING_CATCH_GAME:
 		int capturedTarget = m_tank.getNumberOfCapturedTarget();
-		int targetLeft = m_targets.getNumberOfDisplayedTarget() - capturedTarget;
+		int targetLeft = m_targets.getNumberOfActiveTarget() - capturedTarget;
 		if (targetLeft <= 0) //Winning game over
 		{
 			setGameOver(true);

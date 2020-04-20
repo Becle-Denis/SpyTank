@@ -11,6 +11,10 @@ class TargetManager
 private: // Attributes 
 	Target* m_targets; // Target storage array 
 	int m_number_of_targets; // size of the array
+	int m_numberMinOfTargets; //minimum value for easy mode; 
+
+	int m_numberofActiveTargets; 
+
 
 public: // functions 
 	TargetManager(); //Construct the manager
@@ -21,13 +25,13 @@ public: // functions
 	/// also delete the previous target if the function is call twice or more
 	/// </summary>
 	/// <param name="targetData">Data of the target to be created</param>
-	void construct(std::vector<TargetData>& targetData, SoundManager* soundManager = nullptr);
+	void construct(std::vector<TargetData>& targetData, int minNumberOfTarget, SoundManager* soundManager = nullptr);
 
 
 	/// <summary>
 	/// Start each Target
 	/// </summary>
-	void start(bool timed, sf::Texture const& targetTexture);
+	void start(bool timed, sf::Texture const& targetTexture, bool smallNumber = false);
 
 	/// <summary>
 	/// Update all the targets
@@ -64,7 +68,7 @@ public: // functions
 	/// Return the number of targets 
 	/// </summary>
 	/// <returns>Number of targets</returns>
-	int getNumberOfDisplayedTarget() const;
+	int getNumberOfActiveTarget() const;
 
 private: // functions 
 	/// <summary>

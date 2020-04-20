@@ -2,7 +2,9 @@
 
 TargetManager::TargetManager() :
 	m_number_of_targets(0),
-	m_targets(nullptr)
+	m_targets(nullptr),
+	m_numberMinOfTargets(0),
+	m_numberofActiveTargets(0)
 {
 
 }
@@ -15,14 +17,24 @@ TargetManager::~TargetManager()
 	}
 }
 
-void TargetManager::construct(std::vector<TargetData>& targetData, SoundManager* soundManager)
+void TargetManager::construct(std::vector<TargetData>& targetData, int minNumberOfTarget, SoundManager* soundManager)
 {
 	//deletion if reconstruct 
 	if (m_targets != nullptr)
 	{
 		delete[] m_targets; 
 	}
+
+	//settings valuess
 	m_number_of_targets = targetData.size();
+	m_numberMinOfTargets = m_number_of_targets;
+	m_numberofActiveTargets = m_number_of_targets;
+	if (minNumberOfTarget < m_number_of_targets)
+	{
+		m_numberMinOfTargets = minNumberOfTarget;
+	}
+
+	//constructing targets 
 	m_targets = new Target[m_number_of_targets];
 	for (int i = 0; i < m_number_of_targets; i++)
 	{
@@ -30,7 +42,7 @@ void TargetManager::construct(std::vector<TargetData>& targetData, SoundManager*
 	}
 }
 
-void TargetManager::start(bool timed, sf::Texture const& targetTexture)
+void TargetManager::start(bool timed, sf::Texture const& targetTexture, bool easyMode)
 {
 	for (int i = 0; i < m_number_of_targets; i++)
 	{
@@ -41,11 +53,20 @@ void TargetManager::start(bool timed, sf::Texture const& targetTexture)
 		int nextIndex = getNextIndex();
 		(m_targets + nextIndex)->reveal();
 	}
+
+	if (easyMode)
+	{
+		m_numberofActiveTargets = m_numberMinOfTargets;
+	}
+	else
+	{
+		m_numberofActiveTargets = m_number_of_targets;
+	}
 }
 
 void TargetManager::update(double dt)
 {
-	for (int i = 0; i < m_number_of_targets; i++)
+	for (int i = 0; i < m_numberofActiveTargets; i++)
 	{
 		(m_targets + i)->update();
 	}
@@ -53,7 +74,7 @@ void TargetManager::update(double dt)
 
 int TargetManager::checkForCollision(sf::Sprite const& sprite) const
 {
-	for (int i = 0; i < m_number_of_targets; i++)
+	for (int i = 0; i < m_numberofActiveTargets; i++)
 	{
 		if ((m_targets + i)->isColliding(sprite))
 		{
@@ -65,7 +86,7 @@ int TargetManager::checkForCollision(sf::Sprite const& sprite) const
 
 void TargetManager::hit(int index)
 {
-	if (index < m_number_of_targets)
+	if (index < m_numberofActiveTargets)
 	{
 		sf::Time bonusTime = (m_targets + index)->hit(); // hit the actual target 
 		//limiting the bonus time 
@@ -86,7 +107,7 @@ void TargetManager::hit(int index)
 
 void TargetManager::render(sf::RenderWindow& window) const
 {
-	for (int i = 0; i < m_number_of_targets; i++)
+	for (int i = 0; i < m_numberofActiveTargets; i++)
 	{
 		(m_targets + i)->render(window);
 	}
@@ -94,20 +115,20 @@ void TargetManager::render(sf::RenderWindow& window) const
 
 void TargetManager::revealResult()
 {
-	for (int i = 0; i < m_number_of_targets; i++)
+	for (int i = 0; i < m_numberofActiveTargets; i++)
 	{
 		(m_targets + i)->setResult();
 	}
 }
 
-int TargetManager::getNumberOfDisplayedTarget() const
+int TargetManager::getNumberOfActiveTarget() const
 {
-	return m_number_of_targets;
+	return m_numberofActiveTargets;
 }
 
 bool TargetManager::isOneOnScreen() const
 {
-	for (int i = 0; i < m_number_of_targets; i++)
+	for (int i = 0; i < m_numberofActiveTargets; i++)
 	{
 		if ((m_targets + i)->isOnScreen())
 		{
@@ -122,7 +143,7 @@ int TargetManager::getNextIndex() const
 	int minIndex = -1;
 	sf::Time minTime = sf::seconds(100); // not really good but it works
 	sf::Time targetReaminingTime;
-	for (int i = 0; i < m_number_of_targets; i++)
+	for (int i = 0; i < m_numberofActiveTargets; i++)
 	{
 		if ((m_targets + i)->waintingToBeDisplayed(targetReaminingTime))
 		{

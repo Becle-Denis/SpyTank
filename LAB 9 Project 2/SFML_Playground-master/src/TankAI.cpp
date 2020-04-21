@@ -381,6 +381,7 @@ void TankAi::fire()
 	Projectile* newProjectilePtr = m_projectilesPool.getProjectile();
 	if (newProjectilePtr != nullptr)
 	{
+		m_soundManager.playFireSound(m_tankBase.getPosition(), true);
 		newProjectilePtr->launch(m_tankBase.getPosition(), m_turretRotation, 350.0);
 		m_projectilesPtr.push_back(newProjectilePtr);
 	}

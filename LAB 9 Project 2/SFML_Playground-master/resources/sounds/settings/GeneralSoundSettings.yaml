@@ -1,7 +1,7 @@
 general:
   masterVolume: 100
   musicMasterVolume: 100
-  fxMasterVolume: 70
+  fxMasterVolume: 100
 
 listener:
   updatePosition: true
@@ -11,15 +11,15 @@ listener:
   baseRotation: -90
 
 music:
-  menuVolume: 80
-  levelVolume: 70
+  menuVolume: 100
+  levelVolume: 80
 
 fx:
   fireVolume: 100
-  targetStartVolume: 100
-  targetImpactVolume: 100
-  targetCatchVolume: 90
-  wallImpactVolume: 90
-  projectileVolume: 55
-  motorMaximumVolume: 20
-  daySwitchVolume: 67
+  targetStartVolume: 80
+  targetImpactVolume: 80
+  targetCatchVolume: 70
+  wallImpactVolume: 70
+  projectileVolume: 25
+  motorMaximumVolume: 10
+  daySwitchVolume: 50

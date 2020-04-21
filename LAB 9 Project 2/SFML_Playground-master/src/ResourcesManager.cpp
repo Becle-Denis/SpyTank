@@ -33,9 +33,9 @@ void ResourcesManager::load()
 	std::vector<std::pair<SoundBufferName, std::string>> soundBuffersFilePaths;
 
 	//Sound buffers filepaths 
-	soundBuffersFilePaths.push_back({ SoundBufferName::FIRE, "./resources/sounds/fx/fire1.wav"});
+	soundBuffersFilePaths.push_back({ SoundBufferName::FIRE, "./resources/sounds/fx/fire3.wav"});
 	soundBuffersFilePaths.push_back({ SoundBufferName::MOTOR, "./resources/sounds/fx/Motor2.wav" });
-	soundBuffersFilePaths.push_back({ SoundBufferName::PROJECTILE_FLY, "./resources/sounds/fx/TestPinkNoise.wav" });
+	soundBuffersFilePaths.push_back({ SoundBufferName::PROJECTILE_FLY, "./resources/sounds/fx/projectile2.wav" });
 	soundBuffersFilePaths.push_back({ SoundBufferName::TARGET_IMPACT, "./resources/sounds/fx/targetImpact2.wav" });
 	soundBuffersFilePaths.push_back({ SoundBufferName::TARGET_CATCH, "./resources/sounds/fx/targetCatch2.wav" });
 	soundBuffersFilePaths.push_back({ SoundBufferName::TARGET_START, "./resources/sounds/fx/targetStart2.wav" });

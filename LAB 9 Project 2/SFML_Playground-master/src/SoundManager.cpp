@@ -192,9 +192,9 @@ MovingSound* SoundManager::startProjectileSound(sf::Vector2f position)
 	return effectPtr;
 }
 
-void SoundManager::playFireSound(sf::Vector2f position)
+void SoundManager::playFireSound(sf::Vector2f position, bool updatePosition)
 {
-	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::FIRE), position, m_settings.fireVol(),false);
+	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::FIRE), position, m_settings.fireVol(), updatePosition);
 }
 
 

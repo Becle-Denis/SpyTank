@@ -90,7 +90,7 @@ public: // functions
 
 	//FX
 	void playFireSound(sf::Vector2f position);
-	void playTargetImpactSound(sf::Vector2f position);
+	void playTargetSound(sf::Vector2f position, bool hitted);
 	void playTargetStartSound(sf::Vector2f position);
 	void playWallImpactSound(sf::Vector2f position);
 

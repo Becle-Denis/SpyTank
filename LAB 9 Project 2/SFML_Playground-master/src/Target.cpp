@@ -83,7 +83,7 @@ void Target::render(sf::RenderWindow& window)
 }
 
 
-sf::Time Target::hit()
+sf::Time Target::capture(bool hitted)
 {
 	m_isDisplayed = false;
 	m_state = TargetState::DeadByHit;
@@ -91,7 +91,7 @@ sf::Time Target::hit()
 	//sound stuff
 	if (m_soundManagerPtr != nullptr)
 	{
-		m_soundManagerPtr->playTargetImpactSound(m_sprite.getPosition());
+		m_soundManagerPtr->playTargetSound(m_sprite.getPosition(),hitted);
 	}
 
 	return m_timer.getRemainingTime();

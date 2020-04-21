@@ -64,7 +64,7 @@ void Tank::update(double dt)
 			int collisionResult = m_targets.checkForCollision(m_projectilesPtr.at(i)->getSprite());
 			if (collisionResult != -1) // Colision with target
 			{
-				m_targets.hit(collisionResult);
+				m_targets.capture(collisionResult, true);
 				m_projectilesPtr.at(i)->setInactive();
 				m_projectilesPtr.erase(m_projectilesPtr.begin() + i);
 				m_performances.targetHitted();
@@ -98,7 +98,7 @@ void Tank::update(double dt)
 		int collisionResult = m_targets.checkForCollision(m_tankBase);
 		if (collisionResult != -1)
 		{
-			m_targets.hit(collisionResult);
+			m_targets.capture(collisionResult, false);
 			m_capturedTarget++;
 		}
 

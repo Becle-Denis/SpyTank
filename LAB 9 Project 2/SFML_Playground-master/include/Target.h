@@ -45,10 +45,10 @@ public:
 	void render(sf::RenderWindow& window);
 
 	/// <summary>
-	/// Change the state of the Target when hitting by a Tank
+	/// Change the state of the Target when hitting or catched by a Tank
 	/// </summary>
 	/// <returns>Remaining Time on screen</returns>
-	sf::Time hit();
+	sf::Time capture(bool hitted);
 
 
 	/// <summary>

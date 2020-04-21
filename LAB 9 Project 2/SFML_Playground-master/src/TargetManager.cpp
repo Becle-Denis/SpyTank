@@ -84,11 +84,11 @@ int TargetManager::checkForCollision(sf::Sprite const& sprite) const
 	return -1;
 }
 
-void TargetManager::hit(int index)
+void TargetManager::capture(int index, bool hitted)
 {
 	if (index < m_numberofActiveTargets)
 	{
-		sf::Time bonusTime = (m_targets + index)->hit(); // hit the actual target 
+		sf::Time bonusTime = (m_targets + index)->capture(hitted); // hit the actual target 
 		//limiting the bonus time 
 		if (bonusTime > sf::seconds(4.f))
 		{

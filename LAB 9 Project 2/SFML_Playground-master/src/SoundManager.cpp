@@ -197,9 +197,17 @@ void SoundManager::playFireSound(sf::Vector2f position)
 	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::FIRE), position, m_settings.fireVol(),false);
 }
 
-void SoundManager::playTargetImpactSound(sf::Vector2f position)
+
+void SoundManager::playTargetSound(sf::Vector2f position, bool hitted)
 {
-	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TARGET_IMPACT),position,m_settings.targetImpactVol());
+	if (hitted)
+	{
+		playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TARGET_IMPACT), position, m_settings.targetImpactVol());
+	}
+	else
+	{
+		playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TARGET_CATCH), position, m_settings.targetCatchVol());
+	}
 }
 
 void SoundManager::playTargetStartSound(sf::Vector2f position)

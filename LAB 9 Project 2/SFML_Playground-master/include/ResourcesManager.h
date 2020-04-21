@@ -22,6 +22,7 @@ enum class FontName {
 enum class SoundBufferName {
 	FIRE,
 	TARGET_IMPACT,
+	TARGET_CATCH,
 	TARGET_START,
 	WALL_IMPACT,
 	PROJECTILE_FLY,

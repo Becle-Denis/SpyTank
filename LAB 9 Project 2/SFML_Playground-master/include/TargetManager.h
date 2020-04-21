@@ -51,7 +51,7 @@ public: // functions
 	/// Reveal the next target to be on screen if there is no more target on screen
 	/// </summary>
 	/// <param name="index">Index of the target to hit </param>
-	void hit(int index);
+	void capture(int index, bool hitted);
 
 	/// <summary>
 	/// Draw all the targets

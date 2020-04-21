@@ -72,7 +72,7 @@ Game::Game()
 	m_aiTank2.init(m_level.m_aiTank.m_position);
 
 	//Constrcut the targets
-	m_targets.construct(m_level.m_targets, 9, &m_soundManager);
+	m_targets.construct(m_level.m_targets, 8, &m_soundManager);
 }
 
 ////////////////////////////////////////////////////////////

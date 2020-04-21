@@ -20,4 +20,5 @@ fx:
   targetImpactVolume: 100
   wallImpactVolume: 90
   projectileVolume: 55
-  motorMaximumVolume: 10
+  motorMaximumVolume: 20
+  daySwitchVolume: 70

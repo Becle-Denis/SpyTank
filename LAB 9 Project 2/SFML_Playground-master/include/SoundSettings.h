@@ -27,6 +27,7 @@ private: //Attributes
 	float m_fx_wallImpactVol{ 100 }; // wall impact 
 	float m_fx_projectileVol{ 80 }; // projectile volume
 	float m_fx_motorVol{ 80 }; // motor max volume
+	float m_fx_daySwitch{ 80 }; // day switch volume
 
 public: //functions
 	SoundSettings() = default; 
@@ -41,8 +42,7 @@ public: //functions
 	float wallImpactVol() const;
 	float projectileVol() const;
 	float motorMaxVolume() const;
-
-	float masterFx() const;
+	float daySwitchVolume() const;
 
 	//Listener accessers 
 	/// <summary>

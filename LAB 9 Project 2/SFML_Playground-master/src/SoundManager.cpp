@@ -155,7 +155,7 @@ void SoundManager::switchToAttackMusic()
 
 void SoundManager::switchToDiscoveredMusic()
 {
-	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::DAY_SWITCH), m_settings.masterFx());
+	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::DAY_SWITCH), m_settings.daySwitchVolume());
 	m_menuMusic.setVolume(0);
 	m_missionMusic.setVolume(0);
 	m_attackMusic.setVolume(0);

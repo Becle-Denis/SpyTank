@@ -40,10 +40,11 @@ float SoundSettings::motorMaxVolume() const
 	return (m_masterVol / 100) * (m_fx_masterVol / 100) * m_fx_motorVol;
 }
 
-float SoundSettings::masterFx() const
+float SoundSettings::daySwitchVolume() const
 {
-	return (m_masterVol / 100) * m_fx_masterVol;
+	return (m_masterVol / 100) * (m_fx_masterVol / 100) * m_fx_daySwitch;
 }
+
 
 bool SoundSettings::updateListenerPosition(sf::Vector2f& position) const
 {
@@ -96,6 +97,7 @@ SoundSettings SoundSettings::loadFromFile(std::string filePath)
 		settings.m_fx_wallImpactVol = baseNode["fx"]["wallImpactVolume"].as<float>();
 		settings.m_fx_projectileVol = baseNode["fx"]["projectileVolume"].as<float>();
 		settings.m_fx_motorVol = baseNode["fx"]["motorMaximumVolume"].as<float>();
+		settings.m_fx_daySwitch = baseNode["fx"]["daySwitchVolume"].as<float>();
 
 	}
 	catch (YAML::ParserException& e)

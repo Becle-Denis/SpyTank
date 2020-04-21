@@ -40,6 +40,11 @@ float SoundSettings::motorMaxVolume() const
 	return (m_masterVol / 100) * (m_fx_masterVol / 100) * m_fx_motorVol;
 }
 
+float SoundSettings::masterFx() const
+{
+	return (m_masterVol / 100) * m_fx_masterVol;
+}
+
 bool SoundSettings::updateListenerPosition(sf::Vector2f& position) const
 {
 	position = m_listener_basePosition;

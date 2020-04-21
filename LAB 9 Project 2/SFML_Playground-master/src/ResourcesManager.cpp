@@ -39,6 +39,7 @@ void ResourcesManager::load()
 	soundBuffersFilePaths.push_back({ SoundBufferName::TARGET_IMPACT, "./resources/sounds/fx/targetImpact2.wav" });
 	soundBuffersFilePaths.push_back({ SoundBufferName::TARGET_START, "./resources/sounds/fx/TargetSonarStart.wav" });
 	soundBuffersFilePaths.push_back({ SoundBufferName::WALL_IMPACT, "./resources/sounds/fx/WallImpact1.wav" });
+	soundBuffersFilePaths.push_back({ SoundBufferName::DAY_SWITCH, "./resources/sounds/fx/daySwitch1.wav" });
 
 	//loading each ressoruces 
 	try

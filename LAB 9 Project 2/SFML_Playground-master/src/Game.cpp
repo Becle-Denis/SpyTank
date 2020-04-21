@@ -275,34 +275,37 @@ void Game::start(GameState newState)
 
 void Game::setLightMode(LightMode mode)
 {
-	m_light = mode;
-
-	//Game management 
-	if (m_light == LightMode::DAY)
+	if (mode != m_light)
 	{
-		m_bgSprite.setTexture(ResourcesManager::getTexture(TexturesName::LEVEL_BACKGROUND));
-		sf::Texture const& newSpriteSheetTexture = ResourcesManager::getTexture(TexturesName::SPRITE_SHEET);
-		for (sf::Sprite& sprite : m_wallSprites)
-		{
-			sprite.setTexture(newSpriteSheetTexture);
-		}
-		m_soundManager.lightOn();
-	}
-	else
-	{
-		m_bgSprite.setTexture(ResourcesManager::getTexture(TexturesName::LEVEL_BACKGROUND_NIGHT));
-		sf::Texture const& newSpriteSheetTexture = ResourcesManager::getTexture(TexturesName::SPRITE_SHEET_NIGHT);
-		for (sf::Sprite& sprite : m_wallSprites)
-		{
-			sprite.setTexture(newSpriteSheetTexture);
-		}
-		m_soundManager.lightOff();
-	}
+		m_light = mode;
 
-	m_tank.setLightMode(m_light);
-	m_aiTank.setLightMode(m_light);
-	m_aiTank2.setLightMode(m_light);
-	m_projectilesPool.setLightMode(m_light);
+		//Game management 
+		if (m_light == LightMode::DAY)
+		{
+			m_bgSprite.setTexture(ResourcesManager::getTexture(TexturesName::LEVEL_BACKGROUND));
+			sf::Texture const& newSpriteSheetTexture = ResourcesManager::getTexture(TexturesName::SPRITE_SHEET);
+			for (sf::Sprite& sprite : m_wallSprites)
+			{
+				sprite.setTexture(newSpriteSheetTexture);
+			}
+			m_soundManager.lightOn();
+		}
+		else
+		{
+			m_bgSprite.setTexture(ResourcesManager::getTexture(TexturesName::LEVEL_BACKGROUND_NIGHT));
+			sf::Texture const& newSpriteSheetTexture = ResourcesManager::getTexture(TexturesName::SPRITE_SHEET_NIGHT);
+			for (sf::Sprite& sprite : m_wallSprites)
+			{
+				sprite.setTexture(newSpriteSheetTexture);
+			}
+			m_soundManager.lightOff();
+		}
+
+		m_tank.setLightMode(m_light);
+		m_aiTank.setLightMode(m_light);
+		m_aiTank2.setLightMode(m_light);
+		m_projectilesPool.setLightMode(m_light);
+	}
 }
 
 ////////////////////////////////////////////////////////////

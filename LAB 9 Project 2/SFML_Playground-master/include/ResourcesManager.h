@@ -25,7 +25,8 @@ enum class SoundBufferName {
 	TARGET_START,
 	WALL_IMPACT,
 	PROJECTILE_FLY,
-	MOTOR
+	MOTOR,
+	DAY_SWITCH
 };
 
 // This SINGLETON class will hold the principal ressources of the Game 

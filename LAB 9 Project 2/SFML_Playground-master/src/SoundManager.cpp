@@ -155,7 +155,7 @@ void SoundManager::switchToAttackMusic()
 
 void SoundManager::switchToDiscoveredMusic()
 {
-	//Temporary 
+	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::DAY_SWITCH), m_settings.masterFx());
 	m_menuMusic.setVolume(0);
 	m_missionMusic.setVolume(0);
 	m_attackMusic.setVolume(0);
@@ -321,6 +321,15 @@ SpatializedSound* SoundManager::playSound(sf::SoundBuffer const& buffer, sf::Vec
 	{
 		m_nonUpdatedSoundInProgressPtr.push_back(soundPtr);
 	}
+	return soundPtr;
+}
+
+SpatializedSound* SoundManager::playSound(sf::SoundBuffer const& buffer, float volume)
+{
+	SpatializedSound* soundPtr = new SpatializedSound(buffer, sf::Vector2f(), volume);
+	soundPtr->sound.setRelativeToListener(false);
+	soundPtr->sound.play();
+	m_nonUpdatedSoundInProgressPtr.push_back(soundPtr);
 	return soundPtr;
 }
 

@@ -42,6 +42,8 @@ public: //functions
 	float projectileVol() const;
 	float motorMaxVolume() const;
 
+	float masterFx() const;
+
 	//Listener accessers 
 	/// <summary>
 	/// accesser to the Listener Position settings 

@@ -212,7 +212,7 @@ void TankAi::update(Tank& playerTank, double dt)
 	//update the cone Vision and Ai State
 	adaptConeDisplay();
 	
-
+	 
 	//update the AI state
 	//check if the player is inside the cone and the AI can see it
 	if ((MathUtility::pointPositionToLine(m_leftConeArray[0].position, m_leftConeArray[1].position, playerTankPosition) > 0)

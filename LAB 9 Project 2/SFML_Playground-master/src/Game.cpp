@@ -10,7 +10,7 @@ const sf::Time Game::s_DAY_TIME = sf::milliseconds(5550);
 ////////////////////////////////////////////////////////////
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
-	m_tank(m_wallSprites, m_wallSpatialMap, m_targets, m_projectilesPool, m_soundManager, m_hud),
+	m_tank(m_wallSprites, m_wallSpatialMap, m_targets, m_projectilesPool, m_soundManager, m_hud, m_noiseScreen),
 	m_aiTank(m_wallSprites, m_wallSpatialMap, m_projectilesPool, m_soundManager),
 	m_aiTank2(m_wallSprites, m_wallSpatialMap, m_projectilesPool, m_soundManager),
 	m_state(GameState::NOT_STARTED), 
@@ -238,6 +238,7 @@ void Game::setGameOver(bool win)
 	}
 	
 	//setting the hud
+	m_noiseScreen.cleanNoise();
 	m_hud.setOver(m_state, actualPerf, bestPerf);
 	setLightMode(LightMode::DAY);
 	
@@ -360,6 +361,9 @@ void Game::update(double dt)
 			//updating the HUD
 			m_hud.update(targetLeft,m_dayTimer,m_nightMissionTime);
 
+			//updating the noise screen 
+			m_noiseScreen.update(dt);
+
 			//checking for light change 
 			if (m_lastTankCapturedItem != capturedTarget)
 			{
@@ -406,6 +410,9 @@ void Game::render()
 		//drawing the AI tank 
 		m_aiTank.render(m_window);
 		m_aiTank2.render(m_window);
+
+		//dariwng the noise screen 
+		m_noiseScreen.render(m_window);
 	}
 
 	//Not Started 

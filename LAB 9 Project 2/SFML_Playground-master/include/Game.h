@@ -14,6 +14,7 @@
 #include "GameState.h"
 #include "HUD.h"
 #include "ResourcesManager.h"
+#include "NoiseScreen.h"
 
 /// <summary>
 /// @author RP
@@ -58,7 +59,9 @@ protected: //attributes
 
 	sf::Sprite m_bgSprite; //backgroud sprite
 
-	sf::Sprite m_smokedSprite;
+	sf::Sprite m_smokedSprite; //menu sprite for better lisibility
+
+	NoiseScreen m_noiseScreen; // noise screen displayed when tank hitted 
 
 	//Wall sprites storages 
 	std::vector<sf::Sprite> m_wallSprites; // Vector 

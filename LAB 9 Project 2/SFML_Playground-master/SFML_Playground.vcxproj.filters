@@ -87,6 +87,9 @@
     <ClInclude Include="include\ResourcesManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\NoiseScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp">
@@ -153,6 +156,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ResourcesManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\NoiseScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

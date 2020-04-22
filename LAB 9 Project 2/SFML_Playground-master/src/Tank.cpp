@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-Tank::Tank(std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, HUD& hud) :
+Tank::Tank(std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, HUD& hud, NoiseScreen& noiseScreen) :
 	m_wallSprites(wallSprites),
 	m_wallSpatialMap(wallMap),
 	m_targets(targets),
@@ -10,7 +10,8 @@ Tank::Tank(std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sp
 	m_maximumSpeed(100.0),
 	m_soundManager(soundManager),
 	m_hud(hud),
-	m_performances(&m_targets)
+	m_performances(&m_targets),
+	m_noiseScreen(noiseScreen)
 {
 	initSprites();
 }
@@ -544,9 +545,11 @@ void Tank::takeImpact()
 	m_tankBase.setColor(newColor);
 	m_turret.setColor(newColor);
 
-	//sound stuff 
+	//affecting sound 
 	m_soundManager.playTankImpact();
 	
+	//affecting display 
+	m_noiseScreen.updateNoise();
 }
 
 bool Tank::isAlive() const

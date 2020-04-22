@@ -13,6 +13,7 @@
 #include "HUD.h"
 #include "ScreenSize.h"
 #include "ResourcesManager.h"
+#include "NoiseScreen.h"
 
 /// <summary>
 /// @brief A simple tank controller.
@@ -31,6 +32,7 @@ private: // Attributes
 	SoundManager& m_soundManager; // Reference to the soundManager
 	MovingMotorEffect* m_motorSound; // Pointer to the motor sound effect
 	HUD& m_hud; // Reference to the HUD
+	NoiseScreen& m_noiseScreen; // Reference to the noise screen  
 
 	//Sprites 
 	sf::Sprite m_tankBase;
@@ -99,7 +101,7 @@ public:	//functions
 	/// </summary>
 	/// <param name="texture">A reference to the sprite sheet texture</param>
 	///< param name="texture">A reference to the container of wall sprites</param>  
-	Tank(std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, HUD& hud);
+	Tank(std::vector<sf::Sprite>& wallSprites, std::map<int, std::list< sf::Sprite> >& wallMap, TargetManager& targets, ProjectilePool& projectilePool, SoundManager& soundManager, HUD& hud, NoiseScreen& noiseScreen);
 
 	void initialise(GameState gameRunningState);
 

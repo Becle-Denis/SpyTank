@@ -30,6 +30,7 @@
     <ClInclude Include="include\MathUtility.h" />
     <ClInclude Include="include\MovingMotorEffect.h" />
     <ClInclude Include="include\MovingSound.h" />
+    <ClInclude Include="include\NoiseScreen.h" />
     <ClInclude Include="include\OrientedBoundingBox.h" />
     <ClInclude Include="include\Projectile.h" />
     <ClInclude Include="include\ProjectilePool.h" />
@@ -45,6 +46,7 @@
     <ClInclude Include="include\UserPerformance.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\NoiseScreen.cpp" />
     <ClCompile Include="src\CollisionDetector.cpp" />
     <ClCompile Include="src\CrossFade.cpp" />
     <ClCompile Include="src\FadeIn.cpp" />

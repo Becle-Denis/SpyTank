@@ -35,10 +35,11 @@ class SoundManager
 private: // Attributes 
 
 	//musics
+	static const unsigned int s_DAMAGE_LEVELS;
 	sf::Music m_menuMusic;
-	sf::Music m_missionMusic;
-	sf::Music m_attackMusic;
-	sf::Music m_discoveredMusic;
+	sf::Music* m_missionMusics;
+	sf::Music* m_attackMusics;
+	sf::Music* m_discoveredMusics;
 	
 	int m_attackedTank;
 	unsigned int m_damageLevel;
@@ -117,6 +118,7 @@ private: //functions
 	void switchToDiscoveredMusic();
 	void switchToMissionMusic();
 
+	void increaseDamageLevel();
 
 	void setSettings(); //Set the sounds settings according to m_settings 
 

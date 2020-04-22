@@ -1,30 +1,45 @@
 #include "SoundManager.h"
 
 const sf::Time SoundManager::s_MUSIC_TRANSITION_TIME = sf::milliseconds(50);
+const unsigned int SoundManager::s_DAMAGE_LEVELS = 4;
 
-SoundManager::SoundManager()
+SoundManager::SoundManager() 
 {
-
+	std::string soundPath = "./resources/sounds/music/";
+	std::string soundEnd = ".wav";
 	//loading Musics 
-	if (!m_menuMusic.openFromFile("./resources/sounds/music/SpyTank_Music_Menu.wav"))
+	if (!m_menuMusic.openFromFile(soundPath + "SpyTank_Music_Menu_0DL" + soundEnd))
 	{
-		std::string s("Error loading music ./resources/sounds/music/SpyTank_Music_Menu.wav");
+		std::string s("Error loading music" + soundPath + "SpyTank_Music_Menu_0DL" + soundEnd);
 		throw std::exception(s.c_str());
 	}
-	if (!m_missionMusic.openFromFile("./resources/sounds/music/SpyTank_Music_Night.wav"))
+
+	//creating musics arrays
+	m_missionMusics = new sf::Music[s_DAMAGE_LEVELS + 1];
+	m_attackMusics = new sf::Music[s_DAMAGE_LEVELS + 1];
+	m_discoveredMusics = new sf::Music[s_DAMAGE_LEVELS + 1];
+
+	//loadings musics in vectors 
+	for (unsigned int damageLevel = 0; damageLevel <= s_DAMAGE_LEVELS; damageLevel++)
 	{
-		std::string s("Error loading music ./resources/sounds/music/SpyTank_Music_Night.wav");
-		throw std::exception(s.c_str());
-	}
-	if (!m_attackMusic.openFromFile("./resources/sounds/music/SpyTank_Music_Night_Attack.wav"))
-	{
-		std::string s("Error loading music ./resources/sounds/music/SpyTank_Music_Night_Attack.wav");
-		throw std::exception(s.c_str());
-	}
-	if (!m_discoveredMusic.openFromFile("./resources/sounds/music/SpyTank_Music_Day.wav"))
-	{
-		std::string s("Error loading music ./resources/sounds/music/SpyTank_Music_Day.wav");
-		throw std::exception(s.c_str());
+		
+		std::string fileEnd = "_" + std::to_string(damageLevel) + "DL" + soundEnd;
+		if (!m_missionMusics[damageLevel].openFromFile(soundPath +  "SpyTank_Music_Night" + fileEnd))
+		{
+			std::string s("Error loading music" + soundPath +  "SpyTank_Music_Night" + fileEnd);
+			throw std::exception(s.c_str());
+		}
+		if (!m_attackMusics[damageLevel].openFromFile(soundPath + "SpyTank_Music_Night_Attack" + fileEnd))
+		{
+			std::string s("Error loading music " + soundPath + "SpyTank_Music_Night_Attack" + fileEnd);
+			throw std::exception(s.c_str());
+		}
+		if (!m_discoveredMusics[damageLevel].openFromFile(soundPath + "SpyTank_Music_Day" + fileEnd))
+		{
+			std::string s("Error loading music " + soundPath + "SpyTank_Music_Day" + fileEnd);
+			throw std::exception(s.c_str());
+		}
+		
 	}
 	
 	m_attackedTank = 0;
@@ -48,20 +63,30 @@ SoundManager::~SoundManager()
 		delete s;
 		s = nullptr;
 	}
+
+	delete[] m_missionMusics;
+	delete[] m_attackMusics;
+	delete[] m_discoveredMusics;
+	
 }
 
 void SoundManager::startMusic()
 {
 	//launching all music in silence 
 	m_menuMusic.setVolume(0);
-	m_missionMusic.setVolume(0);
-	m_attackMusic.setVolume(0);
-	m_discoveredMusic.setVolume(0);
-
 	m_menuMusic.play();
-	m_missionMusic.play();
-	m_attackMusic.play();
-	m_discoveredMusic.play();
+
+	for (unsigned int damageLevel = 0; damageLevel <= s_DAMAGE_LEVELS; damageLevel++)
+	{
+		m_missionMusics[damageLevel].setVolume(0);
+		m_missionMusics[damageLevel].play();
+		m_attackMusics[damageLevel].setVolume(0);
+		m_attackMusics[damageLevel].play();
+		m_discoveredMusics[damageLevel].setVolume(0);
+		m_discoveredMusics[damageLevel].play();
+	}
+	
+	
 
 	m_menuMusic.setVolume(m_settings.menuMusicVol());
 }
@@ -71,6 +96,14 @@ void SoundManager::menu()
 	m_missionInProgress = false;
 	m_attackedTank = 0;
 	m_damageLevel = 0;
+	//mutting all musics
+	for (unsigned int damageLevel = 0; damageLevel <= s_DAMAGE_LEVELS; damageLevel++)
+	{
+		m_missionMusics[damageLevel].setVolume(0);
+		m_attackMusics[damageLevel].setVolume(0);
+		m_discoveredMusics[damageLevel].setVolume(0);
+	}
+
 	switchToMenuMusic();
 }
 
@@ -143,34 +176,61 @@ void SoundManager::tanksafe()
 void SoundManager::switchToMenuMusic()
 {
 	m_menuMusic.setVolume(m_settings.menuMusicVol());
-	m_missionMusic.setVolume(0);
-	m_attackMusic.setVolume(0);
-	m_discoveredMusic.setVolume(0);
+	m_missionMusics[m_damageLevel].setVolume(0);
+	m_attackMusics[m_damageLevel].setVolume(0);
+	m_discoveredMusics[m_damageLevel].setVolume(0);
 }
 
 void SoundManager::switchToAttackMusic()
 { 
 	m_menuMusic.setVolume(0);
-	m_missionMusic.setVolume(0);
-	m_attackMusic.setVolume(m_settings.levelMusicVol());
-	m_discoveredMusic.setVolume(0);
+	m_missionMusics[m_damageLevel].setVolume(0);
+	m_attackMusics[m_damageLevel].setVolume(m_settings.levelMusicVol());
+	m_discoveredMusics[m_damageLevel].setVolume(0);
 }
 
 void SoundManager::switchToDiscoveredMusic()
 {
 	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::DAY_SWITCH, m_damageLevel), m_settings.daySwitchVolume());
 	m_menuMusic.setVolume(0);
-	m_missionMusic.setVolume(0);
-	m_attackMusic.setVolume(0);
-	m_discoveredMusic.setVolume(m_settings.levelMusicVol());
+	m_missionMusics[m_damageLevel].setVolume(0);
+	m_attackMusics[m_damageLevel].setVolume(0);
+	m_discoveredMusics[m_damageLevel].setVolume(m_settings.levelMusicVol());
 }
 
 void SoundManager::switchToMissionMusic()
 {
 	m_menuMusic.setVolume(0);
-	m_missionMusic.setVolume(m_settings.levelMusicVol());
-	m_attackMusic.setVolume(0);
-	m_discoveredMusic.setVolume(0);
+	m_missionMusics[m_damageLevel].setVolume(m_settings.levelMusicVol());
+	m_attackMusics[m_damageLevel].setVolume(0);
+	m_discoveredMusics[m_damageLevel].setVolume(0);
+}
+
+void SoundManager::increaseDamageLevel()
+{
+	//updating damage level 
+	int lastLevelDamage = m_damageLevel;
+	m_damageLevel++;
+	int newLevelDamage = m_damageLevel;
+
+	//updating music volumes 
+	if (m_missionMusics[lastLevelDamage].getVolume() != 0.0f)
+	{
+		m_missionMusics[newLevelDamage].setVolume(m_missionMusics[lastLevelDamage].getVolume());
+		m_missionMusics[lastLevelDamage].setVolume(0.0f);
+	}
+
+	if (m_attackMusics[lastLevelDamage].getVolume() != 0.0f)
+	{
+		m_attackMusics[newLevelDamage].setVolume(m_attackMusics[lastLevelDamage].getVolume());
+		m_attackMusics[lastLevelDamage].setVolume(0.0f);
+	}
+
+	if (m_discoveredMusics[lastLevelDamage].getVolume() != 0.0f)
+	{
+		m_discoveredMusics[newLevelDamage].setVolume(m_discoveredMusics[lastLevelDamage].getVolume());
+		m_discoveredMusics[lastLevelDamage].setVolume(0.0f);
+	}
 }
 
 
@@ -226,7 +286,7 @@ void SoundManager::playWallImpactSound(sf::Vector2f position)
 void SoundManager::playTankImpact()
 {
 	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TANK_IMPACT, m_damageLevel), m_settings.tankImpactVol());
-	m_damageLevel++;
+	increaseDamageLevel();
 }
 
 void SoundManager::updateListenerPostion(sf::Vector2f position, double rotation)
@@ -308,19 +368,17 @@ void SoundManager::setSettings()
 
 	//setting relative 
 	m_menuMusic.setRelativeToListener(false);
-	m_menuMusic.setLoop(true);
-	m_missionMusic.setRelativeToListener(false);
-	m_missionMusic.setLoop(true);
-	m_attackMusic.setRelativeToListener(false);
-	m_attackMusic.setLoop(true);
-	m_discoveredMusic.setRelativeToListener(false);
-	m_discoveredMusic.setLoop(true);
-
-	//mixing 
-	m_menuMusic.setVolume(m_settings.menuMusicVol());
-	m_missionMusic.setVolume(m_settings.levelMusicVol());
-	m_attackMusic.setVolume(m_settings.levelMusicVol());
-	m_discoveredMusic.setVolume(m_settings.levelMusicVol());
+	m_menuMusic.setLoop(true);;
+	//for each musics 
+	for (unsigned int damageLevel = 0; damageLevel <= s_DAMAGE_LEVELS; damageLevel++)
+	{
+		m_missionMusics[damageLevel].setRelativeToListener(false);
+		m_missionMusics[damageLevel].setLoop(true);
+		m_attackMusics[damageLevel].setRelativeToListener(false);
+		m_attackMusics[damageLevel].setLoop(true);
+		m_discoveredMusics[damageLevel].setRelativeToListener(false);
+		m_discoveredMusics[damageLevel].setLoop(true);
+	}
 
 
 }

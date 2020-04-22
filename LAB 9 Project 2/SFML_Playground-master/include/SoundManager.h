@@ -93,6 +93,7 @@ public: // functions
 	void playTargetSound(sf::Vector2f position, bool hitted);
 	void playTargetStartSound(sf::Vector2f position);
 	void playWallImpactSound(sf::Vector2f position);
+	void playTankImpact();
 
 	//Listener 
 	/// <summary>

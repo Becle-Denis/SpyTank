@@ -27,7 +27,8 @@ enum class SoundBufferName {
 	WALL_IMPACT,
 	PROJECTILE_FLY,
 	MOTOR,
-	DAY_SWITCH
+	DAY_SWITCH,
+	TANK_IMPACT
 };
 
 // This SINGLETON class will hold the principal ressources of the Game 

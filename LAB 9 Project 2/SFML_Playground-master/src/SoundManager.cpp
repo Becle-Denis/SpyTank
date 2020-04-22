@@ -220,6 +220,11 @@ void SoundManager::playWallImpactSound(sf::Vector2f position)
 	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::WALL_IMPACT), position, m_settings.wallImpactVol());
 }
 
+void SoundManager::playTankImpact()
+{
+	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TANK_IMPACT), m_settings.tankImpactVol());
+}
+
 void SoundManager::updateListenerPostion(sf::Vector2f position, double rotation)
 {
 	if (m_updatePosition)

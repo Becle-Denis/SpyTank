@@ -543,6 +543,9 @@ void Tank::takeImpact()
 	sf::Color newColor = sf::Color(255,otherColors, otherColors);
 	m_tankBase.setColor(newColor);
 	m_turret.setColor(newColor);
+
+	//sound stuff 
+	m_soundManager.playTankImpact();
 	
 }
 

@@ -29,6 +29,7 @@ private: //Attributes
 	float m_fx_motorVol{ 80 }; // motor max volume
 	float m_fx_daySwitch{ 80 }; // day switch volume
 	float m_fx_targetCatch{ 80 }; // target catched by player 
+	float m_fx_tankImpact{ 80 }; // sound volume when the player tank is hitted 
 
 
 public: //functions
@@ -46,6 +47,7 @@ public: //functions
 	float motorMaxVolume() const;
 	float daySwitchVolume() const;
 	float targetCatchVol() const;
+	float tankImpactVol() const; 
 
 	//Listener accessers 
 	/// <summary>

@@ -2,6 +2,7 @@ general:
   masterVolume: 100
   musicMasterVolume: 100
   fxMasterVolume: 100
+  damagedMusic: true
 
 listener:
   updatePosition: true
@@ -22,5 +23,5 @@ fx:
   wallImpactVolume: 70
   projectileVolume: 25
   motorMaximumVolume: 10
-  daySwitchVolume: 50
+  daySwitchVolume: 45
   tankImpactVolume: 40

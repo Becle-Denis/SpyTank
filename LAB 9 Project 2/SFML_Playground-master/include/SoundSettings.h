@@ -9,6 +9,7 @@ private: //Attributes
 	float m_masterVol{ 100 }; //MASTER
 	float m_music_masterVol{ 100 }; //MUSIC MASTER
 	float m_fx_masterVol{ 100 }; //FX MASTER 
+	bool m_damagedMusicOn{ true }; // True if the music should change when the tank is hitter 
 
 	//listener
 	bool m_listener_updatePosition{ true }; //if true Position the listener position is updated
@@ -36,6 +37,9 @@ public: //functions
 	SoundSettings() = default; 
 
 	//accessers 
+	bool damagedMusicOn() const;
+
+
 	//volume accessers
 	float menuMusicVol() const;
 	float levelMusicVol() const;

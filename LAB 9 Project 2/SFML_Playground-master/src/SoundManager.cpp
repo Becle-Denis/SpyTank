@@ -208,28 +208,31 @@ void SoundManager::switchToMissionMusic()
 
 void SoundManager::increaseDamageLevel()
 {
-	//updating damage level 
-	int lastLevelDamage = m_damageLevel;
-	m_damageLevel++;
-	int newLevelDamage = m_damageLevel;
-
-	//updating music volumes 
-	if (m_missionMusics[lastLevelDamage].getVolume() != 0.0f)
+	if (m_settings.damagedMusicOn())
 	{
-		m_missionMusics[newLevelDamage].setVolume(m_missionMusics[lastLevelDamage].getVolume());
-		m_missionMusics[lastLevelDamage].setVolume(0.0f);
-	}
+		//updating damage level 
+		int lastLevelDamage = m_damageLevel;
+		m_damageLevel++;
+		int newLevelDamage = m_damageLevel;
 
-	if (m_attackMusics[lastLevelDamage].getVolume() != 0.0f)
-	{
-		m_attackMusics[newLevelDamage].setVolume(m_attackMusics[lastLevelDamage].getVolume());
-		m_attackMusics[lastLevelDamage].setVolume(0.0f);
-	}
+		//updating music volumes 
+		if (m_missionMusics[lastLevelDamage].getVolume() != 0.0f)
+		{
+			m_missionMusics[newLevelDamage].setVolume(m_missionMusics[lastLevelDamage].getVolume());
+			m_missionMusics[lastLevelDamage].setVolume(0.0f);
+		}
 
-	if (m_discoveredMusics[lastLevelDamage].getVolume() != 0.0f)
-	{
-		m_discoveredMusics[newLevelDamage].setVolume(m_discoveredMusics[lastLevelDamage].getVolume());
-		m_discoveredMusics[lastLevelDamage].setVolume(0.0f);
+		if (m_attackMusics[lastLevelDamage].getVolume() != 0.0f)
+		{
+			m_attackMusics[newLevelDamage].setVolume(m_attackMusics[lastLevelDamage].getVolume());
+			m_attackMusics[lastLevelDamage].setVolume(0.0f);
+		}
+
+		if (m_discoveredMusics[lastLevelDamage].getVolume() != 0.0f)
+		{
+			m_discoveredMusics[newLevelDamage].setVolume(m_discoveredMusics[lastLevelDamage].getVolume());
+			m_discoveredMusics[lastLevelDamage].setVolume(0.0f);
+		}
 	}
 }
 

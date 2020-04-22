@@ -1,5 +1,10 @@
 #include "SoundSettings.h"
 
+bool SoundSettings::damagedMusicOn() const
+{
+	return m_damagedMusicOn;
+}
+
 float SoundSettings::menuMusicVol() const
 {
 	return (m_masterVol / 100) * (m_music_masterVol / 100) * m_music_menuMusicVol;
@@ -89,6 +94,7 @@ SoundSettings SoundSettings::loadFromFile(std::string filePath)
 		settings.m_masterVol = baseNode["general"]["masterVolume"].as<float>();
 		settings.m_music_masterVol = baseNode["general"]["musicMasterVolume"].as<float>();
 		settings.m_fx_masterVol = baseNode["general"]["fxMasterVolume"].as<float>();
+		settings.m_damagedMusicOn = baseNode["general"]["damagedMusic"].as<bool>();
 
 		settings.m_listener_updatePosition = baseNode["listener"]["updatePosition"].as<bool>();
 		settings.m_listener_updateRotation = baseNode["listener"]["updateRotation"].as<bool>();

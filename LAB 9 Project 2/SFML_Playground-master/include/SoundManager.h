@@ -41,6 +41,7 @@ private: // Attributes
 	sf::Music m_discoveredMusic;
 	
 	int m_attackedTank;
+	unsigned int m_damageLevel;
 	bool m_missionInProgress;
 	bool m_lightOn;
 

@@ -2,8 +2,9 @@
 
 thor::ResourceHolder<sf::Texture, TexturesName> ResourcesManager::s_texturesHolder;
 thor::ResourceHolder<sf::Font, FontName> ResourcesManager::s_fontHolder;
-thor::ResourceHolder<sf::SoundBuffer, SoundBufferName> ResourcesManager::s_soundBufferHolder;
+std::vector<thor::ResourceHolder<sf::SoundBuffer, SoundBufferName>> ResourcesManager::s_soundBuffers;
 bool ResourcesManager::s_loaded = false;
+const unsigned int ResourcesManager::s_SOUND_DAMAGE_LEVEL = 4;
 
 void ResourcesManager::load()
 {
@@ -29,19 +30,21 @@ void ResourcesManager::load()
 	fontsFilePath.push_back({ FontName::MAIN_FONT, "./resources/fonts/8_bit_fortress.ttf" });
 
 	// SOUND BUFFER 
-	//This variable will link the SoundBufferName to the corresponding filepath
-	std::vector<std::pair<SoundBufferName, std::string>> soundBuffersFilePaths;
+	//This variable will link the SoundBufferName to the corresponding names 
+	std::string soundPath = "./resources/sounds/fx/";
+	std::string soundEnd = ".wav";
+	std::vector<std::pair<SoundBufferName, std::string>> soundBuffersFileNames;
 
 	//Sound buffers filepaths 
-	soundBuffersFilePaths.push_back({ SoundBufferName::FIRE, "./resources/sounds/fx/fire3.wav"});
-	soundBuffersFilePaths.push_back({ SoundBufferName::MOTOR, "./resources/sounds/fx/Motor2.wav" });
-	soundBuffersFilePaths.push_back({ SoundBufferName::PROJECTILE_FLY, "./resources/sounds/fx/projectile2.wav" });
-	soundBuffersFilePaths.push_back({ SoundBufferName::TARGET_IMPACT, "./resources/sounds/fx/targetImpact2.wav" });
-	soundBuffersFilePaths.push_back({ SoundBufferName::TARGET_CATCH, "./resources/sounds/fx/targetCatch2.wav" });
-	soundBuffersFilePaths.push_back({ SoundBufferName::TARGET_START, "./resources/sounds/fx/targetStart2.wav" });
-	soundBuffersFilePaths.push_back({ SoundBufferName::WALL_IMPACT, "./resources/sounds/fx/WallImpact1.wav" });
-	soundBuffersFilePaths.push_back({ SoundBufferName::DAY_SWITCH, "./resources/sounds/fx/daySwitch1.wav" });
-	soundBuffersFilePaths.push_back({ SoundBufferName::TANK_IMPACT, "./resources/sounds/fx/tankImpact1.wav" });
+	soundBuffersFileNames.push_back({ SoundBufferName::FIRE, "fire3"});
+	soundBuffersFileNames.push_back({ SoundBufferName::MOTOR, "Motor2" });
+	soundBuffersFileNames.push_back({ SoundBufferName::PROJECTILE_FLY, "projectile2" });
+	soundBuffersFileNames.push_back({ SoundBufferName::TARGET_IMPACT, "targetImpact2" });
+	soundBuffersFileNames.push_back({ SoundBufferName::TARGET_CATCH, "targetCatch2" });
+	soundBuffersFileNames.push_back({ SoundBufferName::TARGET_START, "targetStart2" });
+	soundBuffersFileNames.push_back({ SoundBufferName::WALL_IMPACT, "WallImpact1" });
+	soundBuffersFileNames.push_back({ SoundBufferName::DAY_SWITCH, "daySwitch1" });
+	soundBuffersFileNames.push_back({ SoundBufferName::TANK_IMPACT, "tankImpact1" });
 
 	//loading each ressoruces 
 	try
@@ -59,9 +62,17 @@ void ResourcesManager::load()
 		}
 
 		//loading the sound buffers 
-		for (std::pair<SoundBufferName, std::string> const& soundBufferPair : soundBuffersFilePaths)
-		{
-			s_soundBufferHolder.acquire(soundBufferPair.first, thor::Resources::fromFile<sf::SoundBuffer>(soundBufferPair.second));
+		//creating the ressource holders 
+		s_soundBuffers.resize(s_SOUND_DAMAGE_LEVEL + 1);
+		for (unsigned int levelDamage = 0; levelDamage <= s_SOUND_DAMAGE_LEVEL; levelDamage++)
+		{ 
+			for (std::pair<SoundBufferName, std::string> const& soundBufferPair : soundBuffersFileNames)
+			{
+				s_soundBuffers.at(levelDamage).acquire(
+					soundBufferPair.first, 
+					thor::Resources::fromFile<sf::SoundBuffer>(
+						soundPath + soundBufferPair.second + "_" + std::to_string(levelDamage) + "DL" + soundEnd));
+			}
 		}
 	}
 	catch (thor::ResourceLoadingException& e)
@@ -90,11 +101,17 @@ sf::Font const& ResourcesManager::getFont(FontName t_name)
 	return s_fontHolder[t_name];
 }
 
-sf::SoundBuffer const& ResourcesManager::getSoundBuffer(SoundBufferName t_name)
+sf::SoundBuffer const& ResourcesManager::getSoundBuffer(SoundBufferName t_name, unsigned int damageLevel)
 {
 	if (!s_loaded)
 	{
 		load();
 	}
-	return s_soundBufferHolder[t_name];
+
+	if (damageLevel > s_SOUND_DAMAGE_LEVEL)
+	{
+		damageLevel = s_SOUND_DAMAGE_LEVEL;
+	}
+
+	return s_soundBuffers.at(damageLevel)[t_name];
 }

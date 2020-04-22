@@ -28,6 +28,7 @@ SoundManager::SoundManager()
 	}
 	
 	m_attackedTank = 0;
+	m_damageLevel = 0;
 	m_lightOn = true;
 	
 	//load settings 
@@ -69,6 +70,7 @@ void SoundManager::menu()
 {
 	m_missionInProgress = false;
 	m_attackedTank = 0;
+	m_damageLevel = 0;
 	switchToMenuMusic();
 }
 
@@ -76,6 +78,7 @@ void SoundManager::mission()
 {
 	m_missionInProgress = true;
 	m_attackedTank = 0;
+	m_damageLevel = 0;
 	switchToMissionMusic();
 }
 
@@ -155,7 +158,7 @@ void SoundManager::switchToAttackMusic()
 
 void SoundManager::switchToDiscoveredMusic()
 {
-	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::DAY_SWITCH), m_settings.daySwitchVolume());
+	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::DAY_SWITCH, m_damageLevel), m_settings.daySwitchVolume());
 	m_menuMusic.setVolume(0);
 	m_missionMusic.setVolume(0);
 	m_attackMusic.setVolume(0);
@@ -185,7 +188,7 @@ MovingMotorEffect* SoundManager::tankMotorEffect()
 
 MovingSound* SoundManager::startProjectileSound(sf::Vector2f position)
 {
-	SpatializedSound* soundPtr = playSound(ResourcesManager::getSoundBuffer(SoundBufferName::PROJECTILE_FLY), position, m_settings.projectileVol());
+	SpatializedSound* soundPtr = playSound(ResourcesManager::getSoundBuffer(SoundBufferName::PROJECTILE_FLY, m_damageLevel), position, m_settings.projectileVol());
 	soundPtr->sound.setLoop(true);
 	MovingSound* effectPtr = new MovingSound(soundPtr);
 	m_effectsInProgressPtr.push_back(effectPtr);
@@ -194,7 +197,7 @@ MovingSound* SoundManager::startProjectileSound(sf::Vector2f position)
 
 void SoundManager::playFireSound(sf::Vector2f position, bool updatePosition)
 {
-	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::FIRE), position, m_settings.fireVol(), updatePosition);
+	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::FIRE, m_damageLevel), position, m_settings.fireVol(), updatePosition);
 }
 
 
@@ -202,27 +205,28 @@ void SoundManager::playTargetSound(sf::Vector2f position, bool hitted)
 {
 	if (hitted)
 	{
-		playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TARGET_IMPACT), position, m_settings.targetImpactVol());
+		playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TARGET_IMPACT, m_damageLevel), position, m_settings.targetImpactVol());
 	}
 	else
 	{
-		playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TARGET_CATCH), position, m_settings.targetCatchVol());
+		playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TARGET_CATCH, m_damageLevel), position, m_settings.targetCatchVol());
 	}
 }
 
 void SoundManager::playTargetStartSound(sf::Vector2f position)
 {
-	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TARGET_START), position, m_settings.targetStartVol());
+	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TARGET_START, m_damageLevel), position, m_settings.targetStartVol());
 }
 
 void SoundManager::playWallImpactSound(sf::Vector2f position)
 {
-	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::WALL_IMPACT), position, m_settings.wallImpactVol());
+	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::WALL_IMPACT, m_damageLevel), position, m_settings.wallImpactVol());
 }
 
 void SoundManager::playTankImpact()
 {
-	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TANK_IMPACT), m_settings.tankImpactVol());
+	playSound(ResourcesManager::getSoundBuffer(SoundBufferName::TANK_IMPACT, m_damageLevel), m_settings.tankImpactVol());
+	m_damageLevel++;
 }
 
 void SoundManager::updateListenerPostion(sf::Vector2f position, double rotation)

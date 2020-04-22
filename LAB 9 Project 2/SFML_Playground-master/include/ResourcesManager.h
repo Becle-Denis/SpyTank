@@ -56,7 +56,7 @@ public: //API static functions
 	/// </summary>
 	/// <param name="name"></param>
 	/// <returns></returns>
-	static sf::SoundBuffer const& getSoundBuffer(SoundBufferName t_name);
+	static sf::SoundBuffer const& getSoundBuffer(SoundBufferName t_name, unsigned int damageLevel = 0);
 
 
 
@@ -71,8 +71,9 @@ private:
 private:
 	static thor::ResourceHolder<sf::Texture, TexturesName> s_texturesHolder; // this will hold all the textures 
 	static thor::ResourceHolder<sf::Font, FontName> s_fontHolder; // this will hold all the font
-	static thor::ResourceHolder<sf::SoundBuffer, SoundBufferName> s_soundBufferHolder; // this will hold all the sound buffers
+	static std::vector<thor::ResourceHolder<sf::SoundBuffer, SoundBufferName> > s_soundBuffers; // this will hold all the sound buffers classed by damage level
 
+	static const unsigned int s_SOUND_DAMAGE_LEVEL;
 	static bool s_loaded;
 
 };

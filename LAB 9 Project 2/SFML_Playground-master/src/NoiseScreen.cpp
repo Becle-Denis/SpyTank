@@ -12,7 +12,7 @@ NoiseScreen::NoiseScreen() :
 	for (sf::CircleShape& shape : m_points)
 	{
 		//setting radius
-		shape.setRadius(1.2f);
+		shape.setRadius(1.5f);
 
 		//setting color 
 		sf::Uint8 newWhiteColor = rand() % 255;

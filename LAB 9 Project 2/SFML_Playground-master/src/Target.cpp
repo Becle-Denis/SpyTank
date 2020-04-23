@@ -74,7 +74,7 @@ void Target::update()
 	}
 }
 
-void Target::render(sf::RenderWindow& window)
+void Target::render(sf::RenderWindow& window) const
 {
 	if (m_isDisplayed)
 	{
@@ -98,7 +98,7 @@ sf::Time Target::capture(bool hitted)
 	
 }
 
-bool Target::isColliding(sf::Sprite const& sprite)
+bool Target::isColliding(sf::Sprite const& sprite) const
 {
 	if (m_state >= TargetState::OnScreen)
 	{
@@ -142,12 +142,12 @@ void Target::setResult()
 	m_isDisplayed = true;
 }
 
-bool Target::isOnScreen()
+bool Target::isOnScreen() const
 {
 	return m_state == TargetState::OnScreen || m_state == TargetState::BlinkingOnScreen;
 }
 
-bool Target::waintingToBeDisplayed(sf::Time& waitingTime)
+bool Target::waintingToBeDisplayed(sf::Time& waitingTime) const
 {
 	if (m_state == TargetState::NotDisplayed)
 	{
@@ -157,7 +157,7 @@ bool Target::waintingToBeDisplayed(sf::Time& waitingTime)
 	return false;
 }
 
-sf::Vector2f Target::getPosition()
+sf::Vector2f Target::getPosition() const
 {
 	return m_sprite.getPosition();
 }

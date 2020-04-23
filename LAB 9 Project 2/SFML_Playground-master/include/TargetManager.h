@@ -9,8 +9,7 @@
 class TargetManager
 {
 private: // Attributes 
-	Target* m_targets; // Target storage array 
-	int m_number_of_targets; // size of the array
+	std::vector<Target> m_targets; // targets storage
 	int m_numberMinOfTargets; //minimum value for easy mode; 
 
 	int m_numberofActiveTargets; 

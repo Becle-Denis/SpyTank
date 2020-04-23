@@ -42,7 +42,7 @@ public:
 	/// Draw the target if it should be drawn (Status onScreen)
 	/// </summary>
 	/// <param name="window"></param>
-	void render(sf::RenderWindow& window);
+	void render(sf::RenderWindow& window) const;
 
 	/// <summary>
 	/// Change the state of the Target when hitting or catched by a Tank
@@ -56,7 +56,7 @@ public:
 	/// </summary>
 	/// <param name="sprite">sprite to tet collision with</param>
 	/// <returns>True if collision</returns>
-	bool isColliding(sf::Sprite const& sprite);
+	bool isColliding(sf::Sprite const& sprite) const;
 
 	/// <summary>
 	/// Display the target on screen and add the bonus time 
@@ -74,16 +74,16 @@ public:
 	/// Check the state of the Target 
 	/// </summary>
 	/// <returns>True if the target is Onscreen or Blinking</returns>
-	bool isOnScreen();
+	bool isOnScreen() const;
 
 	/// <summary>
 	/// Check the state of the Target, and eventually indicate the waintingTime
 	/// </summary>
 	/// <param name="waitingTime">Return Reference, Time left to display the target</param>
 	/// <returns>True if the state is notDisplayed</returns>
-	bool waintingToBeDisplayed(sf::Time& waitingTime);
+	bool waintingToBeDisplayed(sf::Time& waitingTime) const;
 
-	sf::Vector2f getPosition();
+	sf::Vector2f getPosition() const;
 
 private:
 	// the sprite of the Target, this will store the position and rotation of the Target

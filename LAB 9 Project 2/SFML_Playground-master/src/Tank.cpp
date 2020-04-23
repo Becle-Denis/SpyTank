@@ -518,7 +518,7 @@ void Tank::takeImpact()
 	{
 	case 0:
 		//Steering damaged
-		m_maximumSpeed *= 0.80;
+		m_maximumSpeed *= 0.90;
 		m_hud.addEvent("Steering damaged");
 		break;
 	case 1:

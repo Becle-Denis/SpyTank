@@ -39,7 +39,7 @@ private: // Attributes
 	sf::Sprite m_turret;
 	
 	//Tank fire ttributes 
-	std::vector<Projectile*> m_projectilesPtr; // container of the tank projectile (pointers)
+	std::vector<std::shared_ptr<Projectile>> m_projectilesPtr; // container of the tank projectile (pointers)
 	bool canFire{ true }; // True if the tank can fire
 	thor::Timer m_fireTimer; // Timer for the time between two fire
 

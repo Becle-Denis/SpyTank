@@ -3,12 +3,15 @@
 
 double Projectile::s_projectile_default_speed = 800;
 
-Projectile::Projectile()
+Projectile::Projectile(SoundManager& soundManager) : 
+	m_soundManagerPtr(soundManager)
 {
 	m_projectileSprite.setTexture(ResourcesManager::getTexture(TexturesName::SPRITE_SHEET));
 	sf::IntRect baseRect(8, 175, 8, 10);
 	m_projectileSprite.setTextureRect(baseRect);
 	m_projectileSprite.setOrigin(baseRect.width / 2.0, baseRect.height / 2.0);
+
+	setInactive();
 }
 
 void Projectile::launch(sf::Vector2f position, double rotation, double speed)
@@ -19,16 +22,8 @@ void Projectile::launch(sf::Vector2f position, double rotation, double speed)
 
 	m_projectile_speed = speed;
 
-	if (m_soundManagerPtr != nullptr)
-	{
-		m_soundPtr = m_soundManagerPtr->startProjectileSound(position);
-	}
-}
+	m_soundPtr = m_soundManagerPtr.startProjectileSound(position);
 
-void Projectile::setProjectile(SoundManager* soundManager)
-{
-	m_soundManagerPtr = soundManager;
-	setInactive();
 }
 
 sf::Sprite const& Projectile::getSprite() const

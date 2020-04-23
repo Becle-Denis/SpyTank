@@ -275,7 +275,7 @@ void TankAi::render(sf::RenderWindow & window)
 		window.draw(m_rightConeArray);
 	}
 
-	for (Projectile* projPtr : m_projectilesPtr)
+	for (std::shared_ptr<Projectile> projPtr : m_projectilesPtr)
 	{
 		projPtr->render(window);
 	}
@@ -378,7 +378,7 @@ void TankAi::adaptConeDisplay()
 
 void TankAi::fire()
 {
-	Projectile* newProjectilePtr = m_projectilesPool.getProjectile();
+	std::shared_ptr<Projectile> newProjectilePtr = m_projectilesPool.getProjectile();
 	if (newProjectilePtr != nullptr)
 	{
 		m_soundManager.playFireSound(m_tankBase.getPosition(), true);
@@ -395,7 +395,7 @@ void TankAi::fire()
 void TankAi::clearDependantObjects()
 {
 	//deleting the projectiles 
-	for (Projectile* projPtr : m_projectilesPtr)
+	for (std::shared_ptr<Projectile> projPtr : m_projectilesPtr)
 	{
 		projPtr->setInactive();
 		projPtr = nullptr;

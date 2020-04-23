@@ -180,7 +180,7 @@ void Tank::update(double dt)
 ////////////////////////////////////////////////////////////
 void Tank::render(sf::RenderWindow & window)  const
 {
-	for (Projectile* projectile : m_projectilesPtr)
+	for (std::shared_ptr<Projectile> projectile : m_projectilesPtr)
 	{
 		projectile->render(window);
 	}
@@ -241,7 +241,7 @@ sf::Sprite Tank::getTurret() const
 void Tank::clearDependantObjects()
 {
 	//deleting the projectiles 
-	for (Projectile* projPtr : m_projectilesPtr)
+	for (std::shared_ptr<Projectile> projPtr : m_projectilesPtr)
 	{
 		projPtr->setInactive();
 		projPtr = nullptr;
@@ -461,7 +461,7 @@ void Tank::adjustRotation()
 ////////////////////////////////////////////////////////////////
 void Tank::fire()
 {
-	Projectile* newProjectilePtr = m_projectilesPool.getProjectile();
+	std::shared_ptr<Projectile> newProjectilePtr = m_projectilesPool.getProjectile();
 	if (newProjectilePtr != nullptr)
 	{
 		newProjectilePtr->launch(m_tankBase.getPosition(),m_turretRotation);

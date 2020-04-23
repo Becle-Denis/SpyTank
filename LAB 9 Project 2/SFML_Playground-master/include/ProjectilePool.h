@@ -11,10 +11,9 @@
 class ProjectilePool
 {
 private: //Attributes 
-	// Array of the projectiles 
-	Projectile* m_projectiles;
-	// Size of the array 
-	unsigned int const m_numberOfProjectile;
+	// vector of the projectiles 
+	std::vector<std::shared_ptr<Projectile>> m_projectiles;
+
 	// Actual index of the next Projectile that should be available to use 
 	unsigned int m_projectileIndex;
 
@@ -25,7 +24,7 @@ public: //functions
 	/// </summary>
 	/// <param name="texture">Texture of the projectiles</param>
 	/// <param name="poolSize">Maximum number of projetiles that can be used at the same time</param>
-	ProjectilePool(unsigned int poolSize = 15, SoundManager* soundManager = nullptr);
+	ProjectilePool(unsigned int poolSize, SoundManager& soundManager);
 
 	/// <summary>
 	/// delete all the projectiles 
@@ -36,7 +35,7 @@ public: //functions
 	/// Check for the next projectile available and return a pointer to it
 	/// </summary>
 	/// <returns>A pointer to the next available projectile, nullptr if there is no more available</returns>
-	Projectile* getProjectile();
+	std::shared_ptr<Projectile> getProjectile();
 
 	/// <summary>
 	/// Set the Light Mode to all Projectiles 

@@ -14,7 +14,7 @@ Game::Game()
 	m_aiTank(m_wallSprites, m_wallSpatialMap, m_projectilesPool, m_soundManager),
 	m_aiTank2(m_wallSprites, m_wallSpatialMap, m_projectilesPool, m_soundManager),
 	m_state(GameState::NOT_STARTED), 
-	m_projectilesPool(10, &m_soundManager),
+	m_projectilesPool(10, m_soundManager),
 	m_light(LightMode::DAY)
 {
 	//seed the random 

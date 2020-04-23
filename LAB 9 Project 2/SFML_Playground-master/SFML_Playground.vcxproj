@@ -46,7 +46,6 @@
     <ClInclude Include="include\UserPerformance.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\NoiseScreen.cpp" />
     <ClCompile Include="src\CollisionDetector.cpp" />
     <ClCompile Include="src\CrossFade.cpp" />
     <ClCompile Include="src\FadeIn.cpp" />
@@ -58,6 +57,7 @@
     <ClCompile Include="src\MathUtility.cpp" />
     <ClCompile Include="src\MovingMotorEffect.cpp" />
     <ClCompile Include="src\MovingSound.cpp" />
+    <ClCompile Include="src\NoiseScreen.cpp" />
     <ClCompile Include="src\OrientedBoundingBox.cpp" />
     <ClCompile Include="src\Projectile.cpp" />
     <ClCompile Include="src\ProjectilePool.cpp" />

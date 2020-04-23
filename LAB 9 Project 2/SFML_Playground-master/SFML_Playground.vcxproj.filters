@@ -158,7 +158,7 @@
     <ClCompile Include="src\ResourcesManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="include\NoiseScreen.cpp">
+    <ClCompile Include="src\NoiseScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

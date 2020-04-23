@@ -28,18 +28,12 @@ private: //Attributes
 	double m_rotation{ 0.0 };
 
 	//sound stuffs 
-	SoundManager* m_soundManagerPtr{ nullptr };
+	SoundManager& m_soundManagerPtr;
 	MovingSound* m_soundPtr{ nullptr };
 
 public: //functions 
 
-	Projectile();
-
-	/// <summary>
-	/// Set the Sprite of the Projectile
-	/// </summary>
-	/// <param name="texturePtr">Texture of the sprite</param>
-	void setProjectile(SoundManager* soundManager = nullptr);
+	Projectile(SoundManager& soundManager);
 
 	/// <summary>
 	/// Launch the projectile, set the position and the orientation

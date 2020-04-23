@@ -1,28 +1,28 @@
 #include "ProjectilePool.h"
 
-ProjectilePool::ProjectilePool(unsigned int poolSize, SoundManager* soundManager) :
-	m_numberOfProjectile(poolSize), m_projectileIndex(0)
+ProjectilePool::ProjectilePool(unsigned int poolSize, SoundManager& soundManager) :
+	m_projectileIndex(0)
 {
-	m_projectiles = new Projectile[m_numberOfProjectile];
-	for (int i = 0; i < m_numberOfProjectile; i++)
+	m_projectiles.reserve(poolSize);
+	for (int i = 0; i < poolSize; i++)
 	{
-		(m_projectiles + i)->setProjectile(soundManager);
+		m_projectiles.push_back(std::make_shared<Projectile>(soundManager));
 	}
 }
 
 ProjectilePool::~ProjectilePool()
 {
-	delete[] m_projectiles;
+
 }
 
-Projectile* ProjectilePool::getProjectile()
+std::shared_ptr<Projectile> ProjectilePool::getProjectile()
 {
 	//first loop index to the end
-	for (int i = m_projectileIndex; i < m_numberOfProjectile; i++)
+	for (int i = m_projectileIndex; i < m_projectiles.size(); i++)
 	{
-		if ((m_projectiles + i)->isInactive())
+		if (m_projectiles.at(i)->isInactive())
 		{
-			if (i == m_numberOfProjectile - 1)
+			if (i == m_projectiles.size() - 1)
 			{
 				m_projectileIndex = 0;
 			}
@@ -30,16 +30,16 @@ Projectile* ProjectilePool::getProjectile()
 			{
 				m_projectileIndex = i + 1;
 			}
-			return m_projectiles + i;
+			return m_projectiles.at(i);
 		}
 	}
 
 	//second loop, 0 to index 
 	for (int i = 0; i < m_projectileIndex; i++)
 	{
-		if ((m_projectiles + i)->isInactive())
+		if (m_projectiles.at(i)->isInactive())
 		{
-			if (i == m_numberOfProjectile - 1)
+			if (i == m_projectiles.size() - 1)
 			{
 				m_projectileIndex = 0;
 			}
@@ -47,7 +47,7 @@ Projectile* ProjectilePool::getProjectile()
 			{
 				m_projectileIndex = i + 1;
 			}
-			return m_projectiles + i;
+			return m_projectiles.at(i);
 		}
 	}
 	// if all projectiles are active, return nullptr;
@@ -56,8 +56,8 @@ Projectile* ProjectilePool::getProjectile()
 
 void ProjectilePool::setLightMode(LightMode mode)
 {
-	for (int i = 0; i < m_numberOfProjectile; i++)
+	for (std::shared_ptr<Projectile> projectile : m_projectiles)
 	{
-		(m_projectiles + i)->setLightMode(mode);
+		projectile->setLightMode(mode);
 	}
 }

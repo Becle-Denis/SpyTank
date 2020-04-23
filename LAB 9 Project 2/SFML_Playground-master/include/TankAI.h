@@ -168,7 +168,7 @@ private:
 	LightMode m_lightMode;
 
 	ProjectilePool& m_projectilesPool; //Reference to the pool of projectile 
-	std::vector<Projectile*> m_projectilesPtr; // container of the tank projectile (pointers)
+	std::vector<std::shared_ptr<Projectile>> m_projectilesPtr; // container of the tank projectile (pointers)
 
 	thor::Timer m_fireTimer; // Timer for the time between two fire
 

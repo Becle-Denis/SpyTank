@@ -53,16 +53,6 @@ SoundManager::SoundManager()
 
 SoundManager::~SoundManager()
 {
-	for (SoundEffect* e : m_effectsInProgressPtr)
-	{
-		delete e;
-		e = nullptr;
-	}
-	for (SpatializedSound* s : m_soundsInProgressPtr)
-	{
-		delete s;
-		s = nullptr;
-	}
 
 	delete[] m_missionMusics;
 	delete[] m_attackMusics;
@@ -239,21 +229,21 @@ void SoundManager::increaseDamageLevel()
 
 
 
-MovingMotorEffect* SoundManager::tankMotorEffect()
+std::shared_ptr<MovingMotorEffect> SoundManager::tankMotorEffect()
 {
-	SpatializedSound* motorSoundPtr = playSound(ResourcesManager::getSoundBuffer(SoundBufferName::MOTOR),sf::Vector2f());
+	std::shared_ptr<SpatializedSound> motorSoundPtr = playSound(ResourcesManager::getSoundBuffer(SoundBufferName::MOTOR),sf::Vector2f());
 	motorSoundPtr->sound.setLoop(true);
-	MovingMotorEffect* motorEffectPtr = new MovingMotorEffect(motorSoundPtr, m_settings.motorMaxVolume());
+	std::shared_ptr<MovingMotorEffect> motorEffectPtr = std::make_shared<MovingMotorEffect>(motorSoundPtr, m_settings.motorMaxVolume());
 
 	m_effectsInProgressPtr.push_back(motorEffectPtr);
 	return motorEffectPtr;
 }
 
-MovingSound* SoundManager::startProjectileSound(sf::Vector2f position)
+std::shared_ptr<MovingSound> SoundManager::startProjectileSound(sf::Vector2f position)
 {
-	SpatializedSound* soundPtr = playSound(ResourcesManager::getSoundBuffer(SoundBufferName::PROJECTILE_FLY, m_damageLevel), position, m_settings.projectileVol());
+	std::shared_ptr<SpatializedSound> soundPtr = playSound(ResourcesManager::getSoundBuffer(SoundBufferName::PROJECTILE_FLY, m_damageLevel), position, m_settings.projectileVol());
 	soundPtr->sound.setLoop(true);
-	MovingSound* effectPtr = new MovingSound(soundPtr);
+	std::shared_ptr<MovingSound> effectPtr = std::make_shared<MovingSound>(soundPtr);
 	m_effectsInProgressPtr.push_back(effectPtr);
 	return effectPtr;
 }
@@ -312,9 +302,7 @@ void SoundManager::update()
 	{
 		if (m_effectsInProgressPtr.at(i)->updateEnd())
 		{
-			//delete the effect 
-			delete m_effectsInProgressPtr.at(i);
-			m_effectsInProgressPtr.at(i) = nullptr;
+			//remove the effect 
 			m_effectsInProgressPtr.erase(m_effectsInProgressPtr.begin() + i);
 		}
 	}
@@ -322,22 +310,18 @@ void SoundManager::update()
 	for (int i = m_soundsInProgressPtr.size() - 1; i >= 0; i--)
 	{
 		updateSpatialisation(m_soundsInProgressPtr.at(i));
-		//delete the non playing sounds 
+		//remove the non playing sounds 
 		if (m_soundsInProgressPtr.at(i)->sound.getStatus() != sf::Sound::Status::Playing)
 		{
-			delete m_soundsInProgressPtr.at(i);
-			m_soundsInProgressPtr.at(i) = nullptr;
 			m_soundsInProgressPtr.erase(m_soundsInProgressPtr.begin() + i);
 		}
 	}
 
-	//delete the finished non updated sound 
+	//removes the finished non updated sound 
 	for (int i = m_nonUpdatedSoundInProgressPtr.size() - 1; i >= 0; i--)
 	{
 		if (m_nonUpdatedSoundInProgressPtr.at(i)->sound.getStatus() != sf::Sound::Status::Playing)
 		{
-			delete m_nonUpdatedSoundInProgressPtr.at(i);
-			m_nonUpdatedSoundInProgressPtr.at(i) = nullptr;
 			m_nonUpdatedSoundInProgressPtr.erase(m_nonUpdatedSoundInProgressPtr.begin() + i);
 		}
 	}
@@ -386,9 +370,9 @@ void SoundManager::setSettings()
 
 }
 
-SpatializedSound* SoundManager::playSound(sf::SoundBuffer const& buffer, sf::Vector2f position, float volume, bool SpatializationUpdated)
+std::shared_ptr<SpatializedSound> SoundManager::playSound(sf::SoundBuffer const& buffer, sf::Vector2f position, float volume, bool SpatializationUpdated)
 {
-	SpatializedSound* soundPtr = new SpatializedSound(buffer, position, volume);
+	std::shared_ptr<SpatializedSound> soundPtr = std::make_shared<SpatializedSound>(buffer, position, volume);
 	updateSpatialisation(soundPtr);
 	soundPtr->sound.play();
 	if (SpatializationUpdated)
@@ -402,16 +386,16 @@ SpatializedSound* SoundManager::playSound(sf::SoundBuffer const& buffer, sf::Vec
 	return soundPtr;
 }
 
-SpatializedSound* SoundManager::playSound(sf::SoundBuffer const& buffer, float volume)
+std::shared_ptr<SpatializedSound> SoundManager::playSound(sf::SoundBuffer const& buffer, float volume)
 {
-	SpatializedSound* soundPtr = new SpatializedSound(buffer, sf::Vector2f(), volume);
+	std::shared_ptr<SpatializedSound> soundPtr = std::make_shared<SpatializedSound>(buffer, sf::Vector2f(), volume);
 	soundPtr->sound.setRelativeToListener(false);
 	soundPtr->sound.play();
 	m_nonUpdatedSoundInProgressPtr.push_back(soundPtr);
 	return soundPtr;
 }
 
-void SoundManager::updateSpatialisation(SpatializedSound* sound)
+void SoundManager::updateSpatialisation(std::shared_ptr<SpatializedSound> sound)
 {
 	sf::Vector2f positionRelativeToOrigin = sound->position - m_listenerPosition;
 	thor::rotate<float>(positionRelativeToOrigin, -(m_listenerRotation + 90));

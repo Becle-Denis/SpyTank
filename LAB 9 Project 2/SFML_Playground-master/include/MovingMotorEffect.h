@@ -10,13 +10,13 @@ struct SpatializedSound; //further declared
 class MovingMotorEffect : public SoundEffect
 {
 private: //Attributes 
-	SpatializedSound* m_spSoundPtr;
+	std::shared_ptr<SpatializedSound> m_spSoundPtr;
 	MovingSound m_movingEffect;
 	float m_pitchCoef;
 	float m_maxVol;
 
 public: //functions 
-	MovingMotorEffect(SpatializedSound* spSound,float maxVol, float pitchCoef = 1.5);
+	MovingMotorEffect(std::shared_ptr<SpatializedSound> spSound,float maxVol, float pitchCoef = 1.5);
 
 	// Position : Game local position
 	// Speed percentage, Must be POSITIVE, 

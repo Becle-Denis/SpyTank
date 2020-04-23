@@ -1,7 +1,7 @@
 #include "MovingSound.h"
 #include "SoundManager.h"
 
-MovingSound::MovingSound(SpatializedSound* spSound)
+MovingSound::MovingSound(std::shared_ptr<SpatializedSound> spSound)
 	: m_spSoundPtr(spSound)
 {
 

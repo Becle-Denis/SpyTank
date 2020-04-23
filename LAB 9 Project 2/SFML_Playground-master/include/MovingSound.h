@@ -7,11 +7,11 @@ struct SpatializedSound; //further declared
 class MovingSound : public SoundEffect
 {
 private:
-	SpatializedSound* m_spSoundPtr;
+	std::shared_ptr<SpatializedSound> m_spSoundPtr;
 	bool m_ended{ false };
 
 public:
-	MovingSound(SpatializedSound* spSound);
+	MovingSound(std::shared_ptr<SpatializedSound> spSound);
 
 	void updatePosition(sf::Vector2f position);
 

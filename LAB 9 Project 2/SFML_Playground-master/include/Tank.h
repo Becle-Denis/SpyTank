@@ -30,7 +30,7 @@ private: // Attributes
 	ProjectilePool& m_projectilesPool; // Reference to the Pool of projectiles
 	std::map<int, std::list< sf::Sprite> >& m_wallSpatialMap; // Reference to the Spatial map of projectiles
 	SoundManager& m_soundManager; // Reference to the soundManager
-	MovingMotorEffect* m_motorSound; // Pointer to the motor sound effect
+	std::shared_ptr<MovingMotorEffect> m_motorSound; // Pointer to the motor sound effect
 	HUD& m_hud; // Reference to the HUD
 	NoiseScreen& m_noiseScreen; // Reference to the noise screen  
 

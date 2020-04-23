@@ -1,7 +1,7 @@
 #include "MovingMotorEffect.h"
 #include "SoundManager.h"
 
-MovingMotorEffect::MovingMotorEffect(SpatializedSound* spSound, float maxVol, float pitchCoef) :
+MovingMotorEffect::MovingMotorEffect(std::shared_ptr<SpatializedSound> spSound, float maxVol, float pitchCoef) :
 	m_spSoundPtr(spSound),m_movingEffect(spSound),m_pitchCoef(pitchCoef), m_maxVol(maxVol)
 {
 }

@@ -29,7 +29,7 @@ private: //Attributes
 
 	//sound stuffs 
 	SoundManager& m_soundManagerPtr;
-	MovingSound* m_soundPtr{ nullptr };
+	std::shared_ptr<MovingSound> m_soundPtr{ nullptr };
 
 public: //functions 
 

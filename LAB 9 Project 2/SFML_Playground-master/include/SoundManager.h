@@ -47,11 +47,11 @@ private: // Attributes
 	bool m_lightOn;
 
 	//sounds 
-	std::vector<SpatializedSound*> m_soundsInProgressPtr; //Storage for spatializerd sound
-	std::vector<SpatializedSound*> m_nonUpdatedSoundInProgressPtr; //Storage for spatialized sound moving with the listener
+	std::vector<std::shared_ptr<SpatializedSound>> m_soundsInProgressPtr; //Storage for spatializerd sound
+	std::vector<std::shared_ptr<SpatializedSound>> m_nonUpdatedSoundInProgressPtr; //Storage for spatialized sound moving with the listener
 
 	//Sound effects
-	std::vector<SoundEffect*> m_effectsInProgressPtr; //Storage for sound Effects 
+	std::vector<std::shared_ptr<SoundEffect>> m_effectsInProgressPtr; //Storage for sound Effects 
 
 	//listener
 	sf::Vector2f m_listenerPosition; 
@@ -87,8 +87,8 @@ public: // functions
 
 
 	// Updated fx, returns pointer to sound effect 
-	MovingMotorEffect* tankMotorEffect();
-	MovingSound* startProjectileSound(sf::Vector2f position);
+	std::shared_ptr<MovingMotorEffect> tankMotorEffect();
+	std::shared_ptr<MovingSound> startProjectileSound(sf::Vector2f position);
 
 	//FX
 	void playFireSound(sf::Vector2f position, bool updatePosition = false);
@@ -129,14 +129,14 @@ private: //functions
 	/// <param name="position">Local Position of the sound</param>
 	/// <param name="volume">Volume of the sound</param>
 	/// <param name="relativeToListener">Is Spatialized or Not</param>
-	SpatializedSound* playSound(sf::SoundBuffer const& buffer, sf::Vector2f position, float volume = 0, bool SpatializationUpdated = true);
+	std::shared_ptr<SpatializedSound> playSound(sf::SoundBuffer const& buffer, sf::Vector2f position, float volume = 0, bool SpatializationUpdated = true);
 	// Overloaded function for non spatialized sound
-	SpatializedSound* playSound(sf::SoundBuffer const& buffer, float volume = 0);
+	std::shared_ptr<SpatializedSound> playSound(sf::SoundBuffer const& buffer, float volume = 0);
 	
 	/// <summary>
 	/// Update the position of the sound according to the position of the listener 
 	/// </summary>
 	/// <param name="sound">Spatialized sound to update</param>
-	void updateSpatialisation(SpatializedSound* sound);
+	void updateSpatialisation(std::shared_ptr<SpatializedSound> sound);
 };
 
